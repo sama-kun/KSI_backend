@@ -7,5 +7,5 @@ export class Token {
   accessToken: string;
 
   @IsNotEmpty()
-  user: Prisma.UserUpadteCustom;
+  user: Partial<Prisma.UserCreateInput>;
 }

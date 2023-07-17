@@ -4,13 +4,20 @@ import {
   AnyExceptionFilter,
   HttpExceptionFilter,
 } from './common/filters/HttpException.filter';
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/rest-response.interceptor';
 import RateLimit from 'express-rate-limit';
 
 async function bootstrap() {
+  const logger = new Logger('KSI');
+  logger.log(`Application [KSI] is starting...`);
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
+  app.useLogger(logger);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new AnyExceptionFilter(), new HttpExceptionFilter());
   app.useGlobalInterceptors(
