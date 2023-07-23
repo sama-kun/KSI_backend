@@ -1,0 +1,46 @@
+{
+  "image": {
+  "data": [
+      {
+          "id": 464,
+          "attributes": {
+              "name": "avocado.png",
+              "alternativeText": null,
+              "caption": null,
+              "width": 335,
+              "height": 250,
+              "formats": {
+                  "thumbnail": {
+                      "ext": ".png",
+                      "url": "https://res.cloudinary.com/drpdq2t8c/image/upload/v1676742522/thumbnail_avocado_4bf7bd9904.png",
+                      "hash": "thumbnail_avocado_4bf7bd9904",
+                      "mime": "image/png",
+                      "name": "thumbnail_avocado.png",
+                      "path": null,
+                      "size": 58.3,
+                      "width": 209,
+                      "height": 156,
+                      "provider_metadata": {
+                          "public_id": "thumbnail_avocado_4bf7bd9904",
+                          "resource_type": "image"
+                      }
+                  }
+              },
+              "hash": "avocado_4bf7bd9904",
+              "ext": ".png",
+              "mime": "image/png",
+              "size": 28.68,
+              "url": "https://res.cloudinary.com/drpdq2t8c/image/upload/v1676742518/avocado_4bf7bd9904.png",
+              "previewUrl": null,
+              "provider": "cloudinary",
+              "provider_metadata": {
+                  "public_id": "avocado_4bf7bd9904",
+                  "resource_type": "image"
+              },
+              "createdAt": "2023-02-18T17:48:43.347Z",
+              "updatedAt": "2023-02-18T17:48:43.347Z"
+          }
+      }
+  ]
+}
+}

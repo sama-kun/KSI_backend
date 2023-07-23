@@ -1,0 +1,20 @@
+async create(userDto: Prisma.UserCreateInput): Promise<User> {
+    try {
+      const user = await this.prisma.user.create({ data: userDto });
+      delete user.password;
+      return user;
+    } catch (error) {
+      console.error(error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async getAll(): Promise<Prisma.UserCreateInput[]> {
+    const users = await this.prisma.user.findMany();
+    console.log(users);
+    return users;
+  }
+
+  // getRoleByName(role: string): string {
+  //   return Roles[role];
+  // }

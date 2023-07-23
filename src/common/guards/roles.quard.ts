@@ -4,12 +4,15 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
-import { ROLES_KEY } from './roles-auth.decorator';
+import { ROLES_KEY } from '../decorators/roles-auth.decorator';
+
+const console = new Logger('RolesQuard');
 
 @Injectable()
 export class RolesQuard implements CanActivate {
@@ -27,12 +30,11 @@ export class RolesQuard implements CanActivate {
       if (!requiredRoles) {
         return true;
       }
-      console.log('Hello this is guard');
+      console.log('Hello this is RolesQuard');
 
       const req = context.switchToHttp().getRequest();
       const authHeader = req.headers.authorization;
-      const bearer = authHeader.split(' ')[0];
-      const token = authHeader.split(' ')[1];
+      const [bearer, token] = authHeader.split(' ');
 
       if (bearer !== 'Bearer' && !token) {
         throw new UnauthorizedException({ message: "User don't authorized" });
@@ -42,7 +44,7 @@ export class RolesQuard implements CanActivate {
       });
       req.user = user;
 
-      return user.role.some((role) => requiredRoles.includes(role));
+      return requiredRoles.includes(user.role);
     } catch (error) {
       throw new HttpException('Methot Forbidden', HttpStatus.FORBIDDEN);
     }

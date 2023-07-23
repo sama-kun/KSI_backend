@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 // import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from '@/modules/users/dto/login-user.dto';
+import { LoginUserDto } from '@/modules/auth/dto/login-user.dto';
 import { Prisma } from '@prisma/client';
 import { Token } from './dto/token.dto';
 // import { EmailService } from 'src/email/email.service';

@@ -1,20 +1,22 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpStatus,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 
+const console = new Logger('JwtAuthGuard');
+
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
-    console.log('Hello');
+    console.log('Hello this JwtAuthGuard');
     try {
       const authHeader = req.headers.authorization;
       const bearer = authHeader.split(' ')[0];

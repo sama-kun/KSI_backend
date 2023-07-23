@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { findAndRename, findAndReplace } from './lib';
-import * as promptSync from 'prompt-sync';
+import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
 const newNamePascal = prompt('What is ClassName?: ');

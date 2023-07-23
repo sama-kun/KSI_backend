@@ -7,16 +7,17 @@ import {
   ParseIntPipe,
   Get,
   Query,
+  Logger,
 } from '@nestjs/common';
 import { BaseService } from './BaseService';
 import { SearchQueryDto } from './dto/search-query.dto';
-import { query } from 'express';
-
+const console = new Logger('BaseController');
 @Controller()
 export abstract class BaseController<
   T,
   CreateDto,
   UpdateDto extends Partial<CreateDto>,
+  SearchDto extends Partial<SearchQueryDto>,
   DataService extends BaseService<T, CreateDto, UpdateDto>,
 > {
   public dataService: DataService;
@@ -32,12 +33,28 @@ export abstract class BaseController<
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.dataService.findOne(id);
+  findOne(@Query() query: SearchDto, @Param('id', ParseIntPipe) id: number) {
+    const { relations } = query;
+    return this.dataService.findOne(id, relations);
   }
 
   @Get()
-  find(@Query() query: SearchQueryDto) {
-    return this.dataService.findAll(query);
+  findAll(@Query() query: SearchDto) {
+    const { pagination, sort, relations, filter, search } = query;
+    if (!pagination) {
+      return this.dataService.findAll(1, 10, sort, relations, filter, search);
+    }
+
+    const page = +pagination.page;
+    const pageSize = +pagination.pageSize;
+
+    return this.dataService.findAll(
+      page,
+      pageSize,
+      sort,
+      relations,
+      filter,
+      search,
+    );
   }
 }

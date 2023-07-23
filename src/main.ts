@@ -11,6 +11,9 @@ import {
 } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/rest-response.interceptor';
 import RateLimit from 'express-rate-limit';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import swaggerInit from '@/swagger';
+// import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
   const logger = new Logger('KSI');
@@ -23,6 +26,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(
     new TransformInterceptor(),
     new ClassSerializerInterceptor(app.get(Reflector)),
+    new LoggingInterceptor(),
   );
   app.use(
     RateLimit({
@@ -38,6 +42,18 @@ async function bootstrap() {
       },
     }),
   );
+  app.enableCors();
+  swaggerInit(app);
+
+  // app.use(Sentry.Handlers.requestHandler());
+  // app.use(Sentry.Handlers.tracingHandler());
+  // app.use(Sentry.Handlers.errorHandler());
+
+  console.log(`
+  KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
+  Started at http://localhost:3000
+  NODE_ENV=local
+  `);
 }
 bootstrap().catch((e) => {
   throw new Error(e);

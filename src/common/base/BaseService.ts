@@ -1,9 +1,8 @@
 import { PrismaService } from '@/database/prisma.service';
-import { HttpException, HttpStatus } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library';
-import { SearchQueryDto } from './dto/search-query.dto';
-
+const console = new Logger('BaseService');
 export abstract class BaseService<T, CreateDto, UpdateDto> {
   protected prisma: PrismaService;
 
@@ -23,7 +22,7 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
     }
   }
 
-  async update(id: number, data: UpdateDto): Promise<UpdateDto> {
+  async update(id: number, data: UpdateDto): Promise<CreateDto> {
     try {
       const record = this.prisma[this.model].findById(id);
       console.log(record);
@@ -40,9 +39,21 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
     }
   }
 
-  async findOne(id: number): Promise<UpdateDto> {
+  async findOne(id: number, relations: string[]): Promise<CreateDto> {
     try {
-      const record = this.prisma[this.model].findById(id);
+      let convertedObject = null;
+      if (relations) {
+        convertedObject = relations.reduce((acc, relation) => {
+          acc[relation] = true;
+          return acc;
+        }, {});
+      }
+      const record = this.prisma[this.model].findUnique({
+        where: {
+          id,
+        },
+        include: convertedObject,
+      });
       if (!record)
         throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
       delete record.password;
@@ -51,24 +62,57 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
       throw new PrismaClientInitializationError('Error updating record', '');
     }
   }
-  async findAll(query: SearchQueryDto): Promise<any> {
-    const { pagination } = query;
-    const { page, pageSize } = pagination;
-    const records = await this.prisma[this.model].findAll({
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
+  async findAll(
+    page: number,
+    pageSize: number,
+    sort: any,
+    relations: string[],
+    filter: any,
+    search: any,
+  ): Promise<any> {
+    try {
+      let convertedObject = null;
+      let searchObj = null;
+      if (relations) {
+        convertedObject = relations.reduce((acc, relation) => {
+          acc[relation] = true;
+          return acc;
+        }, {});
+      }
+      if (search) {
+        const searchKey = Object.keys(search)[0];
+        searchObj = {
+          [searchKey]: {
+            contains: search[searchKey],
+            mode: 'insensitive',
+          },
+        };
+      }
+      const records = await this.prisma[this.model].findMany({
+        orderBy: sort,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        include: convertedObject,
+        where: {
+          ...searchObj,
+          ...filter,
+        },
+      });
 
-    const total = await this.prisma[this.model].count();
-    const meta = this.createMeta(page, pageSize, total);
+      const total = records.length;
+      const meta = this.createMeta(page, pageSize, total);
 
-    return {
-      users: records,
-      meta,
-    };
+      return {
+        records,
+        meta,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new PrismaClientInitializationError(error, 'IDK');
+    }
   }
 
-  private createMeta(page, pageSize, total) {
+  private createMeta(page: number, pageSize: number, total: number) {
     const meta = {
       page,
       pageSize,

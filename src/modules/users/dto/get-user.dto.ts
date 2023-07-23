@@ -1,19 +1,19 @@
+import { Prisma, Role } from '@prisma/client';
 import { IsNotEmpty, IsEmail, IsOptional } from 'class-validator';
 
 export class GetUserDto {
-  @IsNotEmpty()
-  name: string;
-
-  @IsNotEmpty()
-  surname: string;
+  @IsOptional()
+  id?: number;
 
   @IsEmail()
   email: string;
 
-  @IsNotEmpty()
-  phone: string;
+  @IsOptional()
+  role?: Role;
 
-  bank: number;
+  @IsOptional()
+  createdAt?: Date;
 
-  roles?: string[] | string;
+  @IsOptional()
+  updatedAt?: Date;
 }

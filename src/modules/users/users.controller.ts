@@ -1,29 +1,45 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { Roles } from '@/modules/auth/roles-auth.decorator';
-import { RolesQuard } from '@/modules/auth/roles.quard';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { Roles } from '@/common/decorators/roles-auth.decorator';
+import { RolesQuard } from '@/common/guards/roles.quard';
 import { UserService } from './users.service';
 import { Prisma } from '@prisma/client';
+import { BaseController } from '@/common/base/BaseController';
+import { User } from '@sentry/node';
+import { GetUserDto } from './dto/get-user.dto';
+import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
+import { SearchUserDto } from './dto/search-user.dto';
 
 @Controller('users')
-export class UserController {
-  constructor(private userService: UserService) {}
+export class UserController extends BaseController<
+  User,
+  Prisma.UserCreateInput,
+  GetUserDto,
+  SearchUserDto,
+  UserService
+> {
+  constructor(private userService: UserService) {
+    super();
+    this.dataService = userService;
+  }
 
   // @Get('/test')
   // async test() {
   //   return 'ok';
   // }
 
-  @Post()
-  async create(@Body() userDto: Prisma.UserCreateInput) {
-    const user = this.userService.create(userDto);
-    return user;
-  }
-
-  @UseGuards(RolesQuard)
+  // @UseGuards(RolesQuard)
   @Get()
-  @Roles('ADMIN')
-  async getAll() {
-    return await this.userService.getAll();
+  // @Roles('ADMIN')
+  async findAll(@Query() query: SearchQueryDto) {
+    return super.findAll(query);
   }
 
   // @UseGuards(RolesQuard)

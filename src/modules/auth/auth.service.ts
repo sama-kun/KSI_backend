@@ -7,7 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@/modules/users/users.service';
 import * as bcrypt from 'bcryptjs';
-import { LoginUserDto } from '../users/dto/login-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { Prisma, User } from '@prisma/client';
 import { Token } from './dto/token.dto';
 
@@ -36,6 +36,7 @@ export class AuthService {
     }
     const hash = await bcrypt.hash(dto.password, 5);
     const user = await this.userService.create({ ...dto, password: hash });
+    delete user.password;
     return {
       accessToken: this.generateToken(user),
       user,

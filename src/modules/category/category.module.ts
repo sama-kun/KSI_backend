@@ -1,17 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { XxxController } from './xxx.controller';
-import { XxxService } from './xxx.service';
+import { CategoryService } from './category.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from '@/database/prisma.module';
+import { CategoryController } from './category.controller';
 
 @Module({
-  controllers: [XxxController],
-  providers: [XxxService],
+  controllers: [CategoryController],
+  providers: [CategoryService],
   imports: [
     // MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
     JwtModule,
     PrismaModule,
   ],
-  exports: [XxxService],
+  exports: [CategoryService],
 })
-export class XxxModule {}
+export class CategoryModule {}
