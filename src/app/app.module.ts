@@ -16,6 +16,8 @@ import { LoggingInterceptor } from '@/common/interceptors/logging.interceptor';
 import { CategoryModule } from '@/modules/category/category.module';
 import { ItemModule } from '@/modules/item/item.module';
 import { CloudinaryModule } from '@/modules/cloudinary/cloudinary.module';
+import { CartModule } from '@/modules/cart/cart.module';
+import { ProjectModule } from '@/modules/project/project.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { CloudinaryModule } from '@/modules/cloudinary/cloudinary.module';
     CategoryModule,
     ItemModule,
     CloudinaryModule,
+    CartModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [

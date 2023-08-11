@@ -20,8 +20,8 @@ import { SearchUserDto } from './dto/search-user.dto';
 @Controller('users')
 export class UserController extends BaseController<
   User,
+  Partial<Prisma.UserUncheckedCreateInput>,
   Prisma.UserCreateInput,
-  GetUserDto,
   SearchUserDto,
   UserService
 > {

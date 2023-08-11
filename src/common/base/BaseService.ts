@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library';
 const console = new Logger('BaseService');
-export abstract class BaseService<T, CreateDto, UpdateDto> {
+export abstract class BaseService<T, InputDto, OutputDto> {
   protected prisma: PrismaService;
 
   // constructor() {
@@ -11,7 +11,7 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
   // }
   protected abstract readonly model: Prisma.ModelName;
 
-  async create(data: CreateDto): Promise<T> {
+  async create(data: InputDto): Promise<OutputDto> {
     try {
       return this.prisma[this.model].create({ data });
     } catch (e) {
@@ -22,7 +22,7 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
     }
   }
 
-  async update(id: number, data: UpdateDto): Promise<CreateDto> {
+  async update(id: number, data: InputDto): Promise<OutputDto> {
     try {
       const record = this.prisma[this.model].findById(id);
       console.log(record);
@@ -39,7 +39,7 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
     }
   }
 
-  async findOne(id: number, relations: string[]): Promise<CreateDto> {
+  async findOne(id: number, relations: string[]): Promise<OutputDto> {
     try {
       let convertedObject = null;
       if (relations) {
@@ -120,5 +120,13 @@ export abstract class BaseService<T, CreateDto, UpdateDto> {
       total,
     };
     return meta;
+  }
+
+  async findById(id: number): Promise<OutputDto> {
+    const user = await this.prisma[this.model].findUnique({
+      where: id,
+    });
+    console.log(user);
+    return user;
   }
 }

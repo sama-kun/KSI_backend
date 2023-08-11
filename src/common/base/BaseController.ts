@@ -28,7 +28,7 @@ export abstract class BaseController<
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateDto) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: CreateDto) {
     return this.dataService.update(id, data);
   }
 

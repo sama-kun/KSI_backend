@@ -9,8 +9,8 @@ const console = new Logger('UserService');
 @Injectable()
 export class UserService extends BaseService<
   User,
-  Prisma.UserCreateInput,
-  GetUserDto
+  Partial<Prisma.UserUncheckedCreateInput>,
+  Prisma.UserCreateInput
 > {
   protected readonly model = Prisma.ModelName.User;
   constructor(prisma: PrismaService) {
