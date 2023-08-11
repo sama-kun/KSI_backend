@@ -1,0 +1,94 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model BaseModel{
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String    
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  email       String    @unique
+  password    String    
+  role        Role      @default(USER)
+  carts       Cart[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String?    @unique
+  description String?
+  items       Item[]     @relation("CategoryToItem")
+}
+
+model Item {
+  id          Int        @id @default(autoincrement())
+  name        String     
+  description String?
+  categoryId  Int?
+  category    Category?  @relation("CategoryToItem", fields: [categoryId], references: [id])
+  tag         String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?   @updatedAt
+  images      Image[]    @relation("ItemToImage")
+  carts       Cart[]    @relation("ItemToCart")
+  quantity    Int?
+}
+
+model Image {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  original    String   
+  itemId      Int?
+  item        Item?      @relation("ItemToImage", fields: [itemId], references: [id])
+}
+
+model Project {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  name        String
+  description String?
+  carts       Cart[]    @relation("ProjectToCart")
+}
+
+model Cart {
+  id              Int        @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  quantity        Int?
+  initialQuantity Int?
+  itemId          Int?
+  item            Item?      @relation("ItemToCart", fields: [itemId], references: [id])
+  projectId       Int?
+  project         Project?   @relation("ProjectToCart", fields: [projectId], references: [id])
+  isHistory       Boolean    @default(false)
+  workingHours    Int?
+  userId          Int?
+  createdBy       User?       @relation(fields: [userId], references: [id])
+  returnTime      DateTime?
+  workedHouse     Int?
+  status          CartStatus  @default(OnProject)
+}
+
+enum CartStatus {
+  Warning
+  Complate
+  OnProject
+}
