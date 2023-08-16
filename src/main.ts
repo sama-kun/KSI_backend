@@ -13,11 +13,13 @@ import { TransformInterceptor } from './common/interceptors/rest-response.interc
 import RateLimit from 'express-rate-limit';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import swaggerInit from '@/swagger';
+import pkg from '../package.json';
+
 // import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
   const logger = new Logger('KSI');
-  logger.log(`Application [KSI] is starting...`);
+  logger.log(`Application [${pkg.name}] is starting...`);
   const app = await NestFactory.create(AppModule);
   swaggerInit(app);
   await app.listen(process.env.PORT);
@@ -50,9 +52,9 @@ async function bootstrap() {
   // app.use(Sentry.Handlers.errorHandler());
 
   console.log(`
-    KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
-    Started at http://localhost:3000
-    NODE_ENV=local
+    ${pkg.name} version ${pkg.version} by ${pkg.author} @lieproger
+    Started at ${process.env.APP_URL}
+    NODE_ENV=${process.env.NODE_ENV}
     `);
 }
 bootstrap().catch((e) => {
