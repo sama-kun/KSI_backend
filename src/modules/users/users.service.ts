@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '@/database/prisma.service';
 import { User } from '@prisma/client';
 import { BaseService } from '@/common/base/BaseService';
-import { GetUserDto } from './dto/get-user.dto';
 import { Injectable, Logger } from '@nestjs/common';
 const console = new Logger('UserService');
 

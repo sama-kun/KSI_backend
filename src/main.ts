@@ -19,6 +19,7 @@ async function bootstrap() {
   const logger = new Logger('KSI');
   logger.log(`Application [KSI] is starting...`);
   const app = await NestFactory.create(AppModule);
+  swaggerInit(app);
   await app.listen(3000);
   app.useLogger(logger);
   app.useGlobalPipes(new ValidationPipe());
@@ -43,17 +44,16 @@ async function bootstrap() {
     }),
   );
   app.enableCors();
-  swaggerInit(app);
 
   // app.use(Sentry.Handlers.requestHandler());
   // app.use(Sentry.Handlers.tracingHandler());
   // app.use(Sentry.Handlers.errorHandler());
 
   console.log(`
-  KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
-  Started at http://localhost:3000
-  NODE_ENV=local
-  `);
+    KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
+    Started at http://localhost:3000
+    NODE_ENV=local
+    `);
 }
 bootstrap().catch((e) => {
   throw new Error(e);
