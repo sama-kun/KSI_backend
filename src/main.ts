@@ -20,7 +20,7 @@ async function bootstrap() {
   logger.log(`Application [KSI] is starting...`);
   const app = await NestFactory.create(AppModule);
   swaggerInit(app);
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
   app.useLogger(logger);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new AnyExceptionFilter(), new HttpExceptionFilter());
