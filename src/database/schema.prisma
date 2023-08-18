@@ -22,6 +22,8 @@ model User {
   password    String    
   role        Role      @default(USER)
   carts       Cart[]
+  createdMaintenances Maintenance[] @relation("created")
+  checkedMaintenances Maintenance[] @relation("checker")
 }
 
 enum Role {
@@ -45,18 +47,21 @@ model Item {
   tag         String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime?   @updatedAt
-  images      Image[]    @relation("ItemToImage")
+  images      File[]    @relation("ItemToImage")
   carts       Cart[]    @relation("ItemToCart")
+  maintenance Maintenance[]  @relation("MainToItem")
   quantity    Int?
 }
 
-model Image {
+model File {
   id          Int        @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   original    String   
   itemId      Int?
   item        Item?      @relation("ItemToImage", fields: [itemId], references: [id])
+  maintenance Maintenance @relation("Main")
+  type        FileType   @default(pdf)
 }
 
 model Project {
@@ -70,8 +75,8 @@ model Project {
 
 model Cart {
   id              Int        @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
   quantity        Int?
   initialQuantity Int?
   itemId          Int?
@@ -87,8 +92,35 @@ model Cart {
   status          CartStatus  @default(OnProject)
 }
 
+model Maintenance {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  itemId          Int
+  item            Item       @relation("MainToItem", fields: [itemId], references: [id])
+  date            DateTime?
+  authorId        Int
+  createdBy       User       @relation("created",fields: [authorId], references: [id])
+  userId          Int?
+  checker         User?      @relation("checker",fields: [userId], references: [id])
+  file1Id         Int?
+  file1           File?      @relation("Main",fields: [file1Id], references: [id])
+  file2Id         Int?
+  file2           File?      @relation("Main",fields: [file2Id], references: [id])
+  file3Id         Int?
+  file3           File?      @relation("Main",fields: [file3Id], references: [id])
+  file4Id         Int?
+  file4           File?      @relation("Main",fields: [file4Id], references: [id])
+}
+
+
 enum CartStatus {
   Warning
   Complate
   OnProject
+}
+
+enum FileType {
+  pdf
+  image
 }

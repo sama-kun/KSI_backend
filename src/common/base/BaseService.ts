@@ -126,7 +126,6 @@ export abstract class BaseService<T, InputDto, OutputDto> {
     const user = await this.prisma[this.model].findUnique({
       where: id,
     });
-    console.log(user);
     return user;
   }
 }
