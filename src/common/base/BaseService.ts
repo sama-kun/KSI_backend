@@ -25,9 +25,12 @@ export abstract class BaseService<
     }
   }
 
-  async findOne(option: any): Promise<any> {
+  async findOne(id: number): Promise<any> {
     try {
-      const record = this.repo.findOneBy(option);
+      const options: any = {
+        where: { id },
+      };
+      const record = this.repo.findOne(options);
       if (!record)
         throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
       return record;

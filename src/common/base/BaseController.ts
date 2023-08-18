@@ -22,7 +22,7 @@ export abstract class BaseController<
   CreateDto extends Partial<Entity>,
   UpdateDto extends Partial<Entity>,
   SearchDto extends Partial<Entity & SearchQueryDto>,
-  DataService extends Partial<BaseService<Entity, CreateDto, UpdateDto>>
+  DataService extends Partial<BaseService<Entity, CreateDto, UpdateDto>>,
 > {
   public dataService: DataService;
 
