@@ -1,15 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ItemService } from './item.service';
-import { PrismaModule } from '@/database/prisma.module';
 import { ItemController } from './item.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ItemEntity } from '@/database/entities/item.entity';
 
 @Module({
   controllers: [ItemController],
   providers: [ItemService],
-  imports: [
-    // MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
-    PrismaModule,
-  ],
+  imports: [TypeOrmModule.forFeature([ItemEntity])],
   exports: [ItemService],
 })
 export class ItemModule {}

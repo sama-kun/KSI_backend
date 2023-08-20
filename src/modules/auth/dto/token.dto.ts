@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { UserEntity } from '@/database/entities/user.entity';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class Token {
@@ -7,5 +7,5 @@ export class Token {
   accessToken: string;
 
   @IsNotEmpty()
-  user: Partial<Prisma.UserCreateInput>;
+  user: Partial<UserEntity>;
 }

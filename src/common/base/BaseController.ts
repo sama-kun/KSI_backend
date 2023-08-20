@@ -28,7 +28,13 @@ export abstract class BaseController<
 
   @Post()
   create(@Body() data: CreateDto, @AuthUser() user: UserEntity = null) {
-    return this.dataService.create(data, user, []);
+    return this.dataService.create(data, user);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number, @Query() query: SearchDto) {
+    const { relations } = query;
+    return this.dataService.findById(id, relations);
   }
 
   // @Patch(':id')

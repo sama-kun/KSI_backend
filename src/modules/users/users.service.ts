@@ -1,36 +1,33 @@
-import { Prisma } from '@prisma/client';
-import { PrismaService } from '@/database/prisma.service';
-import { User } from '@prisma/client';
 import { BaseService } from '@/common/base/BaseService';
-import { GetUserDto } from './dto/get-user.dto';
-import { Injectable, Logger } from '@nestjs/common';
+import { UserEntity } from '@/database/entities/user.entity';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 const console = new Logger('UserService');
 
 @Injectable()
 export class UserService extends BaseService<
-  User,
-  Prisma.UserCreateInput,
-  GetUserDto
+  UserEntity,
+  CreateUserDto,
+  UpdateUserDto
 > {
-  protected readonly model = Prisma.ModelName.User;
-  constructor(prisma: PrismaService) {
+  constructor(
+    @InjectRepository(UserEntity) protected repo: Repository<UserEntity>,
+  ) {
     super();
-    this.prisma = prisma;
   }
 
-  async findByEmail(email: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
-    console.log(user);
-
-    return user;
+  async findByEmail(email: string): Promise<CreateUserDto> {
+    const candidate = super.findOne({
+      where: email,
+    });
+    if (!candidate)
+      throw new HttpException(
+        'Not found email: ' + email,
+        HttpStatus.NOT_FOUND,
+      );
+    return candidate;
   }
-
-  // async findById(id: string): Promise<User> {
-  //   const user = await this.userRepository
-  //     .findById(id)
-  //     .select('-password')
-  //     .exec();
-  //   console.log(user);
-  //   return user;
-  // }
 }

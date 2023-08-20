@@ -8,8 +8,8 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '@/modules/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { LoginUserDto } from './dto/login-user.dto';
-import { Prisma, User } from '@prisma/client';
 import { Token } from './dto/token.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +27,7 @@ export class AuthService {
     };
   }
 
-  async registration(dto: Prisma.UserCreateInput): Promise<Token> {
+  async registration(dto: CreateUserDto): Promise<Token> {
     const candidate = await this.userService.findByEmail(dto.email);
     console.log(candidate);
 
@@ -36,20 +36,20 @@ export class AuthService {
     }
     const hash = await bcrypt.hash(dto.password, 5);
     const user = await this.userService.create({ ...dto, password: hash });
-    delete user.password;
+    // delete user.password;
     return {
       accessToken: this.generateToken(user),
       user,
     };
   }
 
-  private generateToken(user: User): string {
+  private generateToken(user: CreateUserDto): string {
     const payload = { email: user.email, id: user.id, role: user.role };
     console.log(user);
     return this.jwtService.sign(payload);
   }
 
-  private async validateUser(userDto: LoginUserDto): Promise<User> {
+  private async validateUser(userDto: LoginUserDto): Promise<CreateUserDto> {
     //console.log(userDto);
     const user = await this.userService.findByEmail(userDto.email);
     //console.log(user);

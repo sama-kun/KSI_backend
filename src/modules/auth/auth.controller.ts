@@ -2,8 +2,8 @@ import { Body, Controller, Post } from '@nestjs/common';
 // import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from '@/modules/auth/dto/login-user.dto';
-import { Prisma } from '@prisma/client';
 import { Token } from './dto/token.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 // import { EmailService } from 'src/email/email.service';
 
 @Controller('auth')
@@ -16,7 +16,7 @@ export class AuthController {
   }
 
   @Post('/registration')
-  registration(@Body() userDto: Prisma.UserCreateInput): Promise<Token> {
+  registration(@Body() userDto: CreateUserDto): Promise<Token> {
     return this.authService.registration(userDto);
   }
 

@@ -9,19 +9,19 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Roles } from '@/common/decorators/roles-auth.decorator';
-import { RolesQuard } from '@/common/guards/roles.quard';
 import { ProjectService } from './project.service';
-import { Prisma, Project } from '@prisma/client';
 import { BaseController } from '@/common/base/BaseController';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 import { Response } from 'express';
+import { ProjectEntity } from '@/database/entities/project.entity';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Controller('project')
 export class ProjectController extends BaseController<
-  Project,
-  Prisma.ProjectCreateInput,
-  Partial<Prisma.ProjectCreateInput>,
+  ProjectEntity,
+  CreateProjectDto,
+  UpdateProjectDto,
   SearchQueryDto,
   ProjectService
 > {

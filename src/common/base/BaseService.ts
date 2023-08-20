@@ -13,29 +13,49 @@ export abstract class BaseService<
 > {
   protected repo: Repository<Entity>;
 
-  async create(data: InputDto, user: UserEntity, relations: string[]) {
+  async create(data: InputDto, user: UserEntity = null) {
     try {
       const record = await this.repo.insert({
         ...data,
         createdBy: { id: user.id },
       } as QueryDeepPartialEntity<Entity>);
-      return record;
+      return this.findById(record.raw[0].id, []);
     } catch (e) {
       throw new TypeORMError(e);
     }
   }
 
-  async findOne(id: number): Promise<any> {
+  async findOne(option: any): Promise<Entity> {
     try {
-      const options: any = {
-        where: { id },
-      };
-      const record = this.repo.findOne(options);
+      // const options: any = {
+      //   where: { id },
+      // };
+      option.relations.push('updatedBy');
+      option.relations.push('createdBy');
+
+      const record = this.repo.findOne(option);
       if (!record)
         throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
       return record;
     } catch (e) {
       throw new PrismaClientInitializationError('Error updating record', '');
+    }
+  }
+
+  async findById(id: number, relations: string[]): Promise<Entity> {
+    try {
+      relations.push('updatedBy');
+      relations.push('createdBy');
+
+      const option: any = {
+        where: id,
+      };
+      const record = this.repo.findOne(option);
+      if (!record)
+        throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
+      return record;
+    } catch (e) {
+      throw new PrismaClientInitializationError('Error updating record', e);
     }
   }
 

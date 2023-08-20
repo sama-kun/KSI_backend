@@ -6,17 +6,23 @@ import { Prisma, BaseModel } from '@prisma/client';
 import { BaseController } from '@/common/base/BaseController';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 
+// @ts-ignore
+import { XxxEntity } from '@/database/entities/xxx.entity';
+import { SearchXxxDto } from '@/modules/xxx/dto/search-xxx.dto';
+import { CreateXxxDto } from './dto/create-xxx.dto';
+import { UpdateXxxDto } from './dto/update-xxx.dto';
+
 @Controller('xxx')
 export class XxxController extends BaseController<
-  BaseModel,
-  Prisma.BaseModelCreateInput,
-  Partial<Prisma.BaseModelCreateInput>,
-  SearchQueryDto,
+  XxxEntity,
+  CreateXxxDto,
+  UpdateXxxDto,
+  SearchXxxDto,
   XxxService
 > {
-  constructor(private xxxService: XxxService) {
+  constructor(dataService: XxxService) {
     super();
-    this.dataService = xxxService;
+    this.dataService = dataService;
   }
 
   // @Get('test')

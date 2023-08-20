@@ -71,8 +71,6 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(3000);
-
   console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
   Started at http://localhost:3000

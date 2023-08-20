@@ -1,7 +1,9 @@
+import { IntersectionType, PartialType } from '@nestjs/swagger';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
-import { PartialType } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
+import { CategoryEntity } from '@/database/entities/category.entity';
 
-export class SearchCategoryDto extends PartialType(SearchQueryDto) {
-  sort?: Partial<Prisma.CategoryCreateInput>;
+export class SearchCategoryDto extends PartialType(
+  IntersectionType(CategoryEntity, SearchQueryDto),
+) {
+  sort?: Partial<CategoryEntity>;
 }

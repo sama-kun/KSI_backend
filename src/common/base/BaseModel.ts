@@ -29,9 +29,9 @@ export class BaseModel {
 
   @ManyToOne('UserEntity')
   @JoinColumn()
-  updatedBy?: Relation<UserEntity>
+  updatedBy?: Relation<UserEntity>;
 
   @ManyToOne('UserEntity')
   @JoinColumn()
-  createdBy?: Relation<UserEntity>
+  createdBy?: Relation<UserEntity>;
 }

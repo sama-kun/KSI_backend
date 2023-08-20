@@ -1,15 +1,5 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
-import { Cart, Prisma, Role } from '@prisma/client';
-import { PrismaService } from '@/database/prisma.service';
-import { User } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
 import { BaseService } from '@/common/base/BaseService';
-import { GetResult } from '@prisma/client/runtime/library';
-import { ItemService } from '../item/item.service';
 import { CartEntity } from '@/database/entities/cart.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,7 +12,9 @@ export class CartService extends BaseService<
   CreateCartDto,
   UpdateCartDto
 > {
-  constructor(@InjectRepository(CartEntity) protected repo: Repository<CartEntity>) {
+  constructor(
+    @InjectRepository(CartEntity) protected repo: Repository<CartEntity>,
+  ) {
     super();
   }
 

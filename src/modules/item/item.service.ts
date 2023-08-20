@@ -4,12 +4,9 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { Item, Prisma } from '@prisma/client';
-import { PrismaService } from '@/database/prisma.service';
 import { BaseService } from '@/common/base/BaseService';
 import { ItemEntity } from '@/database/entities/item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '@/database/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
@@ -20,7 +17,9 @@ export class ItemService extends BaseService<
   CreateItemDto,
   UpdateItemDto
 > {
-  constructor(@InjectRepository(ItemEntity) protected repo: Repository<ItemEntity>) {
+  constructor(
+    @InjectRepository(ItemEntity) protected repo: Repository<ItemEntity>,
+  ) {
     super();
   }
 

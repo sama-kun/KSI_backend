@@ -1,9 +1,9 @@
-import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 import { IntersectionType, PartialType } from '@nestjs/swagger';
-import { GetUserDto } from './get-user.dto';
+import { UserEntity } from '@/database/entities/user.entity';
+import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 
 export class SearchUserDto extends PartialType(
-  IntersectionType(GetUserDto, SearchQueryDto),
+  IntersectionType(UserEntity, SearchQueryDto),
 ) {
-  sort?: GetUserDto;
+  sort?: Partial<UserEntity>;
 }

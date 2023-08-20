@@ -1,34 +1,34 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Category, Prisma } from '@prisma/client';
-import { PrismaService } from '@/database/prisma.service';
 import { BaseService } from '@/common/base/BaseService';
 const console = new Logger('CategoryService');
 
 import * as data from '../../../convertor/output/output.json';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryEntity } from '@/database/entities/category.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 const input = { categories: data.categories };
 
 @Injectable()
 export class CategoryService extends BaseService<
-  Category,
-  Prisma.CategoryCreateInput,
-  Partial<Prisma.CategoryCreateInput>
+  CategoryEntity,
+  CreateCategoryDto,
+  UpdateCategoryDto
 > {
-  protected readonly model = Prisma.ModelName.Category;
-  constructor(prisma: PrismaService) {
+  constructor(
+    @InjectRepository(CategoryEntity)
+    protected repo: Repository<CategoryEntity>,
+  ) {
     super();
-    this.prisma = prisma;
   }
 
   async importCategories(): Promise<any> {
     try {
       const output = input.categories.map((category) => ({ name: category }));
 
-      // console.debug(output);
-      const cates = await this.prisma.category.createMany({
-        data: output,
-      });
-      console.debug(cates.count);
-      return cates;
+      const cates = this.repo.create(output);
+      return this.repo.save(cates);
     } catch (error) {
       console.error(error);
       return false;

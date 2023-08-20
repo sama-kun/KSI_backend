@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaModule } from '@/database/prisma.module';
 import { UserModule } from '@/modules/users/users.module';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { XxxModule } from '@/modules/xxx/xxx.module';
@@ -21,15 +20,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    // PrismaModule,
     UserModule,
     // AuthModule,
     // XxxModule,
-    // CategoryModule,
-    // ItemModule,
-    // CloudinaryModule,
-    // CartModule,
-    // ProjectModule,
+    CategoryModule,
+    ItemModule,
+    CloudinaryModule,
+    CartModule,
+    ProjectModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,

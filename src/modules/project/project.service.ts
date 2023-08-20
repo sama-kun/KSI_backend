@@ -1,6 +1,3 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Project, Prisma, Role } from '@prisma/client';
-import { PrismaService } from '@/database/prisma.service';
 import { BaseService } from '@/common/base/BaseService';
 import * as json2xls from 'json2xls';
 import * as fs from 'fs-extra';
@@ -8,14 +5,19 @@ import { Response } from 'express';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectEntity } from '@/database/entities/project.entity';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProjectService extends BaseService<
   ProjectEntity,
-  Prisma.ProjectCreateInput,
-  Partial<Prisma.ProjectCreateInput>
+  CreateProjectDto,
+  UpdateProjectDto
 > {
-  constructor(@InjectRepository(ProjectEntity) protected repo: Repository<ProjectEntity>) {
+  constructor(
+    @InjectRepository(ProjectEntity) protected repo: Repository<ProjectEntity>,
+  ) {
     super();
   }
   // test(){

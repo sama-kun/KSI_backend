@@ -2,21 +2,23 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { Roles } from '@/common/decorators/roles-auth.decorator';
 import { RolesQuard } from '@/common/guards/roles.quard';
 import { CategoryService } from './category.service';
-import { Prisma, BaseModel, Category } from '@prisma/client';
 import { BaseController } from '@/common/base/BaseController';
+import { CategoryEntity } from '@/database/entities/category.entity';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 import { SearchCategoryDto } from './dto/search-category.dto';
 
 @Controller('category')
 export class CategoryController extends BaseController<
-  Category,
-  Prisma.CategoryCreateInput,
-  Partial<Prisma.CategoryCreateInput>,
+  CategoryEntity,
+  CreateCategoryDto,
+  UpdateCategoryDto,
   SearchCategoryDto,
   CategoryService
 > {
-  constructor(private xxxService: CategoryService) {
+  constructor(private categoryService: CategoryService) {
     super();
-    this.dataService = xxxService;
+    this.dataService = categoryService;
   }
 
   @Get('import')
