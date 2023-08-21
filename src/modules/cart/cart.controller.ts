@@ -11,12 +11,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
-import { Prisma, Cart, User, Role } from '@prisma/client';
-import { BaseController } from '@/common/base/BaseController';
-import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
-import { AuthUser } from '@/common/decorators/auth-user.decorator';
-import { RolesQuard } from '@/common/guards/roles.quard';
-import { Roles } from '@/common/decorators/roles-auth.decorator';
 const console = new Logger('CartController');
 
 @Controller('cart')
