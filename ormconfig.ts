@@ -1,5 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
+import * as fs from 'fs-extra';
 dotenv.config();
 console.log(
   `Uses postgres database ${process.env.POSTGRES_NAME} at ${process.env.POSTGRES_HOST}:${process.env.POSTGRES_POR}`,
@@ -24,4 +25,9 @@ export const appDataSource = new DataSource({
     seedsDir: 'src/database/seeds/',
   },
   ssl: true,
+  extra: {
+    ssl: {
+      ca: fs.readFileSync('./ksi_db.crt'),
+    },
+  },
 } as DataSourceOptions);

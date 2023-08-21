@@ -42,6 +42,7 @@ const cart_module_1 = require("../modules/cart/cart.module");
 const project_module_1 = require("../modules/project/project.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = __importStar(require("dotenv"));
+const fs = __importStar(require("fs-extra"));
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -72,6 +73,11 @@ AppModule = __decorate([
                 logging: 'all',
                 migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
                 ssl: true,
+                extra: {
+                    ssl: {
+                        ca: fs.readFileSync('./ksi_db.crt'),
+                    },
+                },
             }),
         ],
         controllers: [app_controller_1.AppController],

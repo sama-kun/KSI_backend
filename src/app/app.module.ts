@@ -17,6 +17,7 @@ import { CartModule } from '@/modules/cart/cart.module';
 import { ProjectModule } from '@/modules/project/project.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import * as fs from 'fs-extra';
 dotenv.config();
 
 @Module({
@@ -47,6 +48,11 @@ dotenv.config();
       logging: 'all',
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
       ssl: true,
+      extra: {
+        ssl: {
+          ca: fs.readFileSync('./ksi_db.crt'),
+        },
+      },
     }),
   ],
   controllers: [AppController],
