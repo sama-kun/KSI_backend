@@ -16,6 +16,8 @@ import { CloudinaryModule } from '@/modules/cloudinary/cloudinary.module';
 import { CartModule } from '@/modules/cart/cart.module';
 import { ProjectModule } from '@/modules/project/project.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
@@ -39,11 +41,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       subscribers: [
         __dirname + '/../../src/database/subscribers/*.subscriber{.ts,.js}',
       ],
-      synchronize: process.env.NODE_ENV === 'development',
+      synchronize: true,
       migrationsRun: process.env.NODE_ENV !== 'development',
       autoLoadEntities: true,
       logging: 'all',
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
+      ssl: true,
     }),
   ],
   controllers: [AppController],

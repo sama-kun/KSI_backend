@@ -14,6 +14,9 @@ const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const console = new common_1.Logger('JwtAuthGuard');
 let JwtAuthGuard = class JwtAuthGuard {
+    constructor(jwtService) {
+        this.jwtService = jwtService;
+    }
     canActivate(context) {
         const req = context.switchToHttp().getRequest();
         console.log('Hello this JwtAuthGuard');
@@ -30,9 +33,6 @@ let JwtAuthGuard = class JwtAuthGuard {
         catch (error) {
             throw new common_1.UnauthorizedException({ message: "User don't authorized" });
         }
-    }
-    constructor(jwtService) {
-        this.jwtService = jwtService;
     }
 };
 JwtAuthGuard = __decorate([
