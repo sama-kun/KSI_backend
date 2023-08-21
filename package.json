@@ -1,7 +1,7 @@
 {
    "name": "ksi",
-   "version": "0.0.1",
-   "description": "",
+   "version": "0.1.1",
+   "description": "TyprORM",
    "author": "Seriknur Samgar",
    "private": true,
    "license": "MIT",
