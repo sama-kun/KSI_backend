@@ -6,7 +6,7 @@ console.log(`Uses postgres database ${process.env.POSTGRES_NAME} at ${process.en
 export const appDataSource = new DataSource({
 	type: 'postgres',
     host: process.env.POSTGRES_HOST,
-    port: 5432,
+    port: process.env.POSTGRES_PORT,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_NAME,
