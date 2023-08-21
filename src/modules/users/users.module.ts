@@ -3,7 +3,6 @@ import { UserController } from './users.controller';
 import { UserService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '@/database/entities/user.entity';
-import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
