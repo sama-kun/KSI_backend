@@ -5,6 +5,12 @@ export enum CartStatus {
 }
 
 export enum Role {
-  USER,
-  ADMIN,
+  USER = 'user',
+  ADMIN = 'admin',
+  ROOT = 'root',
+}
+
+export enum FileTypes {
+  PDF = 'pdf',
+  IMAGE = 'image',
 }

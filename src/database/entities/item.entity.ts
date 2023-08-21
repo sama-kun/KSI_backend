@@ -1,12 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { CategoryEntity } from './category.entity';
-import { ImageEntity } from './image.entity';
+import { FileEntity } from './file.entity';
 import { CartEntity } from './cart.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IItem } from '@/interfaces/entities';
@@ -28,9 +22,12 @@ export class ItemEntity extends BaseModel implements IItem {
   @Column({ nullable: true })
   quantity?: number;
 
-  @OneToMany(() => ImageEntity, (image) => image.item)
-  images: ImageEntity[];
+  @OneToMany(() => FileEntity, (image) => image.item)
+  images: FileEntity[];
 
   @OneToMany(() => CartEntity, (cart) => cart.item)
   carts: CartEntity[];
+
+  @Column({ nullable: true })
+  projectQuantity?: number;
 }

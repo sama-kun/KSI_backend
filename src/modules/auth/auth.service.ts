@@ -20,7 +20,7 @@ export class AuthService {
 
   async login(dto: LoginUserDto): Promise<Token> {
     const user = await this.validateUser(dto);
-    delete user.password;
+    // delete user.password;
     return {
       accessToken: this.generateToken(user),
       user,
@@ -36,7 +36,7 @@ export class AuthService {
     }
     const hash = await bcrypt.hash(dto.password, 5);
     const user = await this.userService.create({ ...dto, password: hash });
-    // delete user.password;
+    delete user.password;
     return {
       accessToken: this.generateToken(user),
       user,
@@ -50,15 +50,29 @@ export class AuthService {
   }
 
   private async validateUser(userDto: LoginUserDto): Promise<CreateUserDto> {
-    //console.log(userDto);
-    const user = await this.userService.findByEmail(userDto.email);
-    //console.log(user);
-    const passwordCheck = await bcrypt.compare(userDto.password, user.password);
+    // console.log(userDto);
+    try {
+      const user = await this.userService.findByEmail(userDto.email);
+      // console.log(user);
+      // if (!user)
+      //   throw new UnauthorizedException({
+      //     message: 'Incorrect password or email',
+      //   });
+      const passwordCheck = await bcrypt.compare(
+        userDto.password,
+        user.password,
+      );
 
-    if (passwordCheck && user) {
-      return user;
+      if (passwordCheck && user) {
+        return user;
+      }
+      throw new UnauthorizedException({
+        message: 'Incorrect password or email',
+      });
+    } catch (error) {
+      throw new UnauthorizedException({
+        message: 'Incorrect password or email',
+      });
     }
-
-    throw new UnauthorizedException({ message: 'Incorrect password or email' });
   }
 }

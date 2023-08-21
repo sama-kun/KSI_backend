@@ -1,23 +1,25 @@
 import { HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PrismaClientInitializationError } from '@prisma/client/runtime/library';
 import { BaseModel } from './BaseModel';
-import { ObjectLiteral, Repository, TypeORMError } from 'typeorm';
+import { Like, ObjectLiteral, Repository, TypeORMError } from 'typeorm';
 import { UserEntity } from '@/database/entities/user.entity';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 const console = new Logger('BaseService');
 export abstract class BaseService<
   Entity extends BaseModel & ObjectLiteral,
-  InputDto,
-  OutputDto,
+  CreateDto extends Partial<Entity>,
+  UpdateDto extends Partial<Entity>,
 > {
   protected repo: Repository<Entity>;
 
-  async create(data: InputDto, user: UserEntity = null) {
+  async create(data: CreateDto, user: UserEntity = null) {
     try {
+      let id: number = null;
+      if (user) {
+        id = user.id;
+      }
       const record = await this.repo.insert({
         ...data,
-        createdBy: { id: user.id },
+        createdBy: { id },
       } as QueryDeepPartialEntity<Entity>);
       return this.findById(record.raw[0].id, []);
     } catch (e) {
@@ -26,125 +28,112 @@ export abstract class BaseService<
   }
 
   async findOne(option: any): Promise<Entity> {
-    try {
-      // const options: any = {
-      //   where: { id },
-      // };
-      option.relations.push('updatedBy');
-      option.relations.push('createdBy');
-
-      const record = this.repo.findOne(option);
-      if (!record)
-        throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
-      return record;
-    } catch (e) {
-      throw new PrismaClientInitializationError('Error updating record', '');
-    }
+    option.relations = [
+      ...((option.relations as Array<string>) || []),
+      'createdBy',
+      'updatedBy',
+    ];
+    const record = this.repo.findOne(option);
+    return record;
   }
 
   async findById(id: number, relations: string[]): Promise<Entity> {
     try {
-      relations.push('updatedBy');
-      relations.push('createdBy');
+      relations = [
+        ...((relations as Array<string>) || []),
+        'createdBy',
+        'updatedBy',
+      ];
 
       const option: any = {
-        where: id,
+        where: { id },
       };
-      const record = this.repo.findOne(option);
+      const record = await this.findOne({ ...option, relations });
+      console.debug(record);
       if (!record)
         throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
       return record;
     } catch (e) {
-      throw new PrismaClientInitializationError('Error updating record', e);
+      throw new TypeORMError(e);
     }
   }
 
-  // async update(id: number, data: UpdateDto): Promise<CreateDto> {
-  //   try {
-  //     const record = this.prisma[this.model].findUnique(id);
-  //     if (!record)
-  //       throw new PrismaClientInitializationError('Error updating record', '');
-  //     const updated = this.prisma[this.model].update({ where: { id }, data });
-  //     return updated;
-  //   } catch (e) {
-  //     console.debug(e);
-  //     throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
-  //     // throw new HttpException(
-  //     //   'Error updating record',
-  //     //   HttpStatus.INTERNAL_SERVER_ERROR,
-  //     // );
-  //   }
-  // }
+  async update(
+    user: UserEntity = null,
+    id: number,
+    data: UpdateDto,
+  ): Promise<Entity> {
+    const record = await this.findById(id, []);
+    if (user) {
+      id = user.id;
+    }
+    Object.assign(record, { ...data, updatedBy: { id: user.id } });
+    try {
+      return await this.repo.save(record);
+    } catch (e) {
+      throw new TypeORMError(e);
+    }
+  }
 
-  // async findAll(
-  //   page: number,
-  //   pageSize: number,
-  //   sort: any,
-  //   relations: string[],
-  //   filter: any,
-  //   search: any,
-  // ): Promise<any> {
-  //   try {
-  //     let convertedObject = null;
-  //     let searchObj = null;
-  //     if (relations) {
-  //       convertedObject = relations.reduce((acc, relation) => {
-  //         acc[relation] = true;
-  //         return acc;
-  //       }, {});
-  //     }
-  //     if (search) {
-  //       const searchKey = Object.keys(search)[0];
-  //       searchObj = {
-  //         [searchKey]: {
-  //           contains: search[searchKey],
-  //           mode: 'insensitive',
-  //         },
-  //       };
-  //     }
-  //     const records = await this.prisma[this.model].findMany({
-  //       orderBy: sort,
-  //       skip: (page - 1) * pageSize,
-  //       take: pageSize,
-  //       include: convertedObject,
-  //       where: {
-  //         ...searchObj,
-  //         ...filter,
-  //       },
-  //     });
+  async findAll(
+    pagination: any,
+    sort: any,
+    relations: string[],
+    filter: any,
+    search: any,
+  ): Promise<any> {
+    let page = 1;
+    let pageSize = 10;
+    let convertedSearch = null;
+    if (search) {
+      const key = Object.keys(search)[0];
+      const obj = search[key];
+      convertedSearch = { [key]: Like(`%${obj}%`) };
+    }
+    if (pagination) {
+      page = pagination.page;
+      pageSize = pagination.pageSize;
+    }
+    console.debug(pagination);
+    try {
+      const records = await this.repo.find({
+        order: sort,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations,
+        where: {
+          ...filter,
+          ...convertedSearch,
+        },
+      });
 
-  //     const total = records.length;
-  //     const meta = this.createMeta(page, pageSize, total);
+      const total = await this.repo.find({
+        order: sort,
+        relations,
+        where: {
+          ...filter,
+          ...convertedSearch,
+        },
+      });
+      const meta = this.createMeta(page, pageSize, total.length);
 
-  //     return {
-  //       records,
-  //       meta,
-  //     };
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new PrismaClientInitializationError(error, 'IDK');
-  //   }
-  // }
+      return {
+        records,
+        meta,
+      };
+    } catch (error) {
+      console.error(error);
+      throw new TypeORMError(error);
+    }
+  }
 
-  // private createMeta(page: number, pageSize: number, total: number) {
-  //   const meta = {
-  //     page,
-  //     pageSize,
-  //     pageCount: Math.ceil(total / pageSize),
-  //     total,
-  //   };
-  //   return meta;
-  // }
-
-  // async findById(id: number): Promise<Prisma.ItemCreateInput> {
-  //   const candidate = this.prisma[this.model].findUnique({
-  //     where: { id },
-  //   });
-
-  //   if (!candidate) {
-  //     throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
-  //   }
-
-  //   return candidate;
-  // }
+  private createMeta(page: number, pageSize: number, total: number) {
+    const meta = {
+      page,
+      pageSize,
+      pageCount: Math.ceil(total / pageSize),
+      total,
+    };
+    return meta;
+  }
 }

@@ -1,6 +1,5 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { JwtModule } from '@nestjs/jwt';
 import { CategoryController } from './category.controller';
 import { CategoryEntity } from '../../database/entities/category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';

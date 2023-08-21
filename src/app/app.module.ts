@@ -21,7 +21,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     UserModule,
-    // AuthModule,
+    AuthModule,
     // XxxModule,
     CategoryModule,
     ItemModule,

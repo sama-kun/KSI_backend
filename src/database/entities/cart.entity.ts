@@ -1,14 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  Column,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { ItemEntity } from './item.entity';
 import { ProjectEntity } from './project.entity';
-import { UserEntity } from './user.entity';
 import { CartStatus } from '@/interfaces/enums';
 import { BaseModel } from '@/common/base/BaseModel';
 import { ICart } from '@/interfaces/entities';
@@ -32,9 +24,6 @@ export class CartEntity extends BaseModel implements ICart {
 
   @Column({ nullable: true })
   workingHours?: number;
-
-  @ManyToOne(() => UserEntity, (user) => user.carts)
-  createdBy: UserEntity;
 
   @Column({ type: 'timestamptz', nullable: true })
   returnTime?: Date;

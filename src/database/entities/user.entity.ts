@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  Column,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { Role } from '@/interfaces/enums';
 import { CartEntity } from './cart.entity';
 import { BaseModel } from '@/common/base/BaseModel';
@@ -19,7 +12,7 @@ export class UserEntity extends BaseModel implements IUser {
   @Column()
   password: string;
 
-  @Column({ default: Role.USER })
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
   role: Role;
 
   @OneToMany(() => CartEntity, (cart) => cart.createdBy)

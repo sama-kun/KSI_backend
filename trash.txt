@@ -18,3 +18,30 @@ async create(userDto: Prisma.UserCreateInput): Promise<User> {
   // getRoleByName(role: string): string {
   //   return Roles[role];
   // }
+
+
+  {
+    "statusCode": 201,
+    "data": {
+        "asset_id": "74e24ed4342684c874e5b54e42711966",
+        "public_id": "jfzoqzjltulcb4bwdibz",
+        "version": 1692587970,
+        "version_id": "2325a980416d3dfe16615b0aff4b4bac",
+        "signature": "7a310352b556aea4fcff3bbacfcccb4996a45e9b",
+        "width": 3600,
+        "height": 2338,
+        "format": "png",
+        "resource_type": "image",
+        "created_at": "2023-08-21T03:19:30Z",
+        "tags": [],
+        "bytes": 417730,
+        "type": "upload",
+        "etag": "75e95c82ebb4a33cd6c557dec967eb12",
+        "placeholder": false,
+        "url": "http://res.cloudinary.com/digrp0u1f/image/upload/v1692587970/jfzoqzjltulcb4bwdibz.png",
+        "secure_url": "https://res.cloudinary.com/digrp0u1f/image/upload/v1692587970/jfzoqzjltulcb4bwdibz.png",
+        "folder": "",
+        "original_filename": "file",
+        "api_key": "776412232818641"
+    }
+}

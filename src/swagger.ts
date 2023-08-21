@@ -21,5 +21,4 @@ export default (app: INestApplication) => {
       persistAuthorization: true,
     },
   });
-  console.log(document);
 };

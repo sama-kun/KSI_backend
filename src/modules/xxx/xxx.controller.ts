@@ -1,10 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { Roles } from '@/common/decorators/roles-auth.decorator';
-import { RolesQuard } from '@/common/guards/roles.quard';
+import { Controller } from '@nestjs/common';
 import { XxxService } from './xxx.service';
-import { Prisma, BaseModel } from '@prisma/client';
 import { BaseController } from '@/common/base/BaseController';
-import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 
 // @ts-ignore
 import { XxxEntity } from '@/database/entities/xxx.entity';

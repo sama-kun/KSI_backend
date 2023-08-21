@@ -1,9 +1,11 @@
-import { CartStatus, Role } from './enums';
+import { CartStatus, FileTypes, Role } from './enums';
 
 export interface IBaseModel {
   id: number;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
+  updatedBy?: IUser;
+  createdBy?: IUser;
 }
 
 export interface IUser extends IBaseModel {
@@ -25,13 +27,15 @@ export interface IItem extends IBaseModel {
   category?: ICategory;
   tag?: string;
   quantity?: number;
-  images: IImage[];
+  images: IFile[];
   carts: ICart[];
+  projectQuantity?: number;
 }
 
-export interface IImage extends IBaseModel {
+export interface IFile extends IBaseModel {
   original: string;
   item: IItem;
+  type: FileTypes;
 }
 
 export interface IProject extends IBaseModel {
@@ -47,8 +51,12 @@ export interface ICart extends IBaseModel {
   project: IProject;
   isHistory: boolean;
   workingHours?: number;
-  createdBy: IUser;
   returnTime?: Date;
+  returnBy?: IUser;
   workedHouse?: number;
   status: CartStatus;
 }
+
+// export interface IMaintenance extends IBaseModel {
+//   item: IItem
+// }

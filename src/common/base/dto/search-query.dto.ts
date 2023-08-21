@@ -14,9 +14,9 @@ export class SearchQueryDto {
 class Pagination {
   @IsInt()
   @Transform(({ value }) => parseInt(value, 10))
-  page: number;
+  page?: number;
 
   @IsInt()
   @Transform(({ value }) => parseInt(value, 10))
-  pageSize: number;
+  pageSize?: number;
 }
