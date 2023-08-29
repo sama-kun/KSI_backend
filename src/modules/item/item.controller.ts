@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { BaseController } from '@/common/base/BaseController';
 import { SearchItemDto } from './dto/search-item.dto';

@@ -9,4 +9,5 @@ export declare abstract class BaseController<Entity extends BaseModel & ObjectLi
     findOne(id: number, query: SearchDto): Promise<Entity>;
     update(user: UserEntity, id: number, updateDto: UpdateDto): Promise<Entity>;
     findAll(query: SearchDto): Promise<any>;
+    delete(user: UserEntity, id: number): Promise<any>;
 }

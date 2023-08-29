@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const console = new common_1.Logger('BaseService');
 class BaseService {
     async create(data, user = null) {
         try {
@@ -15,6 +14,7 @@ class BaseService {
             return this.findById(record.raw[0].id, []);
         }
         catch (e) {
+            console.error(e);
             throw new typeorm_1.TypeORMError(e);
         }
     }
@@ -38,12 +38,12 @@ class BaseService {
                 where: { id },
             };
             const record = await this.findOne(Object.assign(Object.assign({}, option), { relations }));
-            console.debug(record);
             if (!record)
                 throw new common_1.HttpException('Record not found', common_1.HttpStatus.NOT_FOUND);
             return record;
         }
         catch (e) {
+            console.error(e);
             throw new typeorm_1.TypeORMError(e);
         }
     }
@@ -57,6 +57,7 @@ class BaseService {
             return await this.repo.save(record);
         }
         catch (e) {
+            console.error(e);
             throw new typeorm_1.TypeORMError(e);
         }
     }
@@ -106,6 +107,12 @@ class BaseService {
             total,
         };
         return meta;
+    }
+    async delete(user, id) {
+        const record = await this.findById(id, []);
+        console.warn(`Record id: ${id} was deleted by: id: ${user.id}
+                                 email: ${user.email}`);
+        return await this.repo.delete(record.id);
     }
 }
 exports.BaseService = BaseService;

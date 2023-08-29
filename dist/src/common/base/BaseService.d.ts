@@ -9,4 +9,5 @@ export declare abstract class BaseService<Entity extends BaseModel & ObjectLiter
     update(user: UserEntity, id: number, data: UpdateDto): Promise<Entity>;
     findAll(pagination: any, sort: any, relations: string[], filter: any, search: any): Promise<any>;
     private createMeta;
+    delete(user: UserEntity, id: number): Promise<any>;
 }

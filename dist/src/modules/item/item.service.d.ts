@@ -6,4 +6,6 @@ import { UpdateItemDto } from './dto/update-item.dto';
 export declare class ItemService extends BaseService<ItemEntity, CreateItemDto, UpdateItemDto> {
     protected repo: Repository<ItemEntity>;
     constructor(repo: Repository<ItemEntity>);
+    transaction(id: number, quantity: number, operation: string): Promise<ItemEntity>;
+    private check;
 }
