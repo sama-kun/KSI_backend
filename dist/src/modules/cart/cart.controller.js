@@ -59,7 +59,7 @@ let CartController = class CartController {
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -68,7 +68,7 @@ __decorate([
 ], CartController.prototype, "createCustom", null);
 __decorate([
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)()),
@@ -78,7 +78,7 @@ __decorate([
 ], CartController.prototype, "getOne", null);
 __decorate([
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Patch)(':id'),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Body)()),
@@ -91,7 +91,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id/plus'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -100,7 +100,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':id/minus'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -109,7 +109,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)(':id/return'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -119,7 +119,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)(''),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [search_query_dto_1.SearchQueryDto]),
@@ -129,7 +129,7 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

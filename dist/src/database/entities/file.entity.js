@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileEntity = void 0;
 const typeorm_1 = require("typeorm");
@@ -26,7 +27,7 @@ __decorate([
 ], FileEntity.prototype, "item", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypes, default: enums_1.FileTypes.IMAGE }),
-    __metadata("design:type", String)
+    __metadata("design:type", typeof (_a = typeof enums_1.FileTypes !== "undefined" && enums_1.FileTypes) === "function" ? _a : Object)
 ], FileEntity.prototype, "type", void 0);
 FileEntity = __decorate([
     (0, typeorm_1.Entity)('file')

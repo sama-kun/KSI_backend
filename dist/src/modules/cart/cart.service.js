@@ -60,10 +60,10 @@ let CartService = class CartService extends BaseService_1.BaseService {
         candidate.isHistory = true;
         candidate.initialQuantity = initialQuantity;
         if (candidate.quantity != initialQuantity) {
-            candidate.status = enums_1.CartStatus.Warning;
+            candidate.status = enums_1.CartStatusEnum.Warning;
         }
         else {
-            candidate.status = enums_1.CartStatus.Complate;
+            candidate.status = enums_1.CartStatusEnum.Complate;
         }
         return candidate;
     }

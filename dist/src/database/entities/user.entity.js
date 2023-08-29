@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
@@ -26,7 +27,7 @@ __decorate([
 ], UserEntity.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.Role, default: enums_1.Role.USER }),
-    __metadata("design:type", String)
+    __metadata("design:type", typeof (_a = typeof enums_1.Role !== "undefined" && enums_1.Role) === "function" ? _a : Object)
 ], UserEntity.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.createdBy),

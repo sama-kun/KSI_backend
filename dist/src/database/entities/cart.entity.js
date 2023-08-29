@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartEntity = void 0;
 const typeorm_1 = require("typeorm");
@@ -51,7 +52,7 @@ __decorate([
 ], CartEntity.prototype, "workedHouse", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: enums_1.CartStatus.OnProject }),
-    __metadata("design:type", String)
+    __metadata("design:type", typeof (_a = typeof enums_1.CartStatus !== "undefined" && enums_1.CartStatus) === "function" ? _a : Object)
 ], CartEntity.prototype, "status", void 0);
 CartEntity = __decorate([
     (0, typeorm_1.Entity)('cart')
