@@ -41,7 +41,7 @@ export interface ICart extends IBaseModel {
     quantity?: number;
     initialQuantity?: number;
     item: IItem;
-    project: IProject;
+    project?: IProject;
     isHistory: boolean;
     workingHours?: number;
     returnTime?: Date;

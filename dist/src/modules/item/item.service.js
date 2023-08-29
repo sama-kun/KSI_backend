@@ -25,6 +25,7 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
     }
     async transaction(id, quantity, operation) {
         const candidate = await this.findById(id, []);
+        console.debug(candidate);
         if (operation === '+') {
             await this.check(id, quantity);
             candidate.quantity -= quantity;
@@ -38,6 +39,7 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
     }
     async check(id, transcript) {
         const item = await this.findById(id, []);
+        console.debug(item);
         if (item.quantity < transcript)
             throw new common_1.BadRequestException("Don't enough quantity of item id: " + id);
     }

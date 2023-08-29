@@ -29,7 +29,7 @@ let CartController = class CartController {
         this.cartService = cartService;
     }
     createCustom(user, data) {
-        return this.cartService.createMany(data, user.id);
+        return this.cartService.createMany(data, user);
     }
     getOne(id, query) {
         const { relations } = query;

@@ -26,15 +26,12 @@ let CartService = class CartService extends BaseService_1.BaseService {
         this.repo = repo;
         this.itemService = itemService;
     }
-    async createMany(data, userId) {
-        if (data[1]) {
-            for (const cart of data)
-                cart.createdBy = { id: userId };
-            const records = await this.repo.save(data);
-            return records;
-        }
-        data.createdBy = { id: userId };
-        return this.repo.save(data);
+    async createMany(data, user) {
+        const cartSave = await this.create(data, user);
+        const cart = await this.findById(cartSave.id, ['item']);
+        console.log(cart);
+        await this.itemService.transaction(cart.item.id, data.quantity, '+');
+        return cartSave;
     }
     async plus(id) {
         const candidate = await super.findById(id, ['item', 'project']);

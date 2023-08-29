@@ -22,18 +22,21 @@ export class CartService extends BaseService<
     super();
   }
 
-  async createMany(
-    data: CreateCartDto[] & CreateCartDto,
-    userId: number,
-  ): Promise<any> {
-    if (data[1]) {
-      for (const cart of data) cart.createdBy = { id: userId } as UserEntity;
+  async createMany(data: CreateCartDto, user: UserEntity): Promise<any> {
+    // if (data[1]) {
+    //   for (const cart of data) {
+    //     cart.createdBy = { id: userId } as UserEntity;
+    //     await this.itemService.transaction(cart.item.id, cart.quantity, '+');
+    //   }
 
-      const records = await this.repo.save(data);
-      return records;
-    }
-    data.createdBy = { id: userId } as UserEntity;
-    return this.repo.save(data);
+    //   const records = await this.repo.save(data);
+    //   return records;
+    // }
+    const cartSave = await this.create(data, user);
+    const cart = await this.findById(cartSave.id, ['item']);
+    console.log(cart);
+    await this.itemService.transaction(cart.item.id, data.quantity, '+');
+    return cartSave;
   }
 
   async plus(id: number): Promise<CartEntity> {

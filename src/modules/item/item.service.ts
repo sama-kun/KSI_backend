@@ -25,6 +25,8 @@ export class ItemService extends BaseService<
   ): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
 
+    console.debug(candidate);
+
     if (operation === '+') {
       await this.check(id, quantity);
       candidate.quantity -= quantity;
@@ -39,6 +41,8 @@ export class ItemService extends BaseService<
 
   private async check(id: number, transcript: number) {
     const item = await this.findById(id, []);
+
+    console.debug(item);
 
     if (item.quantity < transcript)
       throw new BadRequestException("Don't enough quantity of item id: " + id);
