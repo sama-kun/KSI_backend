@@ -1,4 +1,4 @@
-import { CartStatusEnum, FileTypes, RoleEnum } from './enums';
+import { CartStatusEnum, FileTypesEnum, RoleEnum } from './enums';
 
 export interface IBaseModel {
   id: number;
@@ -35,7 +35,7 @@ export interface IItem extends IBaseModel {
 export interface IFile extends IBaseModel {
   original: string;
   item: IItem;
-  type: FileTypes;
+  type: FileTypesEnum;
 }
 
 export interface IProject extends IBaseModel {
@@ -57,17 +57,17 @@ export interface ICart extends IBaseModel {
   status: CartStatusEnum;
 }
 
-export interface IMainFile {
-  maintenance: IMaintenance;
-  file: IFile;
-  type: 
-}
+// export interface IMainFile {
+//   maintenance: IMaintenance;
+//   file: IFile;
+//   type:
+// }
 
-export interface IMaintenance extends IBaseModel {
-  item: IItem;
-  checker: IUser;
+// export interface IMaintenance extends IBaseModel {
+//   item: IItem;
+//   checker: IUser;
 
-}
+// }
 
 // date            DateTime?
 //   authorId        Int

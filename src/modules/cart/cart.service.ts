@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { ItemService } from '../item/item.service';
-import { CartStatus } from '@/interfaces/enums';
+import { CartStatusEnum } from '@/interfaces/enums';
 import { UserEntity } from '@/database/entities/user.entity';
 
 @Injectable()
@@ -68,9 +68,9 @@ export class CartService extends BaseService<
     candidate.isHistory = true;
     candidate.initialQuantity = initialQuantity;
     if (candidate.quantity != initialQuantity) {
-      candidate.status = CartStatus.Warning;
+      candidate.status = CartStatusEnum.Warning;
     } else {
-      candidate.status = CartStatus.Complate;
+      candidate.status = CartStatusEnum.Complate;
     }
     return candidate;
   }

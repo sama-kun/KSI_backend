@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { RolesQuard } from '@/common/guards/roles.quard';
-import { Role } from '@/interfaces/enums';
+import { RoleEnum } from '@/interfaces/enums';
 import { Roles } from '@/common/decorators/roles-auth.decorator';
 import { AuthUser } from '@/common/decorators/auth-user.decorator';
 import { UserEntity } from '@/database/entities/user.entity';
@@ -20,7 +20,6 @@ import { CartEntity } from '@/database/entities/cart.entity';
 import { SearchCartDto } from './dto/search-cart.dto';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 
 @Controller('cart')
 export class CartController {
@@ -28,7 +27,7 @@ export class CartController {
 
   @Post()
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   createCustom(
     @AuthUser() user: UserEntity,
     @Body() data: CartEntity[] & CartEntity,
@@ -37,7 +36,7 @@ export class CartController {
   }
 
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Get(':id')
   getOne(@Param('id', ParseIntPipe) id: number, @Query() query: SearchCartDto) {
     const { relations } = query;
@@ -45,7 +44,7 @@ export class CartController {
   }
 
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Patch(':id')
   update(
     @AuthUser() user: UserEntity,
@@ -62,21 +61,21 @@ export class CartController {
 
   @Get(':id/plus')
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   plus(@Param('id', ParseIntPipe) id: number) {
     return this.cartService.plus(id);
   }
 
   @Get(':id/minus')
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   minus(@Param('id', ParseIntPipe) id: number) {
     return this.cartService.minus(id);
   }
 
   @Post(':id/return')
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   return(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: { initialQuantity: number },
@@ -86,7 +85,7 @@ export class CartController {
 
   @Get('')
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   findAll(@Query() query: SearchQueryDto) {
     const { pagination, sort, relations, filter, search } = query;
     return this.cartService.findAll(
@@ -101,7 +100,7 @@ export class CartController {
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(RolesQuard)
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {
     // Check permissions here like that:
     // const record = await super.findOne(query)
