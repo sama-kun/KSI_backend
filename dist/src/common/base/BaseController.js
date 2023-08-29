@@ -31,6 +31,9 @@ let BaseController = class BaseController {
         const { pagination, sort, relations, filter, search } = query;
         return this.dataService.findAll(pagination, sort, relations, filter, search);
     }
+    delete(user, id) {
+        return this.dataService.delete(user, id);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -64,6 +67,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BaseController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
+    __metadata("design:returntype", void 0)
+], BaseController.prototype, "delete", null);
 BaseController = __decorate([
     (0, common_1.Controller)()
 ], BaseController);

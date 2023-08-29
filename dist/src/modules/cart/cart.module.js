@@ -19,7 +19,7 @@ let CartModule = class CartModule {
 CartModule = __decorate([
     (0, common_1.Module)({
         controllers: [cart_controller_1.CartController],
-        providers: [cart_service_1.CartService],
+        providers: [cart_service_1.CartService, item_module_1.ItemModule],
         imports: [jwt_1.JwtModule, item_module_1.ItemModule, typeorm_1.TypeOrmModule.forFeature([cart_entity_1.CartEntity])],
         exports: [cart_service_1.CartService],
     })

@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const jwt_1 = require("@nestjs/jwt");
 const roles_auth_decorator_1 = require("../decorators/roles-auth.decorator");
+const enums_1 = require("../../interfaces/enums");
 const console = new common_1.Logger('RolesQuard');
 let RolesQuard = class RolesQuard {
     constructor(jwtService, reflector) {
@@ -37,6 +38,8 @@ let RolesQuard = class RolesQuard {
                 secret: process.env.JWT_SECRET_KEY,
             });
             req.user = user;
+            if (user.role === enums_1.Role.ROOT)
+                return true;
             return requiredRoles.includes(user.role);
         }
         catch (error) {

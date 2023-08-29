@@ -8,7 +8,7 @@ import { CartEntity } from '@/database/entities/cart.entity';
 
 @Module({
   controllers: [CartController],
-  providers: [CartService],
+  providers: [CartService, ItemModule],
   imports: [JwtModule, ItemModule, TypeOrmModule.forFeature([CartEntity])],
   exports: [CartService],
 })
