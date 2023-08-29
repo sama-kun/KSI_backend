@@ -43,6 +43,7 @@ const project_module_1 = require("../modules/project/project.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+console.log(process.env.POSTGRES_PORT);
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -67,7 +68,6 @@ AppModule = __decorate([
                     __dirname + '/../../src/database/subscribers/*.subscriber{.ts,.js}',
                 ],
                 synchronize: true,
-                migrationsRun: process.env.NODE_ENV !== 'development',
                 autoLoadEntities: true,
                 logging: false,
                 migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],

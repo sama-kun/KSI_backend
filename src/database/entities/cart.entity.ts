@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { ItemEntity } from './item.entity';
 import { ProjectEntity } from './project.entity';
-import { CartStatus } from '@/interfaces/enums';
+import { CartStatusEnum } from '@/interfaces/enums';
 import { BaseModel } from '@/common/base/BaseModel';
 import { ICart } from '@/interfaces/entities';
 
@@ -16,8 +16,10 @@ export class CartEntity extends BaseModel implements ICart {
   @ManyToOne(() => ItemEntity, (item) => item.carts)
   item: ItemEntity;
 
-  @ManyToOne(() => ProjectEntity, (project) => project.carts)
-  project: ProjectEntity;
+  @ManyToOne(() => ProjectEntity, (project) => project.carts, {
+    nullable: true,
+  })
+  project?: ProjectEntity;
 
   @Column({ default: false })
   isHistory: boolean;
@@ -31,6 +33,6 @@ export class CartEntity extends BaseModel implements ICart {
   @Column({ nullable: true })
   workedHouse?: number;
 
-  @Column({ default: CartStatus.OnProject })
-  status: CartStatus;
+  @Column({ default: CartStatusEnum.OnProject })
+  status: CartStatusEnum;
 }

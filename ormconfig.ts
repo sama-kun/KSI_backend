@@ -9,7 +9,7 @@ console.log(
 export const appDataSource = new DataSource({
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
-  port: 25060,
+  port: parseInt(process.env.POSTGRES_PORT || '5432') || 5432,
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_NAME,
@@ -24,10 +24,10 @@ export const appDataSource = new DataSource({
     migrationsDir: 'src/database/migrations/',
     seedsDir: 'src/database/seeds/',
   },
-  ssl: true,
-  extra: {
-    ssl: {
-      ca: fs.readFileSync('./ksi_db.crt'),
-    },
-  },
+  // ssl: true,
+  // extra: {
+  //   ssl: {
+  //     ca: fs.readFileSync('./ksi_db.crt'),
+  //   },
+  // },
 } as DataSourceOptions);

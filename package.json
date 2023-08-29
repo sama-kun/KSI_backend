@@ -24,7 +24,7 @@
       "migrate": "npx prisma migrate dev",
       "template": "(cd templater && ts-node index.ts)",
       "convert": "(cd convertor && ts-node index.ts)",
-      "typeorm": "typeorm-ts-node-commonjs",
+      "typeorm": "node --require tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js -d ./ormconfig.ts",
       "migration:create": "node_modules/.bin/typeorm migration:create ",
       "migration:show": "yarn typeorm migration:show",
       "migration:generate": "yarn typeorm migration:generate ",
@@ -32,7 +32,8 @@
       "migration:revert": "yarn typeorm migration:revert",
       "schema:drop": "yarn typeorm schema:drop",
       "migration:do": "yarn schema:drop && yarn migration:run && yarn migration:generate ",
-      "migration:scratch": "yarn schema:drop && yarn migration:run"
+      "migration:scratch": "yarn schema:drop && yarn migration:run",
+      "compodoc": "npx @compodoc/compodoc -p tsconfig.json"
    },
    "dependencies": {
       "@nestjs/common": "^9.0.0",

@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", item_entity_1.ItemEntity)
 ], FileEntity.prototype, "item", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypes, default: enums_1.FileTypes.IMAGE }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypesEnum, default: enums_1.FileTypesEnum.IMAGE }),
     __metadata("design:type", String)
 ], FileEntity.prototype, "type", void 0);
 FileEntity = __decorate([

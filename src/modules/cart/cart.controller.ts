@@ -32,7 +32,7 @@ export class CartController {
     @AuthUser() user: UserEntity,
     @Body() data: CartEntity[] & CartEntity,
   ) {
-    return this.cartService.createMany(data, user.id);
+    return this.cartService.createMany(data, user);
   }
 
   @UseGuards(RolesQuard)

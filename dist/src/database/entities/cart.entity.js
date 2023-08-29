@@ -30,7 +30,9 @@ __decorate([
     __metadata("design:type", item_entity_1.ItemEntity)
 ], CartEntity.prototype, "item", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => project_entity_1.ProjectEntity, (project) => project.carts),
+    (0, typeorm_1.ManyToOne)(() => project_entity_1.ProjectEntity, (project) => project.carts, {
+        nullable: true,
+    }),
     __metadata("design:type", project_entity_1.ProjectEntity)
 ], CartEntity.prototype, "project", void 0);
 __decorate([
@@ -50,7 +52,7 @@ __decorate([
     __metadata("design:type", Number)
 ], CartEntity.prototype, "workedHouse", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: enums_1.CartStatus.OnProject }),
+    (0, typeorm_1.Column)({ default: enums_1.CartStatusEnum.OnProject }),
     __metadata("design:type", String)
 ], CartEntity.prototype, "status", void 0);
 CartEntity = __decorate([

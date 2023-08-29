@@ -38,7 +38,7 @@ let RolesQuard = class RolesQuard {
                 secret: process.env.JWT_SECRET_KEY,
             });
             req.user = user;
-            if (user.role === enums_1.Role.ROOT)
+            if (user.role === enums_1.RoleEnum.ROOT)
                 return true;
             return requiredRoles.includes(user.role);
         }

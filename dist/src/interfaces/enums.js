@@ -1,21 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FileTypes = exports.Role = exports.CartStatus = void 0;
-var CartStatus;
-(function (CartStatus) {
-    CartStatus["Warning"] = "Warning";
-    CartStatus["Complate"] = "Complate";
-    CartStatus["OnProject"] = "OnProject";
-})(CartStatus = exports.CartStatus || (exports.CartStatus = {}));
-var Role;
-(function (Role) {
-    Role["USER"] = "user";
-    Role["ADMIN"] = "admin";
-    Role["ROOT"] = "root";
-})(Role = exports.Role || (exports.Role = {}));
-var FileTypes;
-(function (FileTypes) {
-    FileTypes["PDF"] = "pdf";
-    FileTypes["IMAGE"] = "image";
-})(FileTypes = exports.FileTypes || (exports.FileTypes = {}));
+exports.MainFileTypesEnum = exports.FileTypesEnum = exports.RoleEnum = exports.CartStatusEnum = void 0;
+var CartStatusEnum;
+(function (CartStatusEnum) {
+    CartStatusEnum["Warning"] = "Warning";
+    CartStatusEnum["Complate"] = "Complate";
+    CartStatusEnum["OnProject"] = "OnProject";
+})(CartStatusEnum = exports.CartStatusEnum || (exports.CartStatusEnum = {}));
+var RoleEnum;
+(function (RoleEnum) {
+    RoleEnum["USER"] = "user";
+    RoleEnum["ADMIN"] = "admin";
+    RoleEnum["ROOT"] = "root";
+})(RoleEnum = exports.RoleEnum || (exports.RoleEnum = {}));
+var FileTypesEnum;
+(function (FileTypesEnum) {
+    FileTypesEnum["PDF"] = "pdf";
+    FileTypesEnum["IMAGE"] = "image";
+})(FileTypesEnum = exports.FileTypesEnum || (exports.FileTypesEnum = {}));
+var MainFileTypesEnum;
+(function (MainFileTypesEnum) {
+    MainFileTypesEnum["fault"] = "fault";
+    MainFileTypesEnum["testing"] = "testing";
+    MainFileTypesEnum["main"] = "main";
+    MainFileTypesEnum["problem"] = "problem";
+})(MainFileTypesEnum = exports.MainFileTypesEnum || (exports.MainFileTypesEnum = {}));
 //# sourceMappingURL=enums.js.map

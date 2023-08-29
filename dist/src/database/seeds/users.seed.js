@@ -6,17 +6,17 @@ exports.users = [
     {
         email: 'admin@example.com',
         password: '$2a$05$MEfmuWzN5iOXZQ79xH/aDeqxksM5QtucTtqv9liM4Iq8dpip2WFiS',
-        role: enums_1.Role.ADMIN,
+        role: enums_1.RoleEnum.ADMIN,
     },
     {
         email: 'root@example.com',
         password: '$2a$05$MEfmuWzN5iOXZQ79xH/aDeqxksM5QtucTtqv9liM4Iq8dpip2WFiS',
-        role: enums_1.Role.ROOT,
+        role: enums_1.RoleEnum.ROOT,
     },
     {
         email: 'user@example.com',
         password: '$2a$05$MEfmuWzN5iOXZQ79xH/aDeqxksM5QtucTtqv9liM4Iq8dpip2WFiS',
-        role: enums_1.Role.USER,
+        role: enums_1.RoleEnum.USER,
     },
 ];
 //# sourceMappingURL=users.seed.js.map

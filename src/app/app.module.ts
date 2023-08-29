@@ -20,6 +20,8 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
 dotenv.config();
 
+console.log(process.env.POSTGRES_PORT);
+
 @Module({
   imports: [
     UserModule,
@@ -43,7 +45,7 @@ dotenv.config();
         __dirname + '/../../src/database/subscribers/*.subscriber{.ts,.js}',
       ],
       synchronize: true,
-      migrationsRun: process.env.NODE_ENV !== 'development',
+      // migrationsRun: process.env.NODE_ENV !== 'development',
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
