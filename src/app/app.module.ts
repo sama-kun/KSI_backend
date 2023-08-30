@@ -49,12 +49,12 @@ console.log(process.env.POSTGRES_PORT);
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-      // ssl: true,
-      // extra: {
-      //   ssl: {
-      //     ca: fs.readFileSync('./ksi_db.crt'),
-      //   },
-      // },
+      ssl: true,
+      extra: {
+        ssl: {
+          ca: fs.readFileSync('./ksi_db.crt'),
+        },
+      },
     }),
   ],
   controllers: [AppController],
