@@ -16,4 +16,5 @@ export declare class CartController {
     }): Promise<CartEntity>;
     findAll(query: SearchQueryDto): Promise<any>;
     remove(user: UserEntity, id: number): Promise<any>;
+    sendToProject(user: UserEntity, ids: number[], projectId: number): Promise<any[]>;
 }

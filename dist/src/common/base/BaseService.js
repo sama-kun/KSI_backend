@@ -49,10 +49,11 @@ class BaseService {
     }
     async update(user = null, id, data) {
         const record = await this.findById(id, []);
+        let userId = null;
         if (user) {
-            id = user.id;
+            userId = user.id;
         }
-        Object.assign(record, Object.assign(Object.assign({}, data), { updatedBy: { id: user.id } }));
+        Object.assign(record, Object.assign(Object.assign({}, data), { updatedBy: { id: userId } }));
         try {
             return await this.repo.save(record);
         }

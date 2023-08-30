@@ -8,6 +8,7 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { ItemService } from '../item/item.service';
 import { CartStatusEnum } from '@/interfaces/enums';
 import { UserEntity } from '@/database/entities/user.entity';
+import { ProjectEntity } from '@/database/entities/project.entity';
 
 @Injectable()
 export class CartService extends BaseService<
@@ -76,6 +77,18 @@ export class CartService extends BaseService<
       candidate.status = CartStatusEnum.Complate;
     }
     return candidate;
+  }
+
+  async send(user: UserEntity, ids: number[], projectId: number) {
+    const records = [];
+    for (const id of ids) {
+      const record = await this.update(user, id, {
+        project: { id: projectId } as ProjectEntity,
+      });
+      records.push(record);
+    }
+
+    return records;
   }
 
   // test(){

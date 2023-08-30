@@ -108,4 +108,17 @@ export class CartController {
     console.log(user);
     return this.cartService.delete(user, id);
   }
+
+  @Patch('send/:projectId')
+  @ApiBearerAuth()
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  async sendToProject(
+    @AuthUser() user: UserEntity,
+    @Body('ids') ids: number[],
+    @Param('projectId') projectId: number,
+  ) {
+    console.log(ids);
+    return this.cartService.send(user, ids, projectId);
+  }
 }

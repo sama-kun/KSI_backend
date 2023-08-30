@@ -14,4 +14,5 @@ export declare class CartService extends BaseService<CartEntity, CreateCartDto, 
     minus(id: number): Promise<CartEntity>;
     private check;
     return(id: number, initialQuantity: number): Promise<CartEntity>;
+    send(user: UserEntity, ids: number[], projectId: number): Promise<any[]>;
 }

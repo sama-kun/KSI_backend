@@ -21,12 +21,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const xlsx = __importStar(require("xlsx"));
-const excelFilePath = './input/ksi.xlsx';
+const excelFilePath = './input/kis_item.xlsx';
 const workbook = xlsx.readFile(excelFilePath);
 const sheetName = workbook.SheetNames[0];
 const worksheet = workbook.Sheets[sheetName];
 const jsonData = xlsx.utils.sheet_to_json(worksheet, { header: 'A' });
-const jsonFilePath = 'output/output.json';
+const jsonFilePath = 'output/output_item.json';
 fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 console.log('Excel-файл успешно сконвертирован в JSON формат и сохранен в output.json');
 //# sourceMappingURL=index.js.map

@@ -64,6 +64,16 @@ let CartService = class CartService extends BaseService_1.BaseService {
         }
         return candidate;
     }
+    async send(user, ids, projectId) {
+        const records = [];
+        for (const id of ids) {
+            const record = await this.update(user, id, {
+                project: { id: projectId },
+            });
+            records.push(record);
+        }
+        return records;
+    }
 };
 CartService = __decorate([
     (0, common_1.Injectable)(),

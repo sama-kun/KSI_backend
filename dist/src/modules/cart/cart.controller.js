@@ -55,6 +55,10 @@ let CartController = class CartController {
         console.log(user);
         return this.cartService.delete(user, id);
     }
+    async sendToProject(user, ids, projectId) {
+        console.log(ids);
+        return this.cartService.send(user, ids, projectId);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -136,6 +140,18 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Patch)('send/:projectId'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.Body)('ids')),
+    __param(2, (0, common_1.Param)('projectId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Array, Number]),
+    __metadata("design:returntype", Promise)
+], CartController.prototype, "sendToProject", null);
 CartController = __decorate([
     (0, common_1.Controller)('cart'),
     __metadata("design:paramtypes", [cart_service_1.CartService])
