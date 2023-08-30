@@ -65,10 +65,11 @@ export abstract class BaseService<
     data: UpdateDto,
   ): Promise<Entity> {
     const record = await this.findById(id, []);
+    let userId: number = null;
     if (user) {
-      id = user.id;
+      userId = user.id;
     }
-    Object.assign(record, { ...data, updatedBy: { id: user.id } });
+    Object.assign(record, { ...data, updatedBy: { id: userId } });
     try {
       return await this.repo.save(record);
     } catch (e) {

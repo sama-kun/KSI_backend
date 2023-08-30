@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as xlsx from 'xlsx';
 
 // Путь к Excel-файлу
-const excelFilePath = './input/ksi.xlsx';
+const excelFilePath = './input/kis_item.xlsx';
 
 // Чтение Excel-файла
 const workbook = xlsx.readFile(excelFilePath);
@@ -15,7 +15,7 @@ const worksheet = workbook.Sheets[sheetName];
 const jsonData = xlsx.utils.sheet_to_json(worksheet, { header: 'A' });
 
 // Запись JSON-данных в файл
-const jsonFilePath = 'output/output.json';
+const jsonFilePath = 'output/output_item.json';
 fs.writeFileSync(jsonFilePath, JSON.stringify(jsonData, null, 2));
 
 console.log(
