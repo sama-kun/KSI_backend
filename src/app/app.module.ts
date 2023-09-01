@@ -20,6 +20,8 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
 dotenv.config();
 
+console.log(process.env.POSTGRES_PORT);
+
 @Module({
   imports: [
     UserModule,
@@ -33,8 +35,8 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
-      // port: parseInt(process.env.POSTGRES_PORT),
-      port: 25060,
+      port: parseInt(process.env.POSTGRES_PORT),
+      // port: process.env.POSTGRES_PORT,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_NAME,
@@ -43,9 +45,9 @@ dotenv.config();
         __dirname + '/../../src/database/subscribers/*.subscriber{.ts,.js}',
       ],
       synchronize: true,
-      migrationsRun: process.env.NODE_ENV !== 'development',
+      // migrationsRun: process.env.NODE_ENV !== 'development',
       autoLoadEntities: true,
-      logging: 'all',
+      logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
       ssl: true,
       extra: {

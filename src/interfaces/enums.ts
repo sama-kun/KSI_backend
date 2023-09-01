@@ -1,16 +1,23 @@
-export enum CartStatus {
+export enum CartStatusEnum {
   Warning = 'Warning',
   Complate = 'Complate',
   OnProject = 'OnProject',
 }
 
-export enum Role {
+export enum RoleEnum {
   USER = 'user',
   ADMIN = 'admin',
   ROOT = 'root',
 }
 
-export enum FileTypes {
+export enum FileTypesEnum {
   PDF = 'pdf',
   IMAGE = 'image',
+}
+
+export enum MainFileTypesEnum {
+  fault = 'fault',
+  testing = 'testing',
+  main = 'main',
+  problem = 'problem',
 }

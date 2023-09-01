@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Get,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { BaseService } from './BaseService';
 import { SearchQueryDto } from './dto/search-query.dto';
@@ -55,5 +56,10 @@ export abstract class BaseController<
       filter,
       search,
     );
+  }
+
+  @Delete(':id')
+  delete(@AuthUser() user: UserEntity, @Param('id') id: number) {
+    return this.dataService.delete(user, id);
   }
 }

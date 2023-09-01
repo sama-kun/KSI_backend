@@ -3,7 +3,7 @@ import { BaseModel } from './BaseModel';
 import { Like, ObjectLiteral, Repository, TypeORMError } from 'typeorm';
 import { UserEntity } from '@/database/entities/user.entity';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-const console = new Logger('BaseService');
+
 export abstract class BaseService<
   Entity extends BaseModel & ObjectLiteral,
   CreateDto extends Partial<Entity>,
@@ -23,6 +23,7 @@ export abstract class BaseService<
       } as QueryDeepPartialEntity<Entity>);
       return this.findById(record.raw[0].id, []);
     } catch (e) {
+      console.error(e);
       throw new TypeORMError(e);
     }
   }
@@ -49,11 +50,11 @@ export abstract class BaseService<
         where: { id },
       };
       const record = await this.findOne({ ...option, relations });
-      console.debug(record);
       if (!record)
         throw new HttpException('Record not found', HttpStatus.NOT_FOUND);
       return record;
     } catch (e) {
+      console.error(e);
       throw new TypeORMError(e);
     }
   }
@@ -64,13 +65,15 @@ export abstract class BaseService<
     data: UpdateDto,
   ): Promise<Entity> {
     const record = await this.findById(id, []);
+    let userId: number = null;
     if (user) {
-      id = user.id;
+      userId = user.id;
     }
-    Object.assign(record, { ...data, updatedBy: { id: user.id } });
+    Object.assign(record, { ...data, updatedBy: { id: userId } });
     try {
       return await this.repo.save(record);
     } catch (e) {
+      console.error(e);
       throw new TypeORMError(e);
     }
   }
@@ -135,5 +138,15 @@ export abstract class BaseService<
       total,
     };
     return meta;
+  }
+
+  async delete(user: UserEntity, id: number): Promise<any> {
+    const record = await this.findById(id, []);
+    console.warn(
+      `Record id: ${id} was deleted by: id: ${user.id}
+                                 email: ${user.email}`,
+    );
+    return await this.repo.delete(record.id);
+    // return record;
   }
 }

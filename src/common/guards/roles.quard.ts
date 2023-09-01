@@ -11,6 +11,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { ROLES_KEY } from '../decorators/roles-auth.decorator';
+import { RoleEnum } from '../../interfaces/enums';
 
 const console = new Logger('RolesQuard');
 
@@ -44,6 +45,7 @@ export class RolesQuard implements CanActivate {
       });
       req.user = user;
 
+      if (user.role === RoleEnum.ROOT) return true;
       return requiredRoles.includes(user.role);
     } catch (error) {
       throw new HttpException('Methot Forbidden', HttpStatus.FORBIDDEN);
