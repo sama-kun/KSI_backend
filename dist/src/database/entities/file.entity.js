@@ -19,7 +19,23 @@ let FileEntity = class FileEntity extends BaseModel_1.BaseModel {
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], FileEntity.prototype, "original", void 0);
+], FileEntity.prototype, "url", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], FileEntity.prototype, "secure_url", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], FileEntity.prototype, "asset_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], FileEntity.prototype, "public_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], FileEntity.prototype, "folder", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.images),
     __metadata("design:type", item_entity_1.ItemEntity)

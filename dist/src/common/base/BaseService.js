@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
+const console = new common_1.Logger('BaseService');
 class BaseService {
     async create(data, user = null) {
         try {
@@ -53,7 +54,7 @@ class BaseService {
         if (user) {
             userId = user.id;
         }
-        Object.assign(record, Object.assign(Object.assign({}, data), { updatedBy: { id: userId } }));
+        Object.assign(record, Object.assign(Object.assign({}, data), { updatedBy: { id: userId }, updatedAt: new Date() }));
         try {
             return await this.repo.save(record);
         }
@@ -71,9 +72,9 @@ class BaseService {
             const obj = search[key];
             convertedSearch = { [key]: (0, typeorm_1.Like)(`%${obj}%`) };
         }
-        if (pagination) {
-            page = pagination.page;
-            pageSize = pagination.pageSize;
+        if (pagination && typeof pagination === 'object') {
+            page = parseInt(pagination.page, 10) || 1;
+            pageSize = parseInt(pagination.pageSize, 10) || 10;
         }
         console.debug(pagination);
         try {

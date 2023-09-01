@@ -15,6 +15,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import swaggerInit from '@/swagger';
 import * as bodyParser from 'body-parser';
+import { join } from 'path';
 // import * as Sentry from '@sentry/node';
 
 async function bootstrap() {

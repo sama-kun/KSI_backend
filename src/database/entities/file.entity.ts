@@ -7,7 +7,19 @@ import { FileTypesEnum } from '@/interfaces/enums';
 @Entity('file')
 export class FileEntity extends BaseModel implements IFile {
   @Column()
-  original: string;
+  url: string;
+
+  @Column()
+  secure_url: string;
+
+  @Column()
+  asset_id: string;
+
+  @Column()
+  public_id: string;
+
+  @Column({ nullable: true })
+  folder?: string;
 
   @ManyToOne(() => ItemEntity, (item) => item.images)
   item: ItemEntity;

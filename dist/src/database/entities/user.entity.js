@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const enums_1 = require("../../interfaces/enums");
 const cart_entity_1 = require("./cart.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
+const maintenance_entity_1 = require("./maintenance.entity");
 let UserEntity = class UserEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -32,6 +33,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.createdBy),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "carts", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => maintenance_entity_1.MaintenanceEntity, (maintenance) => maintenance.checker),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "maintenances", void 0);
 UserEntity = __decorate([
     (0, typeorm_1.Entity)('user')
 ], UserEntity);

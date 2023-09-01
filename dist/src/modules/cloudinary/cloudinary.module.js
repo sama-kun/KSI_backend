@@ -13,6 +13,7 @@ const clodinary_service_1 = require("./clodinary.service");
 const cloudinary_controller_1 = require("./cloudinary.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const file_entity_1 = require("../../database/entities/file.entity");
+const jwt_1 = require("@nestjs/jwt");
 let CloudinaryModule = class CloudinaryModule {
 };
 CloudinaryModule = __decorate([
@@ -20,7 +21,7 @@ CloudinaryModule = __decorate([
         providers: [cloudinary_provider_1.CloudinaryProvider, clodinary_service_1.CloudinaryService],
         exports: [cloudinary_provider_1.CloudinaryProvider, clodinary_service_1.CloudinaryService],
         controllers: [cloudinary_controller_1.CloudinaryController],
-        imports: [typeorm_1.TypeOrmModule.forFeature([file_entity_1.FileEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([file_entity_1.FileEntity]), jwt_1.JwtModule],
     })
 ], CloudinaryModule);
 exports.CloudinaryModule = CloudinaryModule;

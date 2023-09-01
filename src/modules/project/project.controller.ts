@@ -31,9 +31,10 @@ export class ProjectController extends BaseController<
   }
 
   @Get(':id/mdnreport')
-  mdnreport(@Param('id', ParseIntPipe) id: number, @Res() response: Response) {
-    return this.projectService.mdnReport(response);
+  mdnreport(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+    return this.projectService.mdnReport(res);
   }
+
   // @Get('test')
   // test(){
   //   return super().

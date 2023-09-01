@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsInt } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 
 export class SearchQueryDto {
   pagination?: Pagination;
@@ -10,11 +10,13 @@ export class SearchQueryDto {
 }
 
 class Pagination {
-  @IsInt()
+  @IsNumber()
+  @IsOptional()
   @Transform(({ value }) => parseInt(value, 10))
   page?: number;
 
-  @IsInt()
+  @IsNumber()
+  @IsOptional()
   @Transform(({ value }) => parseInt(value, 10))
   pageSize?: number;
 }

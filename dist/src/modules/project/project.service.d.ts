@@ -7,5 +7,5 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 export declare class ProjectService extends BaseService<ProjectEntity, CreateProjectDto, UpdateProjectDto> {
     protected repo: Repository<ProjectEntity>;
     constructor(repo: Repository<ProjectEntity>);
-    mdnReport(response: Response): Promise<void>;
+    mdnReport(res: Response): Promise<void>;
 }

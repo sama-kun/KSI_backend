@@ -43,6 +43,7 @@ const project_module_1 = require("../modules/project/project.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = __importStar(require("dotenv"));
 const fs = __importStar(require("fs-extra"));
+const maintenance_module_1 = require("../modules/maintenance/maintenance.module");
 dotenv.config();
 console.log(process.env.POSTGRES_PORT);
 let AppModule = class AppModule {
@@ -57,6 +58,7 @@ AppModule = __decorate([
             cloudinary_module_1.CloudinaryModule,
             cart_module_1.CartModule,
             project_module_1.ProjectModule,
+            maintenance_module_1.MaintenanceModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: process.env.POSTGRES_HOST,

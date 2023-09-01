@@ -15,6 +15,7 @@ const category_entity_1 = require("./category.entity");
 const file_entity_1 = require("./file.entity");
 const cart_entity_1 = require("./cart.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
+const maintenance_entity_1 = require("./maintenance.entity");
 let ItemEntity = class ItemEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -46,9 +47,17 @@ __decorate([
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "carts", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true, default: 0 }),
     __metadata("design:type", Number)
 ], ItemEntity.prototype, "projectQuantity", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => maintenance_entity_1.MaintenanceEntity, (main) => main.item),
+    __metadata("design:type", Array)
+], ItemEntity.prototype, "maintenances", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], ItemEntity.prototype, "totalQuantity", void 0);
 ItemEntity = __decorate([
     (0, typeorm_1.Entity)('item')
 ], ItemEntity);

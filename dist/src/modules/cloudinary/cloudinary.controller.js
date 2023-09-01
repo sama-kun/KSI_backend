@@ -16,46 +16,89 @@ exports.CloudinaryController = void 0;
 const common_1 = require("@nestjs/common");
 const clodinary_service_1 = require("./clodinary.service");
 const platform_express_1 = require("@nestjs/platform-express");
+const roles_quard_1 = require("../../common/guards/roles.quard");
+const enums_1 = require("../../interfaces/enums");
+const roles_auth_decorator_1 = require("../../common/decorators/roles-auth.decorator");
+const auth_user_decorator_1 = require("../../common/decorators/auth-user.decorator");
+const user_entity_1 = require("../../database/entities/user.entity");
+const search_file_dto_1 = require("./dto/search-file.dto");
 const console = new common_1.Logger('CloudinaryController');
 let CloudinaryController = class CloudinaryController {
     constructor(cloudinaryService) {
         this.cloudinaryService = cloudinaryService;
     }
-    uploadImage(file) {
-        return this.cloudinaryService.uploadImage(file);
+    uploadImage(user, file, data) {
+        console.debug(data.item);
+        return this.cloudinaryService.uploadFile(user, file, { folder: data.folder }, data.item);
     }
-    async uploadImages(files) {
-        console.log(files);
-        return this.cloudinaryService.uploadFiles(files);
+    async uploadImages(user, files, data) {
+        return await this.cloudinaryService.uploadFiles(user, data.item, files, 'item');
     }
-    uploadPdf(file) {
-        return this.cloudinaryService.uploadPdf(file);
+    uploadPdf(user, File) {
+        return this.cloudinaryService.uploadPdf(user, File);
+    }
+    findAll(query) {
+        const { pagination, sort, relations, filter, search } = query;
+        return this.cloudinaryService.findAll(pagination, sort, relations, filter, search);
+    }
+    getOne(id, query) {
+        const { relations } = query;
+        return this.cloudinaryService.findById(id, relations);
     }
 };
 __decorate([
     (0, common_1.Post)('image'),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
-    __param(0, (0, common_1.UploadedFile)()),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.UploadedFile)()),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Object, Object]),
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadImage", null);
 __decorate([
     (0, common_1.Post)('upload-multiply'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([{ name: 'files' }])),
-    __param(0, (0, common_1.UploadedFiles)()),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files')),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.UploadedFiles)()),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Array]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Array, Object]),
     __metadata("design:returntype", Promise)
 ], CloudinaryController.prototype, "uploadImages", null);
 __decorate([
     (0, common_1.Post)('pdf'),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
-    __param(0, (0, common_1.UploadedFile)()),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Object]),
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadPdf", null);
+__decorate([
+    (0, common_1.Get)(),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_file_dto_1.SearchFileDto]),
+    __metadata("design:returntype", void 0)
+], CloudinaryController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, search_file_dto_1.SearchFileDto]),
+    __metadata("design:returntype", void 0)
+], CloudinaryController.prototype, "getOne", null);
 CloudinaryController = __decorate([
     (0, common_1.Controller)('cloud'),
     __metadata("design:paramtypes", [clodinary_service_1.CloudinaryService])
