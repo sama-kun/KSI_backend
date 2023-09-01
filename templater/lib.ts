@@ -1,26 +1,24 @@
 import * as fs from 'fs';
+import replace from 'replace';
 import { globSync } from 'glob';
-import { replaceInFile } from 'replace-in-file';
 
-export const findAndReplace = async (
+export const findAndReplace = (
   filesPaths: string,
   findStr: string,
   replaceStr: string,
 ) => {
   const files = globSync(filesPaths);
-  files.forEach(async (item, index, array) => {
+  files.forEach((item, index, array) => {
     console.log(item + ' found');
-    try {
-      const options = {
-        files: item,
-        from: new RegExp(findStr, 'g'),
-        to: replaceStr,
-      };
-      const changes = await replaceInFile(options);
-      console.log('Replacement complete', changes);
-    } catch (error) {
-      console.error('Error occurred:', error);
-    }
+    // Find and Replace string
+    replace({
+      regex: findStr,
+      replacement: replaceStr,
+      paths: [item],
+      recursive: true,
+      silent: true,
+    });
+    console.log('Replacement complete');
   });
 };
 

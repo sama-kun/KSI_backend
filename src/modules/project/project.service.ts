@@ -1,6 +1,4 @@
 import { BaseService } from '@/common/base/BaseService';
-import * as json2xls from 'json2xls';
-import * as fs from 'fs-extra';
 import { Response } from 'express';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +6,11 @@ import { ProjectEntity } from '@/database/entities/project.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Injectable } from '@nestjs/common';
+import PDFDocument from 'pdfkit';
+import * as ejs from 'ejs';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as htmlPdf from 'html-pdf';
 
 @Injectable()
 export class ProjectService extends BaseService<
@@ -24,28 +27,31 @@ export class ProjectService extends BaseService<
   //   return super().
   // }
 
-  async mdnReport(response: Response) {
-    const jsonData = [
-      { name: 'John Doe', age: 30, email: 'john@example.com' },
-      { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-      // Add more data as needed
-    ];
+  async mdnReport(res: Response) {
+    const doc = new PDFDocument();
+    const fileName = 'generated-pdf.pdf';
 
-    response.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    );
-    response.setHeader('Content-Disposition', 'attachment; filename=data.xlsx');
+    // Данные для шаблона
+    const data = { name: 'John Doe', email: 'john@example.com' };
 
-    // Convert JSON data to Excel format
-    const xls = json2xls(jsonData);
+    // Путь к шаблону EJS
+    const templatePath = path.join(__dirname, 'template', 'mdnreport.ejs');
 
-    // Set the response headers to indicate a downloadable Excel file
+    // Рендеринг шаблона EJS в HTML
+    const template = fs.readFileSync(templatePath, 'utf-8');
+    const html = ejs.render(template, { data });
 
-    // Send the Excel file as a response
-    response.send(xls);
+    // Установка заголовков для PDF
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
 
-    // Optional: If you want to save the Excel file locally, you can use fs-extra
-    await fs.writeFile('data.xlsx', xls, 'binary');
+    // Поток для записи PDF
+    doc.pipe(res);
+
+    // Помещаем HTML в PDF
+    doc.text(html);
+
+    // Заканчиваем запись PDF и отправляем клиенту
+    doc.end();
   }
 }

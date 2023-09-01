@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import { findAndRename, findAndReplace } from './lib';
-import promptSync from 'prompt-sync';
+import usePrompt from 'prompt-sync';
 
-const prompt = promptSync();
+const prompt = usePrompt();
 const newNamePascal = prompt('What is ClassName?: ');
 const newNameKebab = newNamePascal
   .replace(/([a-z0–9])([A-Z])/g, '$1-$2')

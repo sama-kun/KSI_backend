@@ -25,6 +25,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
   },
-	"include": ["src","convertor"],
-  "exclude": ["template"]
+	"include": ["src","convertor", "public"],
+  "exclude": ["templater"]
 }

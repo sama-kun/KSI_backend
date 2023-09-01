@@ -1,33 +1,59 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryResponse } from './dto/cloudinary-response.dto';
-import streamifier from 'streamifier';
+import { Readable } from 'stream';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FileEntity } from '@/database/entities/file.entity';
+import { Repository, TypeORMError } from 'typeorm';
+import { UserEntity } from '../../database/entities/user.entity';
+import { FileTypesEnum } from '@/interfaces/enums';
+import { BaseService } from '@/common/base/BaseService';
 const console = new Logger('CloudinaryService');
 
 @Injectable()
-export class CloudinaryService {
-  uploadImage(file: Express.Multer.File): Promise<CloudinaryResponse> {
-    return new Promise<CloudinaryResponse>((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
-        },
-      );
-
-      streamifier.createReadStream(file.buffer).pipe(uploadStream);
-    });
+export class CloudinaryService extends BaseService<
+  FileEntity,
+  Partial<FileEntity>,
+  Partial<FileEntity>
+> {
+  constructor(
+    @InjectRepository(FileEntity) protected repo: Repository<FileEntity>,
+  ) {
+    super();
   }
 
-  async uploadFiles(
-    files: Express.Multer.File[],
-  ): Promise<CloudinaryResponse[]> {
+  async createMy(
+    user: UserEntity = null,
+    item: number = null,
+    result: CloudinaryResponse,
+  ) {
     try {
-      const uploadPromises = files.map((file) => this.uploadImage(file));
-      return Promise.all(uploadPromises);
+      let id: number = null;
+      let type = FileTypesEnum.IMAGE;
+      let itemId: number = null;
+      if (user) {
+        id = user.id;
+      }
+      if (item) {
+        itemId = item;
+      }
+      if (result.format === 'pdf') {
+        type = FileTypesEnum.PDF;
+      }
+      const file = await this.repo.save({
+        createdBy: { id },
+        url: result.url,
+        secure_url: result.secure_url,
+        asset_id: result.asset_id,
+        public_id: result.public_id,
+        folder: result.folder,
+        type,
+        item: { id: itemId },
+      });
+      return await this.findById(file.id, ['item']);
     } catch (error) {
-      console.error('Error uploading files to Cloudinary:', error);
-      throw error;
+      console.error(error);
+      throw new TypeORMError(error);
     }
   }
 
@@ -44,18 +70,88 @@ export class CloudinaryService {
     }
   }
 
-  async uploadPdf(file: Express.Multer.File): Promise<any> {
-    const uploadOptions = {
-      folder: 'pdf_files', // Specify the folder where you want to save the PDF files in Cloudinary
-      use_filename: true,
-      unique_filename: false,
-    };
-
-    const uploadResult = await cloudinary.uploader.upload(
-      file.path,
-      uploadOptions,
-    );
+  async uploadPdf(user: UserEntity, file: Express.Multer.File): Promise<any> {
+    const uploadResult = await this.uploadFile(user, file, {
+      folder: 'pdf_files',
+    });
 
     return uploadResult;
+  }
+
+  async uploadFile(
+    user: UserEntity = null,
+    file: Express.Multer.File,
+    options: any,
+    item: number = null,
+  ): Promise<CloudinaryResponse> {
+    options = {
+      ...options,
+      public_id: file.originalname,
+    };
+    // Convert the file buffer to a Buffer (if it's not already)
+    const buffer = Buffer.from(file.buffer);
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(options, (error, result) => {
+          if (error) {
+            // Handle the error here
+            reject(error);
+          } else {
+            // Handle the successful upload here
+            this.createMy(user, item, result).then((data) => {
+              result.db = data;
+              resolve(result);
+            });
+          }
+        })
+        .end(buffer); // Pass the buffer here
+    });
+  }
+
+  async uploadFiles(
+    user: UserEntity,
+    item: number = null,
+    files: Express.Multer.File[],
+    folder: string,
+  ) {
+    const uploads = [];
+
+    for (const file of files) {
+      const stream = new Readable();
+      stream.push(file.buffer);
+      stream.push(null);
+
+      const options = {
+        folder: folder,
+        public_id: file.originalname, // Use the original filename as the Cloudinary filename
+      };
+
+      const uploadPromise = new Promise((resolve, reject) => {
+        const bufferChunks = [];
+        stream.on('data', (chunk) => {
+          bufferChunks.push(chunk);
+        });
+
+        stream.on('end', () => {
+          const buffer = Buffer.concat(bufferChunks);
+          cloudinary.uploader
+            .upload_stream(options, (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                this.createMy(user, item, result).then((data) => {
+                  result.db = data;
+                  resolve(result);
+                });
+              }
+            })
+            .end(buffer);
+        });
+      });
+
+      uploads.push(uploadPromise);
+    }
+
+    return Promise.all(uploads); // Wait for all uploads to complete
   }
 }

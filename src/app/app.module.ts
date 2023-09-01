@@ -18,6 +18,7 @@ import { ProjectModule } from '@/modules/project/project.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
+import { MaintenanceModule } from '@/modules/maintenance/maintenance.module';
 dotenv.config();
 
 console.log(process.env.POSTGRES_PORT);
@@ -32,6 +33,7 @@ console.log(process.env.POSTGRES_PORT);
     CloudinaryModule,
     CartModule,
     ProjectModule,
+    MaintenanceModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -49,12 +51,12 @@ console.log(process.env.POSTGRES_PORT);
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-      ssl: true,
-      extra: {
-        ssl: {
-          ca: fs.readFileSync('./ksi_db.crt'),
-        },
-      },
+      // ssl: true,
+      // extra: {
+      //   ssl: {
+      //     ca: fs.readFileSync('./ksi_db.crt'),
+      //   },
+      // },
     }),
   ],
   controllers: [AppController],

@@ -22,8 +22,8 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
         this.projectService = projectService;
         this.dataService = projectService;
     }
-    mdnreport(id, response) {
-        return this.projectService.mdnReport(response);
+    mdnreport(id, res) {
+        return this.projectService.mdnReport(res);
     }
 };
 __decorate([

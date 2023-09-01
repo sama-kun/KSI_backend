@@ -8,5 +8,5 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 export declare class ProjectController extends BaseController<ProjectEntity, CreateProjectDto, UpdateProjectDto, SearchQueryDto, ProjectService> {
     private projectService;
     constructor(projectService: ProjectService);
-    mdnreport(id: number, response: Response): Promise<void>;
+    mdnreport(id: number, res: Response): Promise<void>;
 }

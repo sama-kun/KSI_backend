@@ -3,7 +3,7 @@ import { BaseModel } from './BaseModel';
 import { Like, ObjectLiteral, Repository, TypeORMError } from 'typeorm';
 import { UserEntity } from '@/database/entities/user.entity';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-
+const console = new Logger('BaseService');
 export abstract class BaseService<
   Entity extends BaseModel & ObjectLiteral,
   CreateDto extends Partial<Entity>,
@@ -69,7 +69,11 @@ export abstract class BaseService<
     if (user) {
       userId = user.id;
     }
-    Object.assign(record, { ...data, updatedBy: { id: userId } });
+    Object.assign(record, {
+      ...data,
+      updatedBy: { id: userId },
+      updatedAt: new Date(),
+    });
     try {
       return await this.repo.save(record);
     } catch (e) {
@@ -93,9 +97,9 @@ export abstract class BaseService<
       const obj = search[key];
       convertedSearch = { [key]: Like(`%${obj}%`) };
     }
-    if (pagination) {
-      page = pagination.page;
-      pageSize = pagination.pageSize;
+    if (pagination && typeof pagination === 'object') {
+      page = parseInt(pagination.page, 10) || 1;
+      pageSize = parseInt(pagination.pageSize, 10) || 10;
     }
     console.debug(pagination);
     try {

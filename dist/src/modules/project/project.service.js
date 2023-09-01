@@ -30,30 +30,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectService = void 0;
 const BaseService_1 = require("../../common/base/BaseService");
-const json2xls = __importStar(require("json2xls"));
-const fs = __importStar(require("fs-extra"));
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const project_entity_1 = require("../../database/entities/project.entity");
 const common_1 = require("@nestjs/common");
+const pdfkit_1 = __importDefault(require("pdfkit"));
+const ejs = __importStar(require("ejs"));
+const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
 let ProjectService = class ProjectService extends BaseService_1.BaseService {
     constructor(repo) {
         super();
         this.repo = repo;
     }
-    async mdnReport(response) {
-        const jsonData = [
-            { name: 'John Doe', age: 30, email: 'john@example.com' },
-            { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-        ];
-        response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        response.setHeader('Content-Disposition', 'attachment; filename=data.xlsx');
-        const xls = json2xls(jsonData);
-        response.send(xls);
-        await fs.writeFile('data.xlsx', xls, 'binary');
+    async mdnReport(res) {
+        const doc = new pdfkit_1.default();
+        const fileName = 'generated-pdf.pdf';
+        const data = { name: 'John Doe', email: 'john@example.com' };
+        const templatePath = path.join(__dirname, 'template', 'mdnreport.ejs');
+        const template = fs.readFileSync(templatePath, 'utf-8');
+        const html = ejs.render(template, { data });
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+        doc.pipe(res);
+        doc.text(html);
+        doc.end();
     }
 };
 ProjectService = __decorate([
