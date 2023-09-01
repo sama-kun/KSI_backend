@@ -24,10 +24,10 @@ export const appDataSource = new DataSource({
     migrationsDir: 'src/database/migrations/',
     seedsDir: 'src/database/seeds/',
   },
-  // ssl: true,
-  // extra: {
-  //   ssl: {
-  //     ca: fs.readFileSync('./ksi_db.crt'),
-  //   },
-  // },
+  ssl: true,
+  extra: {
+    ssl: {
+      ca: fs.readFileSync('./ksi_db.crt'),
+    },
+  },
 } as DataSourceOptions);
