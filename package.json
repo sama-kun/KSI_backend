@@ -9,7 +9,6 @@
       "schema": "./src/database/schema.prisma"
    },
    "scripts": {
-      "prebuild": "yarn copy-template && yarn copy-public",
       "build": "nest build",
       "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
       "start": "nest start",
