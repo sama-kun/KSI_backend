@@ -28,11 +28,11 @@
       "migration:create": "node_modules/.bin/typeorm migration:create ",
       "migration:show": "yarn typeorm migration:show",
       "migration:generate": "yarn typeorm migration:generate ",
-      "migration:run": "yarn typeorm migration:run",
       "migration:revert": "yarn typeorm migration:revert",
       "schema:drop": "yarn typeorm schema:drop",
       "migration:do": "yarn schema:drop && yarn migration:run && yarn migration:generate ",
-      "migration:scratch": "yarn schema:drop && yarn migration:run",
+      "migration:scratch": "yarn typeorm migration:run",
+      "migration:run": "yarn schema:drop && yarn migration:scratch",
       "compodoc": "npx @compodoc/compodoc -p tsconfig.json"
    },
    "dependencies": {
