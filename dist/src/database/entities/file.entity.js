@@ -45,16 +45,16 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.images),
     (0, swagger_1.ApiPropertyOptional)(),
-    (0, swagger_1.ApiProperty)({
-        example: 'pdf',
-        description: 'The formats of tghe file',
-        enum: enums_1.FileTypesEnum,
-    }),
     __metadata("design:type", Object)
 ], FileEntity.prototype, "item", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypesEnum, default: enums_1.FileTypesEnum.IMAGE }),
     (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'pdf',
+        description: 'The formats of tghe file',
+        enum: enums_1.FileTypesEnum,
+    }),
     __metadata("design:type", String)
 ], FileEntity.prototype, "type", void 0);
 FileEntity = __decorate([

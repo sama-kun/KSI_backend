@@ -29,14 +29,14 @@ export class FileEntity extends BaseModel implements IFile {
 
   @ManyToOne(() => ItemEntity, (item) => item.images)
   @ApiPropertyOptional()
+  item: Relation<ItemEntity>;
+
+  @Column({ type: 'enum', enum: FileTypesEnum, default: FileTypesEnum.IMAGE })
+  @ApiPropertyOptional()
   @ApiProperty({
     example: 'pdf',
     description: 'The formats of tghe file',
     enum: FileTypesEnum, // Use the enum option to specify the enum type
   })
-  item: Relation<ItemEntity>;
-
-  @Column({ type: 'enum', enum: FileTypesEnum, default: FileTypesEnum.IMAGE })
-  @ApiPropertyOptional()
   type: FileTypesEnum;
 }
