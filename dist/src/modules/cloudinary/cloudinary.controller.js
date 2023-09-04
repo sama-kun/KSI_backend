@@ -49,7 +49,6 @@ let CloudinaryController = class CloudinaryController {
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Upload a file' }),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiBody)({
@@ -67,7 +66,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadImage", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({
         summary: 'Upload a files (U can send a lot files). Only for items',
     }),
@@ -96,7 +94,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CloudinaryController.prototype, "uploadImages", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Upload a file format PDF' }),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiBody)({
@@ -113,7 +110,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadPdf", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Get all file' }),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiBody)({
@@ -132,7 +128,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'File ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
     (0, swagger_1.ApiResponse)({
@@ -153,6 +148,7 @@ __decorate([
 CloudinaryController = __decorate([
     (0, swagger_1.ApiTags)('Files'),
     (0, common_1.Controller)('cloud'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [clodinary_service_1.CloudinaryService])
 ], CloudinaryController);
 exports.CloudinaryController = CloudinaryController;

@@ -29,8 +29,9 @@ import {
 import { RoleEnum } from '@/interfaces/enums';
 import { Roles } from '@/common/decorators/roles-auth.decorator';
 
-@ApiTags('cats')
+@ApiTags('User')
 @Controller('user')
+@ApiBearerAuth()
 export class UserController extends BaseController<
   UserEntity,
   CreateUserDto,
@@ -43,7 +44,6 @@ export class UserController extends BaseController<
     this.dataService = userService;
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Category' })
   @ApiResponse({
     status: 201,
@@ -81,7 +81,6 @@ export class UserController extends BaseController<
   }
 
   @ApiOperation({ summary: 'Get all Users using query' })
-  @ApiBearerAuth()
   @ApiQuery({ type: SearchUserDto })
   @Get()
   @UseGuards(RolesQuard)
@@ -97,7 +96,6 @@ export class UserController extends BaseController<
     );
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiOperation({ summary: 'Get User by id' })
   @ApiResponse({

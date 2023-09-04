@@ -33,6 +33,7 @@ import { UserEntity } from '@/database/entities/user.entity';
 
 @ApiTags('Category')
 @Controller('category')
+@ApiBearerAuth()
 export class CategoryController extends BaseController<
   CategoryEntity,
   CreateCategoryDto,
@@ -45,7 +46,6 @@ export class CategoryController extends BaseController<
     this.dataService = categoryService;
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'Category ID' })
   @ApiOperation({ summary: 'Get Category by id' })
   @ApiResponse({
@@ -64,7 +64,6 @@ export class CategoryController extends BaseController<
     return this.dataService.findById(id, relations);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Category' })
   @ApiResponse({
     status: 201,
@@ -82,7 +81,6 @@ export class CategoryController extends BaseController<
     return this.dataService.create(data, user);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Category' })
   @ApiResponse({
     status: 201,
@@ -103,7 +101,6 @@ export class CategoryController extends BaseController<
   }
 
   @ApiOperation({ summary: 'Get all Categorys using query' })
-  @ApiBearerAuth()
   @ApiQuery({ type: SearchCategoryDto })
   @Get()
   @UseGuards(RolesQuard)
@@ -122,13 +119,9 @@ export class CategoryController extends BaseController<
   @ApiOperation({ summary: 'Delete by ID' })
   @ApiParam({ name: 'id', description: 'Category ID' })
   @Delete(':id')
-  @ApiBearerAuth()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {
-    // Check permissions here like that:
-    // const record = await super.findOne(query)
-    // if (user.id !== record.id) throw new UnauthorizedException()
     console.log(user);
     return this.dataService.delete(user, id);
   }

@@ -52,7 +52,6 @@ let MaintenanceController = class MaintenanceController extends BaseController_1
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create' }),
     (0, swagger_1.ApiBody)({ type: maintenance_entity_1.MaintenanceEntity }),
     (0, swagger_1.ApiResponse)({
@@ -70,7 +69,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "createCustom", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Maintenance ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Maintenance by id' }),
     (0, swagger_1.ApiResponse)({
@@ -89,7 +87,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "getOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Update Maintenance' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -132,7 +129,6 @@ __decorate([
 ], MaintenanceController.prototype, "addFile", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all Maintenances using query' }),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiQuery)({ type: search_maintenance_dto_1.SearchMaintenanceDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -144,6 +140,7 @@ __decorate([
 MaintenanceController = __decorate([
     (0, swagger_1.ApiTags)('Maintenance'),
     (0, common_1.Controller)('maintenance'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [maintenance_service_1.MaintenanceService])
 ], MaintenanceController);
 exports.MaintenanceController = MaintenanceController;

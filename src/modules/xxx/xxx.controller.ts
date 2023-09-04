@@ -46,7 +46,7 @@ export class XxxController extends BaseController<
     this.dataService = dataService;
   }
 
-  // @ApiBearerAuth()
+  //
   // @ApiParam({ name: 'id', description: 'Xxx ID' })
   // @ApiOperation({ summary: 'Get Xxx by id' })
   // @ApiResponse({
@@ -62,7 +62,6 @@ export class XxxController extends BaseController<
   //   return this.dataService.findById(id, relations);
   // }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Xxx' })
   @ApiResponse({
     status: 201,
@@ -77,7 +76,6 @@ export class XxxController extends BaseController<
     return this.dataService.create(data, user);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Xxx' })
   @ApiResponse({
     status: 201,
@@ -98,7 +96,7 @@ export class XxxController extends BaseController<
   }
 
   // @ApiOperation({ summary: 'Get all Xxxs using query' })
-  // @ApiBearerAuth()
+  //
   // @ApiQuery({ type: SearchXxxDto })
   // @Get()
   // @UseGuards(RolesQuard)
@@ -117,7 +115,6 @@ export class XxxController extends BaseController<
   @ApiOperation({ summary: 'Delete by ID' })
   @ApiParam({ name: 'id', description: 'Xxx ID' })
   @Delete(':id')
-  @ApiBearerAuth()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {

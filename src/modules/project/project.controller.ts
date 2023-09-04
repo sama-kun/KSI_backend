@@ -37,6 +37,7 @@ import { Roles } from '@/common/decorators/roles-auth.decorator';
 
 @ApiTags('Project')
 @Controller('project')
+@ApiBearerAuth()
 export class ProjectController extends BaseController<
   ProjectEntity,
   CreateProjectDto,
@@ -49,7 +50,6 @@ export class ProjectController extends BaseController<
     this.dataService = projectService;
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'Project ID' })
   @ApiOperation({ summary: 'Get Project by id' })
   @ApiResponse({
@@ -69,7 +69,6 @@ export class ProjectController extends BaseController<
     return this.dataService.findById(id, relations);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Project' })
   @ApiResponse({
     status: 201,
@@ -87,7 +86,6 @@ export class ProjectController extends BaseController<
     return this.dataService.create(data, user);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Project' })
   @ApiResponse({
     status: 201,
@@ -108,7 +106,6 @@ export class ProjectController extends BaseController<
   }
 
   @ApiOperation({ summary: 'Get all Projects using query' })
-  @ApiBearerAuth()
   @ApiQuery({ type: SearchProjectDto })
   @Get()
   @UseGuards(RolesQuard)
@@ -127,7 +124,6 @@ export class ProjectController extends BaseController<
   @ApiOperation({ summary: 'Delete by ID' })
   @ApiParam({ name: 'id', description: 'Project ID' })
   @Delete(':id')
-  @ApiBearerAuth()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {

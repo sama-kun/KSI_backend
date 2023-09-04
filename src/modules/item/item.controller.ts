@@ -5,8 +5,11 @@ import { SearchItemDto } from './dto/search-item.dto';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { ItemEntity } from '@/database/entities/item.entity';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Item')
 @Controller('item')
+@ApiBearerAuth()
 export class ItemController extends BaseController<
   ItemEntity,
   CreateItemDto,

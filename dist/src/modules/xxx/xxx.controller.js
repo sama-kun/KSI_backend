@@ -41,7 +41,6 @@ let XxxController = class XxxController extends BaseController_1.BaseController 
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create Xxx' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -59,7 +58,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], XxxController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Update Xxx' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -82,7 +80,6 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Xxx ID' }),
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),

@@ -35,6 +35,7 @@ import {
 
 @ApiTags('Maintenance')
 @Controller('maintenance')
+@ApiBearerAuth()
 export class MaintenanceController extends BaseController<
   MaintenanceEntity,
   CreateMaintenanceDto,
@@ -47,7 +48,6 @@ export class MaintenanceController extends BaseController<
     this.dataService = dataService;
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create' })
   @ApiBody({ type: MaintenanceEntity })
   @ApiResponse({
@@ -62,7 +62,6 @@ export class MaintenanceController extends BaseController<
     return this.dataService.create(data, user);
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'Maintenance ID' })
   @ApiOperation({ summary: 'Get Maintenance by id' })
   @ApiResponse({
@@ -82,7 +81,6 @@ export class MaintenanceController extends BaseController<
     return this.dataService.findById(id, relations);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Maintenance' })
   @ApiResponse({
     status: 201,
@@ -122,7 +120,6 @@ export class MaintenanceController extends BaseController<
   // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
 
   @ApiOperation({ summary: 'Get all Maintenances using query' })
-  @ApiBearerAuth()
   @ApiQuery({ type: SearchMaintenanceDto })
   @Get()
   @UseGuards(RolesQuard)

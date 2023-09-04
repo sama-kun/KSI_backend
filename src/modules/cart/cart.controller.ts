@@ -31,10 +31,10 @@ import {
 
 @ApiTags('Cart')
 @Controller('cart')
+@ApiBearerAuth()
 export class CartController {
   constructor(private cartService: CartService) {}
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create cart' })
   @ApiResponse({
     status: 201,
@@ -52,7 +52,6 @@ export class CartController {
     return this.cartService.createMany(data, user);
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'Cart ID' })
   @ApiOperation({ summary: 'Get Cart by id' })
   @ApiResponse({
@@ -69,7 +68,6 @@ export class CartController {
     return this.cartService.findById(id, relations);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update cart' })
   @ApiResponse({
     status: 201,
@@ -94,7 +92,6 @@ export class CartController {
   //   return this.cartService.createMany(data, user.id)
   // }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Add 1 item to Cart' })
   @ApiResponse({
     status: 201,
@@ -109,7 +106,6 @@ export class CartController {
     return this.cartService.plus(id);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Remove 1 item from Cart' })
   @ApiResponse({
     status: 201,
@@ -124,7 +120,6 @@ export class CartController {
     return this.cartService.minus(id);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
   @ApiResponse({
     status: 201,
@@ -155,7 +150,6 @@ export class CartController {
   }
 
   @ApiOperation({ summary: 'Get all carts using query' })
-  @ApiBearerAuth()
   @ApiQuery({ type: SearchCartDto })
   @Get()
   @UseGuards(RolesQuard)
@@ -174,7 +168,6 @@ export class CartController {
   @ApiOperation({ summary: 'Delete by ID' })
   @ApiParam({ name: 'id', description: 'Cart ID' })
   @Delete(':id')
-  @ApiBearerAuth()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {
@@ -200,7 +193,6 @@ export class CartController {
   })
   @ApiParam({ name: 'id', description: 'Project ID' })
   @Patch('send/:projectId')
-  @ApiBearerAuth()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async sendToProject(

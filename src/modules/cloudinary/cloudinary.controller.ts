@@ -36,10 +36,10 @@ const console = new Logger('CloudinaryController');
 
 @ApiTags('Files')
 @Controller('cloud')
+@ApiBearerAuth()
 export class CloudinaryController {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Upload a file' })
   @ApiConsumes('multipart/form-data') // Specify the content type
   @ApiBody({
@@ -67,7 +67,7 @@ export class CloudinaryController {
   // async getAllImages(): Promise<any> {
   //   return this.cloudinaryService.getAllImages();
   // }
-  @ApiBearerAuth()
+
   @ApiOperation({
     summary: 'Upload a files (U can send a lot files). Only for items',
   })
@@ -101,7 +101,6 @@ export class CloudinaryController {
     );
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Upload a file format PDF' })
   @ApiConsumes('multipart/form-data') // Specify the content type
   @ApiBody({
@@ -118,7 +117,6 @@ export class CloudinaryController {
     return this.cloudinaryService.uploadPdf(user, File);
   }
 
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all file' })
   @ApiConsumes('multipart/form-data') // Specify the content type
   @ApiBody({
@@ -143,7 +141,6 @@ export class CloudinaryController {
     );
   }
 
-  @ApiBearerAuth()
   @ApiParam({ name: 'id', description: 'File ID' })
   @ApiOperation({ summary: 'Get Cart by id' })
   @ApiResponse({

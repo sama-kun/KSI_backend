@@ -46,7 +46,6 @@ let UserController = class UserController extends BaseController_1.BaseControlle
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create Category' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -84,7 +83,6 @@ __decorate([
 ], UserController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all Users using query' }),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiQuery)({ type: search_user_dto_1.SearchUserDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -95,7 +93,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'User ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get User by id' }),
     (0, swagger_1.ApiResponse)({
@@ -114,8 +111,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getOne", null);
 UserController = __decorate([
-    (0, swagger_1.ApiTags)('cats'),
+    (0, swagger_1.ApiTags)('User'),
     (0, common_1.Controller)('user'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [users_service_1.UserService])
 ], UserController);
 exports.UserController = UserController;

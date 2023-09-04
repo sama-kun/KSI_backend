@@ -13,6 +13,7 @@ exports.ItemController = void 0;
 const common_1 = require("@nestjs/common");
 const item_service_1 = require("./item.service");
 const BaseController_1 = require("../../common/base/BaseController");
+const swagger_1 = require("@nestjs/swagger");
 let ItemController = class ItemController extends BaseController_1.BaseController {
     constructor(itemService) {
         super();
@@ -21,7 +22,9 @@ let ItemController = class ItemController extends BaseController_1.BaseControlle
     }
 };
 ItemController = __decorate([
+    (0, swagger_1.ApiTags)('Item'),
     (0, common_1.Controller)('item'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [item_service_1.ItemService])
 ], ItemController);
 exports.ItemController = ItemController;

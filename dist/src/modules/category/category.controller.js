@@ -50,7 +50,6 @@ let CategoryController = class CategoryController extends BaseController_1.BaseC
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Category ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Category by id' }),
     (0, swagger_1.ApiResponse)({
@@ -68,7 +67,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CategoryController.prototype, "getOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create Category' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -86,7 +84,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CategoryController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Update Category' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -107,7 +104,6 @@ __decorate([
 ], CategoryController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all Categorys using query' }),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiQuery)({ type: search_category_dto_1.SearchCategoryDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -121,7 +117,6 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Category ID' }),
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
@@ -133,6 +128,7 @@ __decorate([
 CategoryController = __decorate([
     (0, swagger_1.ApiTags)('Category'),
     (0, common_1.Controller)('category'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [category_service_1.CategoryService])
 ], CategoryController);
 exports.CategoryController = CategoryController;

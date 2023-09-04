@@ -50,7 +50,6 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Project by id' }),
     (0, swagger_1.ApiResponse)({
@@ -69,7 +68,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "getOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create Project' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -87,7 +85,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProjectController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Update Project' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -108,7 +105,6 @@ __decorate([
 ], ProjectController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all Projects using query' }),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiQuery)({ type: search_project_dto_1.SearchProjectDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -122,7 +118,6 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
@@ -134,6 +129,7 @@ __decorate([
 ProjectController = __decorate([
     (0, swagger_1.ApiTags)('Project'),
     (0, common_1.Controller)('project'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [project_service_1.ProjectService])
 ], ProjectController);
 exports.ProjectController = ProjectController;

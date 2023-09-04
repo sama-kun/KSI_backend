@@ -61,7 +61,6 @@ let CartController = class CartController {
     }
 };
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -79,7 +78,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "createCustom", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
     (0, swagger_1.ApiResponse)({
@@ -98,7 +96,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "getOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Update cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -119,7 +116,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Add 1 item to Cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -136,7 +132,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "plus", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Remove 1 item from Cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -153,7 +148,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "minus", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiOperation)({ summary: 'Return items to Base of KSI from Project' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -184,7 +178,6 @@ __decorate([
 ], CartController.prototype, "return", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all carts using query' }),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiQuery)({ type: search_cart_dto_1.SearchCartDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -198,7 +191,6 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
@@ -223,7 +215,6 @@ __decorate([
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, common_1.Patch)('send/:projectId'),
-    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
@@ -236,6 +227,7 @@ __decorate([
 CartController = __decorate([
     (0, swagger_1.ApiTags)('Cart'),
     (0, common_1.Controller)('cart'),
+    (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [cart_service_1.CartService])
 ], CartController);
 exports.CartController = CartController;
