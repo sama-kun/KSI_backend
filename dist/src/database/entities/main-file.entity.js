@@ -14,6 +14,7 @@ const enums_1 = require("../../interfaces/enums");
 const typeorm_1 = require("typeorm");
 const file_entity_1 = require("./file.entity");
 const maintenance_entity_1 = require("./maintenance.entity");
+const swagger_1 = require("@nestjs/swagger");
 let MainFileEntity = class MainFileEntity {
 };
 __decorate([
@@ -26,16 +27,24 @@ __decorate([
         enum: enums_1.MainFileTypesEnum,
         default: enums_1.MainFileTypesEnum.main,
     }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'main',
+        description: 'the types of the reports',
+        enum: enums_1.MainFileTypesEnum,
+    }),
     __metadata("design:type", String)
 ], MainFileEntity.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => file_entity_1.FileEntity),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", file_entity_1.FileEntity)
 ], MainFileEntity.prototype, "file", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
     (0, typeorm_1.ManyToOne)(() => maintenance_entity_1.MaintenanceEntity, (maintenance) => maintenance.mainFiles),
     (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", maintenance_entity_1.MaintenanceEntity)
+    __metadata("design:type", Object)
 ], MainFileEntity.prototype, "maintenance", void 0);
 MainFileEntity = __decorate([
     (0, typeorm_1.Entity)('main-file')

@@ -9,6 +9,8 @@ import {
 } from 'typeorm';
 import { FileEntity } from './file.entity';
 import { MaintenanceEntity } from './maintenance.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Relation } from 'typeorm';
 
 @Entity('main-file')
 export class MainFileEntity implements IMainFile {
@@ -20,12 +22,20 @@ export class MainFileEntity implements IMainFile {
     enum: MainFileTypesEnum,
     default: MainFileTypesEnum.main,
   })
+  @ApiPropertyOptional()
+  @ApiProperty({
+    example: 'main',
+    description: 'the types of the reports',
+    enum: MainFileTypesEnum, // Use the enum option to specify the enum type
+  })
   type: MainFileTypesEnum;
 
   @ManyToOne(() => FileEntity)
+  @ApiPropertyOptional()
   file: FileEntity;
 
+  @ApiPropertyOptional()
   @ManyToOne(() => MaintenanceEntity, (maintenance) => maintenance.mainFiles)
   @JoinColumn()
-  maintenance: MaintenanceEntity;
+  maintenance: Relation<MaintenanceEntity>;
 }

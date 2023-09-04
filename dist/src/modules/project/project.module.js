@@ -12,6 +12,7 @@ const project_service_1 = require("./project.service");
 const project_controller_1 = require("./project.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const project_entity_1 = require("../../database/entities/project.entity");
+const jwt_1 = require("@nestjs/jwt");
 let ProjectModule = class ProjectModule {
 };
 ProjectModule = __decorate([
@@ -20,6 +21,7 @@ ProjectModule = __decorate([
         providers: [project_service_1.ProjectService],
         imports: [
             typeorm_1.TypeOrmModule.forFeature([project_entity_1.ProjectEntity]),
+            jwt_1.JwtModule,
         ],
         exports: [project_service_1.ProjectService],
     })

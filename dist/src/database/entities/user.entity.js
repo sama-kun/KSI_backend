@@ -15,26 +15,37 @@ const enums_1 = require("../../interfaces/enums");
 const cart_entity_1 = require("./cart.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const maintenance_entity_1 = require("./maintenance.entity");
+const swagger_1 = require("@nestjs/swagger");
 let UserEntity = class UserEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], UserEntity.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.RoleEnum, default: enums_1.RoleEnum.USER }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'user',
+        description: 'The role of the user',
+        enum: enums_1.RoleEnum,
+    }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.createdBy),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity, isArray: true }),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "carts", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => maintenance_entity_1.MaintenanceEntity, (maintenance) => maintenance.checker),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => maintenance_entity_1.MaintenanceEntity, isArray: true }),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "maintenances", void 0);
 UserEntity = __decorate([

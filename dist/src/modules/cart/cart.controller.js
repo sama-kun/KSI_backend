@@ -61,6 +61,14 @@ let CartController = class CartController {
     }
 };
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create cart' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Cart created successfully',
+    }),
+    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -71,6 +79,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "createCustom", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Cart created successfully',
+    }),
+    (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Get)(':id'),
@@ -81,6 +98,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "getOne", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Update cart' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Cart updated successfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
+    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Patch)(':id'),
@@ -93,6 +119,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Add 1 item to Cart' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Cart updated successfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
     (0, common_1.Get)(':id/plus'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -102,6 +136,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "plus", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove 1 item from Cart' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Cart updated successfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
     (0, common_1.Get)(':id/minus'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -111,6 +153,26 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "minus", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Return items to Base of KSI from Project' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_entity_1.CartEntity,
+        description: 'Items returned succesfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                initialQuantity: {
+                    type: 'number',
+                    example: 10,
+                    description: 'The initial quantity of the cart',
+                },
+            },
+        },
+    }),
     (0, common_1.Post)(':id/return'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -121,7 +183,10 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "return", null);
 __decorate([
-    (0, common_1.Get)(''),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all carts using query' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiQuery)({ type: search_cart_dto_1.SearchCartDto }),
+    (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, common_1.Query)()),
@@ -130,6 +195,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
     (0, common_1.Delete)(':id'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -141,6 +208,20 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "remove", null);
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Send to the Project' }),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                ids: {
+                    type: 'array',
+                    example: [1, 2, 3, 4],
+                    description: 'The array of ids carts',
+                },
+            },
+        },
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, common_1.Patch)('send/:projectId'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
@@ -153,6 +234,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "sendToProject", null);
 CartController = __decorate([
+    (0, swagger_1.ApiTags)('Cart'),
     (0, common_1.Controller)('cart'),
     __metadata("design:paramtypes", [cart_service_1.CartService])
 ], CartController);

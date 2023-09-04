@@ -21,11 +21,30 @@ import { Roles } from '@/common/decorators/roles-auth.decorator';
 import { AuthUser } from '@/common/decorators/auth-user.decorator';
 import { UserEntity } from '@/database/entities/user.entity';
 import { SearchFileDto } from './dto/search-file.dto';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { UpdateFileDto } from './dto/update-file.dto';
 const console = new Logger('CloudinaryController');
 
+@ApiTags('Files')
 @Controller('cloud')
 export class CloudinaryController {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Upload a file' })
+  @ApiConsumes('multipart/form-data') // Specify the content type
+  @ApiBody({
+    description: 'Image to upload', // Define a DTO for the file upload (optional)
+  })
   @Post('image')
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
@@ -48,7 +67,23 @@ export class CloudinaryController {
   // async getAllImages(): Promise<any> {
   //   return this.cloudinaryService.getAllImages();
   // }
-
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Upload a files (U can send a lot files). Only for items',
+  })
+  @ApiConsumes('multipart/form-data') // Specify the content type
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        item: {
+          type: 'number',
+          example: 1,
+          description: 'ID of item',
+        },
+      },
+    },
+  })
   @Post('upload-multiply')
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
@@ -66,6 +101,12 @@ export class CloudinaryController {
     );
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Upload a file format PDF' })
+  @ApiConsumes('multipart/form-data') // Specify the content type
+  @ApiBody({
+    description: 'PDF to upload', // Define a DTO for the file upload (optional)
+  })
   @Post('pdf')
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
@@ -77,6 +118,17 @@ export class CloudinaryController {
     return this.cloudinaryService.uploadPdf(user, File);
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all file' })
+  @ApiConsumes('multipart/form-data') // Specify the content type
+  @ApiBody({
+    description: 'Image to upload', // Define a DTO for the file upload (optional)
+  })
+  @ApiResponse({
+    status: 201,
+    type: Array,
+  })
+  @ApiQuery({ type: SearchFileDto })
   @Get()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
@@ -91,6 +143,15 @@ export class CloudinaryController {
     );
   }
 
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'File ID' })
+  @ApiOperation({ summary: 'Get Cart by id' })
+  @ApiResponse({
+    status: 201,
+    type: UpdateFileDto,
+    description: 'Cart created successfully',
+  })
+  @ApiQuery({ name: 'relations', required: false, type: Array })
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Get(':id')

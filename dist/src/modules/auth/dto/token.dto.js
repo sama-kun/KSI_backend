@@ -10,16 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Token = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class Token {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], Token.prototype, "accessToken", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Object)
 ], Token.prototype, "user", void 0);
 exports.Token = Token;

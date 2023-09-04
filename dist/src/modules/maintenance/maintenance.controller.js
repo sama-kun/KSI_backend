@@ -24,6 +24,7 @@ const roles_auth_decorator_1 = require("../../common/decorators/roles-auth.decor
 const auth_user_decorator_1 = require("../../common/decorators/auth-user.decorator");
 const user_entity_1 = require("../../database/entities/user.entity");
 const main_file_entity_1 = require("../../database/entities/main-file.entity");
+const swagger_1 = require("@nestjs/swagger");
 let MaintenanceController = class MaintenanceController extends BaseController_1.BaseController {
     constructor(dataService) {
         super();
@@ -51,16 +52,33 @@ let MaintenanceController = class MaintenanceController extends BaseController_1
     }
 };
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create' }),
+    (0, swagger_1.ApiBody)({ type: maintenance_entity_1.MaintenanceEntity }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: maintenance_entity_1.MaintenanceEntity,
+        description: 'Maintenance created successfully',
+    }),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.UserEntity, Object]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, maintenance_entity_1.MaintenanceEntity]),
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "createCustom", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Maintenance ID' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get Maintenance by id' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: maintenance_entity_1.MaintenanceEntity,
+        description: 'Maintenance created successfully',
+    }),
+    (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Get)(':id'),
@@ -71,6 +89,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "getOne", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Update Maintenance' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: maintenance_entity_1.MaintenanceEntity,
+        description: 'Maintenance updated successfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Maintenance ID' }),
+    (0, swagger_1.ApiBody)({ type: maintenance_entity_1.MaintenanceEntity }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Patch)(':id'),
@@ -82,6 +109,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "update", null);
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Delete by ID' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Maintenance ID' }),
     (0, common_1.Delete)(':id'),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Param)('id')),
@@ -90,6 +119,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "delete", null);
 __decorate([
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Maintenance ID' }),
+    (0, swagger_1.ApiBody)({ type: main_file_entity_1.MainFileEntity }),
     (0, common_1.Post)(':id/addfile'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -100,6 +131,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "addFile", null);
 __decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Get all Maintenances using query' }),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiQuery)({ type: search_maintenance_dto_1.SearchMaintenanceDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -108,6 +142,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MaintenanceController.prototype, "findAll", null);
 MaintenanceController = __decorate([
+    (0, swagger_1.ApiTags)('Maintenance'),
     (0, common_1.Controller)('maintenance'),
     __metadata("design:paramtypes", [maintenance_service_1.MaintenanceService])
 ], MaintenanceController);

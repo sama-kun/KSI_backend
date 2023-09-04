@@ -12,13 +12,14 @@ const category_service_1 = require("./category.service");
 const category_controller_1 = require("./category.controller");
 const category_entity_1 = require("../../database/entities/category.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const jwt_1 = require("@nestjs/jwt");
 let CategoryModule = class CategoryModule {
 };
 CategoryModule = __decorate([
     (0, common_1.Module)({
         controllers: [category_controller_1.CategoryController],
         providers: [category_service_1.CategoryService],
-        imports: [typeorm_1.TypeOrmModule.forFeature([category_entity_1.CategoryEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([category_entity_1.CategoryEntity]), jwt_1.JwtModule],
         exports: [category_service_1.CategoryService],
     })
 ], CategoryModule);

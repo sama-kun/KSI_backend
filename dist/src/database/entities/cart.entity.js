@@ -15,44 +15,59 @@ const item_entity_1 = require("./item.entity");
 const project_entity_1 = require("./project.entity");
 const enums_1 = require("../../interfaces/enums");
 const BaseModel_1 = require("../../common/base/BaseModel");
+const swagger_1 = require("@nestjs/swagger");
 let CartEntity = class CartEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], CartEntity.prototype, "quantity", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], CartEntity.prototype, "initialQuantity", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.carts),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", item_entity_1.ItemEntity)
 ], CartEntity.prototype, "item", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => project_entity_1.ProjectEntity, (project) => project.carts, {
         nullable: true,
     }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", project_entity_1.ProjectEntity)
 ], CartEntity.prototype, "project", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: false }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Boolean)
 ], CartEntity.prototype, "isHistory", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], CartEntity.prototype, "workingHours", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamptz', nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Date)
 ], CartEntity.prototype, "returnTime", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], CartEntity.prototype, "workedHouse", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: enums_1.CartStatusEnum.OnProject }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'Warning',
+        description: 'The status of the cart',
+        enum: enums_1.CartStatusEnum,
+    }),
     __metadata("design:type", String)
 ], CartEntity.prototype, "status", void 0);
 CartEntity = __decorate([

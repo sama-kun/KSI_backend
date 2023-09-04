@@ -14,34 +14,47 @@ const typeorm_1 = require("typeorm");
 const item_entity_1 = require("./item.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const enums_1 = require("../../interfaces/enums");
+const swagger_1 = require("@nestjs/swagger");
 let FileEntity = class FileEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "url", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "secure_url", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "asset_id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "public_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "folder", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.images),
-    __metadata("design:type", item_entity_1.ItemEntity)
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'pdf',
+        description: 'The formats of tghe file',
+        enum: enums_1.FileTypesEnum,
+    }),
+    __metadata("design:type", Object)
 ], FileEntity.prototype, "item", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypesEnum, default: enums_1.FileTypesEnum.IMAGE }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], FileEntity.prototype, "type", void 0);
 FileEntity = __decorate([

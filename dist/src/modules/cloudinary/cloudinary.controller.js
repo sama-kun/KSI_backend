@@ -22,6 +22,8 @@ const roles_auth_decorator_1 = require("../../common/decorators/roles-auth.decor
 const auth_user_decorator_1 = require("../../common/decorators/auth-user.decorator");
 const user_entity_1 = require("../../database/entities/user.entity");
 const search_file_dto_1 = require("./dto/search-file.dto");
+const swagger_1 = require("@nestjs/swagger");
+const update_file_dto_1 = require("./dto/update-file.dto");
 const console = new common_1.Logger('CloudinaryController');
 let CloudinaryController = class CloudinaryController {
     constructor(cloudinaryService) {
@@ -47,6 +49,12 @@ let CloudinaryController = class CloudinaryController {
     }
 };
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload a file' }),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        description: 'Image to upload',
+    }),
     (0, common_1.Post)('image'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -59,6 +67,23 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadImage", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Upload a files (U can send a lot files). Only for items',
+    }),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                item: {
+                    type: 'number',
+                    example: 1,
+                    description: 'ID of item',
+                },
+            },
+        },
+    }),
     (0, common_1.Post)('upload-multiply'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -71,6 +96,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CloudinaryController.prototype, "uploadImages", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload a file format PDF' }),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        description: 'PDF to upload',
+    }),
     (0, common_1.Post)('pdf'),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -82,6 +113,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "uploadPdf", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all file' }),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        description: 'Image to upload',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: Array,
+    }),
+    (0, swagger_1.ApiQuery)({ type: search_file_dto_1.SearchFileDto }),
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -90,6 +132,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "findAll", null);
 __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'File ID' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: update_file_dto_1.UpdateFileDto,
+        description: 'Cart created successfully',
+    }),
+    (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Get)(':id'),
@@ -100,6 +151,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CloudinaryController.prototype, "getOne", null);
 CloudinaryController = __decorate([
+    (0, swagger_1.ApiTags)('Files'),
     (0, common_1.Controller)('cloud'),
     __metadata("design:paramtypes", [clodinary_service_1.CloudinaryService])
 ], CloudinaryController);

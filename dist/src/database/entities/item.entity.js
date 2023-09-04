@@ -16,46 +16,57 @@ const file_entity_1 = require("./file.entity");
 const cart_entity_1 = require("./cart.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const maintenance_entity_1 = require("./maintenance.entity");
+const swagger_1 = require("@nestjs/swagger");
 let ItemEntity = class ItemEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ItemEntity.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ItemEntity.prototype, "description", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => category_entity_1.CategoryEntity, (category) => category.items),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", category_entity_1.CategoryEntity)
 ], ItemEntity.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ItemEntity.prototype, "tag", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], ItemEntity.prototype, "quantity", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => file_entity_1.FileEntity, (image) => image.item),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "images", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.item),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "carts", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: 0 }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], ItemEntity.prototype, "projectQuantity", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => maintenance_entity_1.MaintenanceEntity, (main) => main.item),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => maintenance_entity_1.MaintenanceEntity, isArray: true }),
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "maintenances", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], ItemEntity.prototype, "totalQuantity", void 0);
 ItemEntity = __decorate([

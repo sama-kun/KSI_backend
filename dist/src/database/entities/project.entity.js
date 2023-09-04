@@ -13,18 +13,22 @@ exports.ProjectEntity = void 0;
 const typeorm_1 = require("typeorm");
 const cart_entity_1 = require("./cart.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
+const swagger_1 = require("@nestjs/swagger");
 let ProjectEntity = class ProjectEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ProjectEntity.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], ProjectEntity.prototype, "description", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.project),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity, isArray: true }),
     __metadata("design:type", Array)
 ], ProjectEntity.prototype, "carts", void 0);
 ProjectEntity = __decorate([

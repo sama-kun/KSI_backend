@@ -1,3 +1,4 @@
+import { Relation } from 'typeorm';
 import { ItemEntity } from './item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IFile } from '@/interfaces/entities';
@@ -8,6 +9,6 @@ export declare class FileEntity extends BaseModel implements IFile {
     asset_id: string;
     public_id: string;
     folder?: string;
-    item: ItemEntity;
+    item: Relation<ItemEntity>;
     type: FileTypesEnum;
 }

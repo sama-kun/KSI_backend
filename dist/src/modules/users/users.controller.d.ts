@@ -7,5 +7,8 @@ import { SearchUserDto } from './dto/search-user.dto';
 export declare class UserController extends BaseController<UserEntity, CreateUserDto, UpdateUserDto, SearchUserDto, UserService> {
     private userService;
     constructor(userService: UserService);
+    create(data: UserEntity[] & UserEntity, user: UserEntity): Promise<UserEntity>;
     update(user: UserEntity, id: number, updateUserDto: UpdateUserDto): Promise<UserEntity>;
+    findAll(query: SearchUserDto): Promise<any>;
+    getOne(id: number, query: SearchUserDto): Promise<UserEntity>;
 }
