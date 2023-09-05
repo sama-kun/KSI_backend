@@ -13,10 +13,11 @@ exports.ItemEntity = void 0;
 const typeorm_1 = require("typeorm");
 const category_entity_1 = require("./category.entity");
 const file_entity_1 = require("./file.entity");
-const cart_entity_1 = require("./cart.entity");
+const cart_item_entity_1 = require("./cart-item.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const maintenance_entity_1 = require("./maintenance.entity");
 const swagger_1 = require("@nestjs/swagger");
+const enums_1 = require("../../interfaces/enums");
 let ItemEntity = class ItemEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -50,7 +51,7 @@ __decorate([
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "images", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.item),
+    (0, typeorm_1.OneToMany)(() => cart_item_entity_1.CartItemEntity, (cart) => cart.item),
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "carts", void 0);
@@ -69,6 +70,16 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], ItemEntity.prototype, "totalQuantity", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", Number)
+], ItemEntity.prototype, "workingHours", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.ItemStatusEnum, default: enums_1.ItemStatusEnum.ok }),
+    (0, swagger_1.ApiProperty)({ enum: enums_1.ItemStatusEnum, example: enums_1.ItemStatusEnum.warning }),
+    __metadata("design:type", String)
+], ItemEntity.prototype, "status", void 0);
 ItemEntity = __decorate([
     (0, typeorm_1.Entity)('item')
 ], ItemEntity);

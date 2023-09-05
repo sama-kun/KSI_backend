@@ -48,11 +48,11 @@ export class CategoryController extends BaseController<
 
   @ApiParam({ name: 'id', description: 'Category ID' })
   @ApiOperation({ summary: 'Get Category by id' })
+  @ApiQuery({ name: 'relations', required: false, type: Array })
   @ApiResponse({
     status: 201,
     type: CategoryEntity,
   })
-  @ApiQuery({ name: 'relations', required: false, type: Array })
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Get(':id')

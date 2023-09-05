@@ -4,7 +4,8 @@ import { Column, Entity, ManyToOne, OneToMany, Relation } from 'typeorm';
 import { ItemEntity } from './item.entity';
 import { MainFileEntity } from './main-file.entity';
 import { UserEntity } from './user.entity';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { MainTypeEnum } from '@/interfaces/enums';
 
 @Entity('maintenance')
 export class MaintenanceEntity extends BaseModel implements IMaintenance {
@@ -23,4 +24,16 @@ export class MaintenanceEntity extends BaseModel implements IMaintenance {
   @Column({ type: 'date', nullable: true })
   @ApiPropertyOptional()
   checkDate: Date;
+
+  @ApiProperty({
+    enum: MainTypeEnum,
+    example: MainTypeEnum.corrective,
+    description: 'Type of Maintenance',
+  })
+  @Column({
+    type: 'enum',
+    enum: MainTypeEnum,
+    default: MainTypeEnum.corrective,
+  })
+  type: MainTypeEnum;
 }

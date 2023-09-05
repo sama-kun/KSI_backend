@@ -16,6 +16,7 @@ const item_entity_1 = require("./item.entity");
 const main_file_entity_1 = require("./main-file.entity");
 const user_entity_1 = require("./user.entity");
 const swagger_1 = require("@nestjs/swagger");
+const enums_1 = require("../../interfaces/enums");
 let MaintenanceEntity = class MaintenanceEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -38,6 +39,19 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Date)
 ], MaintenanceEntity.prototype, "checkDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        enum: enums_1.MainTypeEnum,
+        example: enums_1.MainTypeEnum.corrective,
+        description: 'Type of Maintenance',
+    }),
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enums_1.MainTypeEnum,
+        default: enums_1.MainTypeEnum.corrective,
+    }),
+    __metadata("design:type", String)
+], MaintenanceEntity.prototype, "type", void 0);
 MaintenanceEntity = __decorate([
     (0, typeorm_1.Entity)('maintenance')
 ], MaintenanceEntity);

@@ -4,12 +4,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { CartController } from './cart.controller';
 import { ItemModule } from '../item/item.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CartEntity } from '@/database/entities/cart.entity';
+import { CartItemEntity } from '@/database/entities/cart-item.entity';
 
 @Module({
   controllers: [CartController],
   providers: [CartService, ItemModule],
-  imports: [JwtModule, ItemModule, TypeOrmModule.forFeature([CartEntity])],
+  imports: [JwtModule, ItemModule, TypeOrmModule.forFeature([CartItemEntity])],
   exports: [CartService],
 })
 export class CartModule {}

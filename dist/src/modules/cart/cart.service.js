@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartService = void 0;
 const common_1 = require("@nestjs/common");
 const BaseService_1 = require("../../common/base/BaseService");
-const cart_entity_1 = require("../../database/entities/cart.entity");
+const cart_item_entity_1 = require("../../database/entities/cart-item.entity");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const item_service_1 = require("../item/item.service");
@@ -57,10 +57,10 @@ let CartService = class CartService extends BaseService_1.BaseService {
         candidate.isHistory = true;
         candidate.initialQuantity = initialQuantity;
         if (candidate.quantity != initialQuantity) {
-            candidate.status = enums_1.CartStatusEnum.Warning;
+            candidate.status = enums_1.CartStatusEnum.FillLackReason;
         }
         else {
-            candidate.status = enums_1.CartStatusEnum.Complate;
+            candidate.status = enums_1.CartStatusEnum.Finished;
         }
         return candidate;
     }
@@ -69,6 +69,7 @@ let CartService = class CartService extends BaseService_1.BaseService {
         for (const id of ids) {
             const record = await this.update(user, id, {
                 project: { id: projectId },
+                status: enums_1.CartStatusEnum.FillWorkingHour,
             });
             records.push(record);
         }
@@ -77,7 +78,7 @@ let CartService = class CartService extends BaseService_1.BaseService {
 };
 CartService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_2.InjectRepository)(cart_entity_1.CartEntity)),
+    __param(0, (0, typeorm_2.InjectRepository)(cart_item_entity_1.CartItemEntity)),
     __metadata("design:paramtypes", [typeorm_1.Repository,
         item_service_1.ItemService])
 ], CartService);

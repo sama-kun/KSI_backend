@@ -16,15 +16,15 @@ const category_entity_1 = require("../../../database/entities/category.entity");
 class SearchCategoryDto extends (0, swagger_1.PartialType)((0, swagger_1.IntersectionType)(category_entity_1.CategoryEntity, search_query_dto_1.SearchQueryDto)) {
 }
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ type: category_entity_1.CategoryEntity }),
+    (0, swagger_1.ApiPropertyOptional)({ type: Object }),
     __metadata("design:type", Object)
 ], SearchCategoryDto.prototype, "sort", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ type: category_entity_1.CategoryEntity }),
+    (0, swagger_1.ApiPropertyOptional)({ type: Object }),
     __metadata("design:type", Object)
 ], SearchCategoryDto.prototype, "filter", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ type: category_entity_1.CategoryEntity }),
+    (0, swagger_1.ApiPropertyOptional)({ type: Object }),
     __metadata("design:type", Object)
 ], SearchCategoryDto.prototype, "search", void 0);
 exports.SearchCategoryDto = SearchCategoryDto;

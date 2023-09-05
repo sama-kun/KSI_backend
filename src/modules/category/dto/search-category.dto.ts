@@ -9,12 +9,12 @@ import { CategoryEntity } from '@/database/entities/category.entity';
 export class SearchCategoryDto extends PartialType(
   IntersectionType(CategoryEntity, SearchQueryDto),
 ) {
-  @ApiPropertyOptional({ type: CategoryEntity })
+  @ApiPropertyOptional({ type: Object })
   sort?: Partial<CategoryEntity>;
 
-  @ApiPropertyOptional({ type: CategoryEntity })
+  @ApiPropertyOptional({ type: Object })
   filter?: Partial<CategoryEntity>;
 
-  @ApiPropertyOptional({ type: CategoryEntity })
+  @ApiPropertyOptional({ type: Object })
   search?: Partial<CategoryEntity>;
 }

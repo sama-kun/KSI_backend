@@ -52,11 +52,11 @@ let CategoryController = class CategoryController extends BaseController_1.BaseC
 __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Category ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Category by id' }),
+    (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, swagger_1.ApiResponse)({
         status: 201,
         type: category_entity_1.CategoryEntity,
     }),
-    (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Get)(':id'),

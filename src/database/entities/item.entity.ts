@@ -1,11 +1,12 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 import { FileEntity } from './file.entity';
-import { CartEntity } from './cart.entity';
+import { CartItemEntity } from './cart-item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IItem } from '@/interfaces/entities';
 import { MaintenanceEntity } from './maintenance.entity';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ItemStatusEnum } from '@/interfaces/enums';
 
 @Entity('item')
 export class ItemEntity extends BaseModel implements IItem {
@@ -33,9 +34,9 @@ export class ItemEntity extends BaseModel implements IItem {
   @ApiPropertyOptional()
   images: FileEntity[];
 
-  @OneToMany(() => CartEntity, (cart) => cart.item)
+  @OneToMany(() => CartItemEntity, (cart) => cart.item)
   @ApiPropertyOptional()
-  carts: CartEntity[];
+  carts: CartItemEntity[];
 
   @Column({ nullable: true, default: 0 })
   @ApiPropertyOptional()
@@ -48,4 +49,12 @@ export class ItemEntity extends BaseModel implements IItem {
   @Column({ nullable: true })
   @ApiPropertyOptional()
   totalQuantity?: number;
+
+  @Column({ nullable: true })
+  @ApiPropertyOptional()
+  workingHours?: number;
+
+  @Column({ type: 'enum', enum: ItemStatusEnum, default: ItemStatusEnum.ok })
+  @ApiProperty({ enum: ItemStatusEnum, example: ItemStatusEnum.warning })
+  status: ItemStatusEnum;
 }

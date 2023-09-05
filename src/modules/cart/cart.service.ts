@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { BaseService } from '@/common/base/BaseService';
-import { CartEntity } from '@/database/entities/cart.entity';
+import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCartDto } from './dto/create-cart.dto';
@@ -12,27 +12,22 @@ import { ProjectEntity } from '@/database/entities/project.entity';
 
 @Injectable()
 export class CartService extends BaseService<
-  CartEntity,
+  CartItemEntity,
   CreateCartDto,
   UpdateCartDto
 > {
   constructor(
-    @InjectRepository(CartEntity) protected repo: Repository<CartEntity>,
+    @InjectRepository(CartItemEntity)
+    protected repo: Repository<CartItemEntity>,
     private readonly itemService: ItemService,
   ) {
     super();
   }
 
   async createMany(data: CreateCartDto, user: UserEntity): Promise<any> {
-    // if (data[1]) {
-    //   for (const cart of data) {
-    //     cart.createdBy = { id: userId } as UserEntity;
-    //     await this.itemService.transaction(cart.item.id, cart.quantity, '+');
-    //   }
+    // const id = data.item;
+    // const item = this.itemService.findById(id, []);
 
-    //   const records = await this.repo.save(data);
-    //   return records;
-    // }
     const cartSave = await this.create(data, user);
     const cart = await this.findById(cartSave.id, ['item']);
     console.log(cart);
@@ -40,7 +35,7 @@ export class CartService extends BaseService<
     return cartSave;
   }
 
-  async plus(id: number): Promise<CartEntity> {
+  async plus(id: number): Promise<CartItemEntity> {
     const candidate = await super.findById(id, ['item', 'project']);
     await this.itemService.transaction(candidate.item.id, 1, '+');
 
@@ -49,7 +44,7 @@ export class CartService extends BaseService<
     return await super.findById(id, ['item', 'project', 'createdBy']);
   }
 
-  async minus(id: number): Promise<CartEntity> {
+  async minus(id: number): Promise<CartItemEntity> {
     const candidate = await super.findById(id, ['item']);
     await this.check(id, 1);
     await this.itemService.transaction(candidate.item.id, 1, '-');
@@ -72,9 +67,9 @@ export class CartService extends BaseService<
     candidate.isHistory = true;
     candidate.initialQuantity = initialQuantity;
     if (candidate.quantity != initialQuantity) {
-      candidate.status = CartStatusEnum.Warning;
+      candidate.status = CartStatusEnum.FillLackReason;
     } else {
-      candidate.status = CartStatusEnum.Complate;
+      candidate.status = CartStatusEnum.Finished;
     }
     return candidate;
   }
@@ -84,6 +79,7 @@ export class CartService extends BaseService<
     for (const id of ids) {
       const record = await this.update(user, id, {
         project: { id: projectId } as ProjectEntity,
+        status: CartStatusEnum.FillWorkingHour,
       });
       records.push(record);
     }

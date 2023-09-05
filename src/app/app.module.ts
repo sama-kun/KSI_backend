@@ -51,7 +51,7 @@ console.log(process.env.POSTGRES_PORT);
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-      ssl: true,
+      ssl: Boolean(process.env.DB_SSl) || false,
       extra: {
         ssl: {
           ca: fs.readFileSync('./ksi_db.crt'),

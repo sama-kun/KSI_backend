@@ -4,17 +4,17 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
-import { CartEntity } from '@/database/entities/cart.entity';
+import { CartItemEntity } from '@/database/entities/cart-item.entity';
 
 export class SearchCartDto extends PartialType(
-  IntersectionType(CartEntity, SearchQueryDto),
+  IntersectionType(CartItemEntity, SearchQueryDto),
 ) {
-  @ApiPropertyOptional({ type: CartEntity })
-  sort?: Partial<CartEntity>;
+  @ApiPropertyOptional({ type: CartItemEntity })
+  sort?: Partial<CartItemEntity>;
 
-  @ApiPropertyOptional({ type: CartEntity })
-  filter?: Partial<CartEntity>;
+  @ApiPropertyOptional({ type: CartItemEntity })
+  filter?: Partial<CartItemEntity>;
 
-  @ApiPropertyOptional({ type: CartEntity })
-  search?: Partial<CartEntity>;
+  @ApiPropertyOptional({ type: CartItemEntity })
+  search?: Partial<CartItemEntity>;
 }

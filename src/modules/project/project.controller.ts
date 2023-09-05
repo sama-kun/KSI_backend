@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
   Param,
   ParseIntPipe,
   Patch,
@@ -133,10 +132,16 @@ export class ProjectController extends BaseController<
     console.log(user);
     return this.dataService.delete(user, id);
   }
-  // @Get(':id/mdnreport')
-  // mdnreport(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-  //   return this.projectService.mdnReport(res);
-  // }
+  @Get(':id/mdnreport')
+  // @UseGuards(RolesQuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  mdnreport(
+    @AuthUser() user: UserEntity,
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
+    return this.projectService.mdnReport(user, res, id);
+  }
 
   // @Get('test')
   // test(){

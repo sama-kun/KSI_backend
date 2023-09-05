@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { RoleEnum } from '@/interfaces/enums';
-import { CartEntity } from './cart.entity';
+import { CartItemEntity } from './cart-item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IUser } from '@/interfaces/entities';
 import { MaintenanceEntity } from './maintenance.entity';
@@ -25,9 +25,9 @@ export class UserEntity extends BaseModel implements IUser {
   })
   role: RoleEnum;
 
-  @OneToMany(() => CartEntity, (cart) => cart.createdBy)
-  @ApiPropertyOptional({ type: () => CartEntity, isArray: true })
-  carts: CartEntity[];
+  @OneToMany(() => CartItemEntity, (cart) => cart.createdBy)
+  @ApiPropertyOptional({ type: () => CartItemEntity, isArray: true })
+  carts: CartItemEntity[];
 
   @OneToMany(() => MaintenanceEntity, (maintenance) => maintenance.checker)
   @ApiPropertyOptional({ type: () => MaintenanceEntity, isArray: true })

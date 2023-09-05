@@ -1,7 +1,10 @@
 import {
   CartStatusEnum,
   FileTypesEnum,
+  ItemStatusEnum,
   MainFileTypesEnum,
+  MainTypeEnum,
+  ProjectStatusEnum,
   RoleEnum,
 } from './enums';
 
@@ -17,7 +20,7 @@ export interface IUser extends IBaseModel {
   email: string;
   password: string;
   role: RoleEnum;
-  carts: ICart[];
+  carts: ICartItem[];
   maintenances: IMaintenance[];
 }
 
@@ -34,10 +37,12 @@ export interface IItem extends IBaseModel {
   tag?: string;
   quantity?: number;
   images: IFile[];
-  carts: ICart[];
+  carts: ICartItem[];
   projectQuantity?: number;
   maintenances: IMaintenance[];
+  workingHours?: number;
   totalQuantity?: number;
+  status: ItemStatusEnum;
 }
 
 export interface IFile extends IBaseModel {
@@ -53,16 +58,16 @@ export interface IFile extends IBaseModel {
 export interface IProject extends IBaseModel {
   name: string;
   description?: string;
-  carts: ICart[];
+  carts: ICartItem[];
+  status: ProjectStatusEnum;
 }
 
-export interface ICart extends IBaseModel {
+export interface ICartItem extends IBaseModel {
   quantity?: number;
   initialQuantity?: number;
   item: IItem;
   project?: IProject;
   isHistory: boolean;
-  workingHours?: number;
   returnTime?: Date;
   returnBy?: IUser;
   workedHouse?: number;
@@ -80,6 +85,7 @@ export interface IMaintenance extends IBaseModel {
   checker?: IUser;
   mainFiles: IMainFile[];
   checkDate?: Date;
+  type: MainTypeEnum;
 }
 
 // date            DateTime?

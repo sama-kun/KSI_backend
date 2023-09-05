@@ -20,7 +20,7 @@ const enums_1 = require("../../interfaces/enums");
 const roles_auth_decorator_1 = require("../../common/decorators/roles-auth.decorator");
 const auth_user_decorator_1 = require("../../common/decorators/auth-user.decorator");
 const user_entity_1 = require("../../database/entities/user.entity");
-const cart_entity_1 = require("../../database/entities/cart.entity");
+const cart_item_entity_1 = require("../../database/entities/cart-item.entity");
 const search_cart_dto_1 = require("./dto/search-cart.dto");
 const search_query_dto_1 = require("../../common/base/dto/search-query.dto");
 const swagger_1 = require("@nestjs/swagger");
@@ -64,10 +64,10 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Cart created successfully',
     }),
-    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
+    (0, swagger_1.ApiBody)({ type: cart_item_entity_1.CartItemEntity }),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
@@ -82,7 +82,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Cart created successfully',
     }),
     (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
@@ -99,11 +99,11 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Update cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Cart updated successfully',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
-    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
+    (0, swagger_1.ApiBody)({ type: cart_item_entity_1.CartItemEntity }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Patch)(':id'),
@@ -112,14 +112,14 @@ __decorate([
     __param(2, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity,
-        cart_entity_1.CartEntity, Number]),
+        cart_item_entity_1.CartItemEntity, Number]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Add 1 item to Cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Cart updated successfully',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
@@ -135,7 +135,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Remove 1 item from Cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Cart updated successfully',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
@@ -151,7 +151,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Return items to Base of KSI from Project' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_entity_1.CartEntity,
+        type: cart_item_entity_1.CartItemEntity,
         description: 'Items returned succesfully',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
@@ -225,8 +225,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "sendToProject", null);
 CartController = __decorate([
-    (0, swagger_1.ApiTags)('Cart'),
-    (0, common_1.Controller)('cart'),
+    (0, swagger_1.ApiTags)('Cart-Item'),
+    (0, common_1.Controller)('cart-item'),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [cart_service_1.CartService])
 ], CartController);

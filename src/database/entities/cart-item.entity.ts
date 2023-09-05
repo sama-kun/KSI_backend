@@ -3,11 +3,11 @@ import { ItemEntity } from './item.entity';
 import { ProjectEntity } from './project.entity';
 import { CartStatusEnum } from '@/interfaces/enums';
 import { BaseModel } from '@/common/base/BaseModel';
-import { ICart } from '@/interfaces/entities';
+import { ICartItem } from '@/interfaces/entities';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-@Entity('cart')
-export class CartEntity extends BaseModel implements ICart {
+@Entity('cart-item')
+export class CartItemEntity extends BaseModel implements ICartItem {
   @Column({ nullable: true })
   @ApiPropertyOptional()
   quantity?: number;
@@ -30,19 +30,15 @@ export class CartEntity extends BaseModel implements ICart {
   @ApiPropertyOptional()
   isHistory: boolean;
 
-  @Column({ nullable: true })
-  @ApiPropertyOptional()
-  workingHours?: number;
-
   @Column({ type: 'timestamptz', nullable: true })
   @ApiPropertyOptional()
   returnTime?: Date;
 
   @Column({ nullable: true })
   @ApiPropertyOptional()
-  workedHouse?: number;
+  workedHours?: number;
 
-  @Column({ default: CartStatusEnum.OnProject })
+  @Column({ default: CartStatusEnum.InCart })
   @ApiPropertyOptional()
   @ApiProperty({
     example: 'Warning',

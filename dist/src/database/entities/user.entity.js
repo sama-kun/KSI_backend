@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
 const enums_1 = require("../../interfaces/enums");
-const cart_entity_1 = require("./cart.entity");
+const cart_item_entity_1 = require("./cart-item.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const maintenance_entity_1 = require("./maintenance.entity");
 const swagger_1 = require("@nestjs/swagger");
@@ -39,8 +39,8 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.createdBy),
-    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity, isArray: true }),
+    (0, typeorm_1.OneToMany)(() => cart_item_entity_1.CartItemEntity, (cart) => cart.createdBy),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_item_entity_1.CartItemEntity, isArray: true }),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "carts", void 0);
 __decorate([
