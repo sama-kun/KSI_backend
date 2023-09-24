@@ -15,33 +15,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemService = void 0;
 const common_1 = require("@nestjs/common");
 const BaseService_1 = require("../../common/base/BaseService");
-const item_entity_1 = require("../../database/entities/item.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const item_entity_1 = require("../../database/entities/item.entity");
+const enums_1 = require("../../interfaces/enums");
+const console = new common_1.Logger('ItemService');
 let ItemService = class ItemService extends BaseService_1.BaseService {
     constructor(repo) {
         super();
         this.repo = repo;
     }
-    async transaction(id, quantity, operation) {
+    async updateWorkedHours(id, workedHour) {
         const candidate = await this.findById(id, []);
-        console.debug(candidate);
-        if (operation === '+') {
-            await this.check(id, quantity);
-            candidate.quantity -= quantity;
-            candidate.projectQuantity += quantity;
-        }
-        else {
-            candidate.quantity += quantity;
-            candidate.projectQuantity -= quantity;
-        }
+        candidate.workedHours = workedHour;
         return this.repo.save(candidate);
     }
-    async check(id, transcript) {
-        const item = await this.findById(id, []);
-        console.debug(item);
-        if (item.quantity < transcript)
-            throw new common_1.BadRequestException("Don't enough quantity of item id: " + id);
+    async updateWorkingHours(id, workingHour) {
+        const candidate = await this.findById(id, []);
+        candidate.workingHours = workingHour;
+        candidate.status = enums_1.ItemStatusEnum.inProject;
+        return this.repo.save(candidate);
+    }
+    async addCartItem(itemId, cartId) {
+        const item = await this.findById(itemId, ['cartItems']);
+        item.cartItems = [...item.cartItems, { id: cartId }];
+        item.status = enums_1.ItemStatusEnum.inCart;
+        console.log(item);
+        return this.repo.save(item);
+    }
+    async removeCartItem(itemId, cartId) {
+        const candidate = await this.findById(itemId, ['cartItems']);
+        candidate.cartItems = [
+            ...candidate.cartItems.filter((item) => item.id != cartId),
+        ];
+        candidate.status = enums_1.ItemStatusEnum.ok;
+        return await this.repo.save(candidate);
     }
 };
 ItemService = __decorate([

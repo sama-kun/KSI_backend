@@ -38,11 +38,13 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => file_entity_1.FileEntity),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", file_entity_1.FileEntity)
+    __metadata("design:type", Object)
 ], MainFileEntity.prototype, "file", void 0);
 __decorate([
+    (0, typeorm_1.ManyToOne)(() => maintenance_entity_1.MaintenanceEntity, (maintenance) => maintenance.reports, {
+        nullable: true,
+    }),
     (0, swagger_1.ApiPropertyOptional)(),
-    (0, typeorm_1.ManyToOne)(() => maintenance_entity_1.MaintenanceEntity, (maintenance) => maintenance.mainFiles),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Object)
 ], MainFileEntity.prototype, "maintenance", void 0);

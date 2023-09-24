@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryEntity = void 0;
 const typeorm_1 = require("typeorm");
-const item_entity_1 = require("./item.entity");
+const item_group_entity_1 = require("./item-group.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const swagger_1 = require("@nestjs/swagger");
 let CategoryEntity = class CategoryEntity extends BaseModel_1.BaseModel {
@@ -27,10 +27,10 @@ __decorate([
     __metadata("design:type", String)
 ], CategoryEntity.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => item_entity_1.ItemEntity, (item) => item.category),
-    (0, swagger_1.ApiPropertyOptional)({ type: () => item_entity_1.ItemEntity, isArray: true }),
+    (0, typeorm_1.OneToMany)(() => item_group_entity_1.ItemGroupEntity, (itemGroup) => itemGroup.category),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => item_group_entity_1.ItemGroupEntity, isArray: true }),
     __metadata("design:type", Array)
-], CategoryEntity.prototype, "items", void 0);
+], CategoryEntity.prototype, "itemGroups", void 0);
 CategoryEntity = __decorate([
     (0, typeorm_1.Entity)('category')
 ], CategoryEntity);

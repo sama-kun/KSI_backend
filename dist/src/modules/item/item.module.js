@@ -9,16 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemModule = void 0;
 const common_1 = require("@nestjs/common");
 const item_service_1 = require("./item.service");
-const item_controller_1 = require("./item.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const item_entity_1 = require("../../database/entities/item.entity");
+const item_controller_1 = require("./item.controller");
+const jwt_1 = require("@nestjs/jwt");
 let ItemModule = class ItemModule {
 };
 ItemModule = __decorate([
     (0, common_1.Module)({
-        controllers: [item_controller_1.ItemController],
+        imports: [typeorm_1.TypeOrmModule.forFeature([item_entity_1.ItemEntity]), jwt_1.JwtModule],
         providers: [item_service_1.ItemService],
-        imports: [typeorm_1.TypeOrmModule.forFeature([item_entity_1.ItemEntity])],
+        controllers: [item_controller_1.ItemController],
         exports: [item_service_1.ItemService],
     })
 ], ItemModule);

@@ -21,6 +21,7 @@ let MaintenanceEntity = class MaintenanceEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
     (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.maintenances),
+    (0, typeorm_1.JoinColumn)(),
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Object)
 ], MaintenanceEntity.prototype, "item", void 0);
@@ -28,7 +29,7 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => main_file_entity_1.MainFileEntity, (mainFile) => mainFile.maintenance),
     (0, swagger_1.ApiPropertyOptional)({ type: () => main_file_entity_1.MainFileEntity, isArray: true }),
     __metadata("design:type", Array)
-], MaintenanceEntity.prototype, "mainFiles", void 0);
+], MaintenanceEntity.prototype, "reports", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.maintenances, { nullable: true }),
     (0, swagger_1.ApiPropertyOptional)(),

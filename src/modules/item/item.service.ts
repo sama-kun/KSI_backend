@@ -1,10 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { BaseService } from '@/common/base/BaseService';
-import { ItemEntity } from '@/database/entities/item.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
+import { BaseService } from '@/common/base/BaseService';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { ItemEntity } from '@/database/entities/item.entity';
+import { ItemStatusEnum } from '@/interfaces/enums';
+import { CartItemEntity } from '@/database/entities/cart-item.entity';
+const console = new Logger('ItemService');
 
 @Injectable()
 export class ItemService extends BaseService<
@@ -18,37 +22,40 @@ export class ItemService extends BaseService<
     super();
   }
 
-  async transaction(
-    id: number,
-    quantity: number,
-    operation: string,
-  ): Promise<ItemEntity> {
+  async updateWorkedHours(id: number, workedHour: number): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
-
-    console.debug(candidate);
-
-    if (operation === '+') {
-      await this.check(id, quantity);
-      candidate.quantity -= quantity;
-      candidate.projectQuantity += quantity;
-    } else {
-      candidate.quantity += quantity;
-      candidate.projectQuantity -= quantity;
-    }
-
+    candidate.workedHours = workedHour;
     return this.repo.save(candidate);
   }
 
-  private async check(id: number, transcript: number) {
-    const item = await this.findById(id, []);
-
-    console.debug(item);
-
-    if (item.quantity < transcript)
-      throw new BadRequestException("Don't enough quantity of item id: " + id);
+  async updateWorkingHours(
+    id: number,
+    workingHour: number,
+  ): Promise<ItemEntity> {
+    const candidate = await this.findById(id, []);
+    candidate.workingHours = workingHour;
+    candidate.status = ItemStatusEnum.inProject;
+    return this.repo.save(candidate);
   }
 
-  // test(){
-  //   return super().
+  async addCartItem(itemId: number, cartId: number): Promise<ItemEntity> {
+    const item = await this.findById(itemId, ['cartItems']);
+    item.cartItems = [...item.cartItems, { id: cartId } as CartItemEntity];
+    item.status = ItemStatusEnum.inCart;
+    console.log(item);
+    return this.repo.save(item);
+  }
+
+  async removeCartItem(itemId: number, cartId: number): Promise<ItemEntity> {
+    const candidate = await this.findById(itemId, ['cartItems']);
+    candidate.cartItems = [
+      ...candidate.cartItems.filter((item) => item.id != cartId),
+    ];
+    candidate.status = ItemStatusEnum.ok;
+    return await this.repo.save(candidate);
+  }
+
+  // async removeLast() {
+
   // }
 }

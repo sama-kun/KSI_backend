@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, Relation } from 'typeorm';
-import { ItemEntity } from './item.entity';
+import { ItemGroupEntity } from './item-group.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IFile } from '@/interfaces/entities';
 import { FileTypesEnum } from '@/interfaces/enums';
@@ -27,9 +27,9 @@ export class FileEntity extends BaseModel implements IFile {
   @ApiPropertyOptional()
   folder?: string;
 
-  @ManyToOne(() => ItemEntity, (item) => item.images)
+  @ManyToOne(() => ItemGroupEntity, (itemGroup) => itemGroup.images)
   @ApiPropertyOptional()
-  item: Relation<ItemEntity>;
+  itemGroup: Relation<ItemGroupEntity>;
 
   @Column({ type: 'enum', enum: FileTypesEnum, default: FileTypesEnum.IMAGE })
   @ApiPropertyOptional()

@@ -36,14 +36,15 @@ const core_1 = require("@nestjs/core");
 const rest_response_interceptor_1 = require("../common/interceptors/rest-response.interceptor");
 const logging_interceptor_1 = require("../common/interceptors/logging.interceptor");
 const category_module_1 = require("../modules/category/category.module");
-const item_module_1 = require("../modules/item/item.module");
+const item_group_module_1 = require("../modules/item-group/item-group.module");
 const cloudinary_module_1 = require("../modules/cloudinary/cloudinary.module");
 const cart_module_1 = require("../modules/cart/cart.module");
 const project_module_1 = require("../modules/project/project.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const dotenv = __importStar(require("dotenv"));
-const fs = __importStar(require("fs-extra"));
 const maintenance_module_1 = require("../modules/maintenance/maintenance.module");
+const cart_item_module_1 = require("../modules/cart-item/cart-item.module");
+const item_module_1 = require("../modules/item/item.module");
 dotenv.config();
 console.log(process.env.POSTGRES_PORT);
 let AppModule = class AppModule {
@@ -53,8 +54,10 @@ AppModule = __decorate([
         imports: [
             users_module_1.UserModule,
             auth_module_1.AuthModule,
-            category_module_1.CategoryModule,
+            cart_item_module_1.CartItemModule,
             item_module_1.ItemModule,
+            category_module_1.CategoryModule,
+            item_group_module_1.ItemGroupModule,
             cloudinary_module_1.CloudinaryModule,
             cart_module_1.CartModule,
             project_module_1.ProjectModule,
@@ -74,12 +77,6 @@ AppModule = __decorate([
                 autoLoadEntities: true,
                 logging: false,
                 migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-                ssl: Boolean(process.env.DB_SSl) || false,
-                extra: {
-                    ssl: {
-                        ca: fs.readFileSync('./ksi_db.crt'),
-                    },
-                },
             }),
         ],
         controllers: [app_controller_1.AppController],

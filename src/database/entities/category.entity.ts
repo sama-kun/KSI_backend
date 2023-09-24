@@ -1,5 +1,5 @@
 import { Entity, Column, OneToMany } from 'typeorm';
-import { ItemEntity } from './item.entity';
+import { ItemGroupEntity } from './item-group.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { ICategory } from '@/interfaces/entities';
 import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -14,7 +14,7 @@ export class CategoryEntity extends BaseModel implements ICategory {
   @ApiPropertyOptional()
   description?: string;
 
-  @OneToMany(() => ItemEntity, (item) => item.category)
-  @ApiPropertyOptional({ type: () => ItemEntity, isArray: true })
-  items: ItemEntity[];
+  @OneToMany(() => ItemGroupEntity, (itemGroup) => itemGroup.category)
+  @ApiPropertyOptional({ type: () => ItemGroupEntity, isArray: true })
+  itemGroups: ItemGroupEntity[];
 }

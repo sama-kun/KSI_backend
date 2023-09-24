@@ -1,5 +1,4 @@
 import {
-  CartStatusEnum,
   FileTypesEnum,
   ItemStatusEnum,
   MainFileTypesEnum,
@@ -20,29 +19,14 @@ export interface IUser extends IBaseModel {
   email: string;
   password: string;
   role: RoleEnum;
-  carts: ICartItem[];
+  carts: ICart[];
   maintenances: IMaintenance[];
 }
 
 export interface ICategory extends IBaseModel {
   name?: string;
   description?: string;
-  items: IItem[];
-}
-
-export interface IItem extends IBaseModel {
-  name: string;
-  description?: string;
-  category?: ICategory;
-  tag?: string;
-  quantity?: number;
-  images: IFile[];
-  carts: ICartItem[];
-  projectQuantity?: number;
-  maintenances: IMaintenance[];
-  workingHours?: number;
-  totalQuantity?: number;
-  status: ItemStatusEnum;
+  itemGroups: IItemGroup[];
 }
 
 export interface IFile extends IBaseModel {
@@ -50,7 +34,7 @@ export interface IFile extends IBaseModel {
   secure_url: string;
   asset_id: string;
   public_id: string;
-  item: IItem;
+  itemGroup?: IItemGroup;
   type: FileTypesEnum;
   folder?: string;
 }
@@ -58,23 +42,29 @@ export interface IFile extends IBaseModel {
 export interface IProject extends IBaseModel {
   name: string;
   description?: string;
-  carts: ICartItem[];
+  cart: ICart[];
   status: ProjectStatusEnum;
+}
+
+export interface ICart extends IBaseModel {
+  cartItems: ICartItem[];
+  project: IProject;
+  returnTime?: Date;
+  returnBy?: IUser;
 }
 
 export interface ICartItem extends IBaseModel {
   quantity?: number;
   initialQuantity?: number;
-  item: IItem;
-  project?: IProject;
+  itemGroup: IItemGroup;
+  items: IItem[];
+  cart?: ICart;
   isHistory: boolean;
-  returnTime?: Date;
-  returnBy?: IUser;
-  workedHouse?: number;
-  status: CartStatusEnum;
+  comment?: string;
 }
 
 export interface IMainFile {
+  id: number;
   maintenance?: IMaintenance;
   file: IFile;
   type: MainFileTypesEnum;
@@ -83,9 +73,31 @@ export interface IMainFile {
 export interface IMaintenance extends IBaseModel {
   item: IItem;
   checker?: IUser;
-  mainFiles: IMainFile[];
+  reports: IMainFile[];
   checkDate?: Date;
   type: MainTypeEnum;
+}
+
+export interface IItem extends IBaseModel {
+  uuid: string;
+  status: ItemStatusEnum;
+  itemGroup: IItemGroup;
+  maintenances: IMaintenance[];
+  workingHours?: number;
+  workedHours?: number;
+  cartItems: ICartItem[];
+}
+
+export interface IItemGroup extends IBaseModel {
+  name: string;
+  description?: string;
+  category?: ICategory;
+  tag?: string;
+  quantity?: number;
+  images: IFile[];
+  projectQuantity?: number;
+  totalQuantity?: number;
+  items: IItem[];
 }
 
 // date            DateTime?

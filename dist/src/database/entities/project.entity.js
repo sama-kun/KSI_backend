@@ -11,10 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectEntity = void 0;
 const typeorm_1 = require("typeorm");
-const cart_item_entity_1 = require("./cart-item.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const swagger_1 = require("@nestjs/swagger");
 const enums_1 = require("../../interfaces/enums");
+const cart_entity_1 = require("./cart.entity");
 let ProjectEntity = class ProjectEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -28,15 +28,15 @@ __decorate([
     __metadata("design:type", String)
 ], ProjectEntity.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => cart_item_entity_1.CartItemEntity, (cart) => cart.project),
-    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_item_entity_1.CartItemEntity, isArray: true }),
+    (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.project),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity, isArray: true }),
     __metadata("design:type", Array)
-], ProjectEntity.prototype, "carts", void 0);
+], ProjectEntity.prototype, "cart", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: enums_1.ProjectStatusEnum,
-        default: enums_1.ProjectStatusEnum.planned,
+        default: enums_1.ProjectStatusEnum.detailing,
     }),
     (0, swagger_1.ApiProperty)({
         example: 'active',

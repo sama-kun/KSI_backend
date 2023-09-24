@@ -12,10 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartItemEntity = void 0;
 const typeorm_1 = require("typeorm");
 const item_entity_1 = require("./item.entity");
-const project_entity_1 = require("./project.entity");
-const enums_1 = require("../../interfaces/enums");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const swagger_1 = require("@nestjs/swagger");
+const item_group_entity_1 = require("./item-group.entity");
+const cart_entity_1 = require("./cart.entity");
+const enums_1 = require("../../interfaces/enums");
 let CartItemEntity = class CartItemEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -29,42 +30,39 @@ __decorate([
     __metadata("design:type", Number)
 ], CartItemEntity.prototype, "initialQuantity", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.carts),
+    (0, typeorm_1.ManyToMany)(() => item_entity_1.ItemEntity, (item) => item.cartItems),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", item_entity_1.ItemEntity)
-], CartItemEntity.prototype, "item", void 0);
+    __metadata("design:type", Array)
+], CartItemEntity.prototype, "items", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => project_entity_1.ProjectEntity, (project) => project.carts, {
-        nullable: true,
-    }),
+    (0, typeorm_1.ManyToOne)(() => item_group_entity_1.ItemGroupEntity),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", project_entity_1.ProjectEntity)
-], CartItemEntity.prototype, "project", void 0);
+    __metadata("design:type", item_group_entity_1.ItemGroupEntity)
+], CartItemEntity.prototype, "itemGroup", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => cart_entity_1.CartEntity, (cart) => cart.cartItems, { nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", cart_entity_1.CartEntity)
+], CartItemEntity.prototype, "cart", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: false }),
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Boolean)
 ], CartItemEntity.prototype, "isHistory", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'timestamptz', nullable: true }),
-    (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
-], CartItemEntity.prototype, "returnTime", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Number)
-], CartItemEntity.prototype, "workedHours", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: enums_1.CartStatusEnum.InCart }),
-    (0, swagger_1.ApiPropertyOptional)(),
-    (0, swagger_1.ApiProperty)({
-        example: 'Warning',
+    (0, typeorm_1.Column)({ default: enums_1.CartItemStatusEnum.detailing }),
+    (0, swagger_1.ApiPropertyOptional)({
+        example: 'detailing',
         description: 'The status of the cart',
-        enum: enums_1.CartStatusEnum,
+        enum: enums_1.CartItemStatusEnum,
     }),
     __metadata("design:type", String)
 ], CartItemEntity.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", String)
+], CartItemEntity.prototype, "comment", void 0);
 CartItemEntity = __decorate([
     (0, typeorm_1.Entity)('cart-item')
 ], CartItemEntity);

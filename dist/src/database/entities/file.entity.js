@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileEntity = void 0;
 const typeorm_1 = require("typeorm");
-const item_entity_1 = require("./item.entity");
+const item_group_entity_1 = require("./item-group.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const enums_1 = require("../../interfaces/enums");
 const swagger_1 = require("@nestjs/swagger");
@@ -43,10 +43,10 @@ __decorate([
     __metadata("design:type", String)
 ], FileEntity.prototype, "folder", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => item_entity_1.ItemEntity, (item) => item.images),
+    (0, typeorm_1.ManyToOne)(() => item_group_entity_1.ItemGroupEntity, (itemGroup) => itemGroup.images),
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Object)
-], FileEntity.prototype, "item", void 0);
+], FileEntity.prototype, "itemGroup", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.FileTypesEnum, default: enums_1.FileTypesEnum.IMAGE }),
     (0, swagger_1.ApiPropertyOptional)(),

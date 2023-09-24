@@ -1,10 +1,11 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { ItemEntity } from './item.entity';
-import { ProjectEntity } from './project.entity';
-import { CartStatusEnum } from '@/interfaces/enums';
 import { BaseModel } from '@/common/base/BaseModel';
 import { ICartItem } from '@/interfaces/entities';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ItemGroupEntity } from './item-group.entity';
+import { CartEntity } from './cart.entity';
+import { CartItemStatusEnum } from '@/interfaces/enums';
 
 @Entity('cart-item')
 export class CartItemEntity extends BaseModel implements ICartItem {
@@ -16,34 +17,31 @@ export class CartItemEntity extends BaseModel implements ICartItem {
   @ApiPropertyOptional()
   initialQuantity?: number;
 
-  @ManyToOne(() => ItemEntity, (item) => item.carts)
+  @ManyToMany(() => ItemEntity, (item) => item.cartItems)
   @ApiPropertyOptional()
-  item: ItemEntity;
+  items: ItemEntity[];
 
-  @ManyToOne(() => ProjectEntity, (project) => project.carts, {
-    nullable: true,
-  })
+  @ManyToOne(() => ItemGroupEntity)
   @ApiPropertyOptional()
-  project?: ProjectEntity;
+  itemGroup: ItemGroupEntity;
+
+  @ManyToOne(() => CartEntity, (cart) => cart.cartItems, { nullable: true })
+  @ApiPropertyOptional()
+  cart?: CartEntity;
 
   @Column({ default: false })
   @ApiPropertyOptional()
   isHistory: boolean;
 
-  @Column({ type: 'timestamptz', nullable: true })
-  @ApiPropertyOptional()
-  returnTime?: Date;
-
-  @Column({ nullable: true })
-  @ApiPropertyOptional()
-  workedHours?: number;
-
-  @Column({ default: CartStatusEnum.InCart })
-  @ApiPropertyOptional()
-  @ApiProperty({
-    example: 'Warning',
+  @Column({ default: CartItemStatusEnum.detailing })
+  @ApiPropertyOptional({
+    example: 'detailing',
     description: 'The status of the cart',
-    enum: CartStatusEnum, // Use the enum option to specify the enum type
+    enum: CartItemStatusEnum,
   })
-  status: CartStatusEnum;
+  status: CartItemStatusEnum;
+
+  @Column({ type: 'text', nullable: true })
+  @ApiPropertyOptional()
+  comment?: string;
 }

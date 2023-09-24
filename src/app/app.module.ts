@@ -11,7 +11,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from '@/common/interceptors/rest-response.interceptor';
 import { LoggingInterceptor } from '@/common/interceptors/logging.interceptor';
 import { CategoryModule } from '@/modules/category/category.module';
-import { ItemModule } from '@/modules/item/item.module';
+import { ItemGroupModule } from '@/modules/item-group/item-group.module';
 import { CloudinaryModule } from '@/modules/cloudinary/cloudinary.module';
 import { CartModule } from '@/modules/cart/cart.module';
 import { ProjectModule } from '@/modules/project/project.module';
@@ -19,6 +19,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
 import { MaintenanceModule } from '@/modules/maintenance/maintenance.module';
+import { CartItemModule } from '@/modules/cart-item/cart-item.module';
+import { ItemModule } from '@/modules/item/item.module';
 dotenv.config();
 
 console.log(process.env.POSTGRES_PORT);
@@ -27,9 +29,11 @@ console.log(process.env.POSTGRES_PORT);
   imports: [
     UserModule,
     AuthModule,
+    CartItemModule,
+    ItemModule,
     // XxxModule,
     CategoryModule,
-    ItemModule,
+    ItemGroupModule,
     CloudinaryModule,
     CartModule,
     ProjectModule,
@@ -51,12 +55,12 @@ console.log(process.env.POSTGRES_PORT);
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-      ssl: Boolean(process.env.DB_SSl) || false,
-      extra: {
-        ssl: {
-          ca: fs.readFileSync('./ksi_db.crt'),
-        },
-      },
+      // ssl: Boolean(process.env.DB_SSl) || false,
+      // extra: {
+      //   ssl: {
+      //     ca: fs.readFileSync('./ksi_db.crt'),
+      //   },
+      // },
     }),
   ],
   controllers: [AppController],

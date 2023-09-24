@@ -37,7 +37,6 @@ export class ProjectService extends BaseService<
     ]);
     const doc = new PDFDocument();
     const fileName = 'KSI_Project_MDNreport.pdf';
-    console.debug(project.carts);
 
     // Данные для шаблона
 

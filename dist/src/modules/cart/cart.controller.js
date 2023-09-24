@@ -29,7 +29,7 @@ let CartController = class CartController {
         this.cartService = cartService;
     }
     createCustom(user, data) {
-        return this.cartService.createMany(data, user);
+        return this.cartService.create(data, user);
     }
     getOne(id, query) {
         const { relations } = query;
@@ -38,15 +38,6 @@ let CartController = class CartController {
     update(user, data, id) {
         return this.cartService.update(user, id, data);
     }
-    plus(id) {
-        return this.cartService.plus(id);
-    }
-    minus(id) {
-        return this.cartService.minus(id);
-    }
-    return(id, body) {
-        return this.cartService.return(id, body.initialQuantity);
-    }
     findAll(query) {
         const { pagination, sort, relations, filter, search } = query;
         return this.cartService.findAll(pagination, sort, relations, filter, search);
@@ -54,10 +45,6 @@ let CartController = class CartController {
     async remove(user, id) {
         console.log(user);
         return this.cartService.delete(user, id);
-    }
-    async sendToProject(user, ids, projectId) {
-        console.log(ids);
-        return this.cartService.send(user, ids, projectId);
     }
 };
 __decorate([
@@ -74,7 +61,7 @@ __decorate([
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.UserEntity, Object]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, cart_item_entity_1.CartItemEntity]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "createCustom", null);
 __decorate([
@@ -116,67 +103,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Add 1 item to Cart' }),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        type: cart_item_entity_1.CartItemEntity,
-        description: 'Cart updated successfully',
-    }),
-    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
-    (0, common_1.Get)(':id/plus'),
-    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], CartController.prototype, "plus", null);
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Remove 1 item from Cart' }),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        type: cart_item_entity_1.CartItemEntity,
-        description: 'Cart updated successfully',
-    }),
-    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
-    (0, common_1.Get)(':id/minus'),
-    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], CartController.prototype, "minus", null);
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Return items to Base of KSI from Project' }),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        type: cart_item_entity_1.CartItemEntity,
-        description: 'Items returned succesfully',
-    }),
-    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
-    (0, swagger_1.ApiBody)({
-        schema: {
-            type: 'object',
-            properties: {
-                initialQuantity: {
-                    type: 'number',
-                    example: 10,
-                    description: 'The initial quantity of the cart',
-                },
-            },
-        },
-    }),
-    (0, common_1.Post)(':id/return'),
-    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
-    __metadata("design:returntype", void 0)
-], CartController.prototype, "return", null);
-__decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get all carts using query' }),
     (0, swagger_1.ApiQuery)({ type: search_cart_dto_1.SearchCartDto }),
     (0, common_1.Get)(),
@@ -199,34 +125,9 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "remove", null);
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Send to the Project' }),
-    (0, swagger_1.ApiBody)({
-        schema: {
-            type: 'object',
-            properties: {
-                ids: {
-                    type: 'array',
-                    example: [1, 2, 3, 4],
-                    description: 'The array of ids carts',
-                },
-            },
-        },
-    }),
-    (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
-    (0, common_1.Patch)('send/:projectId'),
-    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
-    __param(0, (0, auth_user_decorator_1.AuthUser)()),
-    __param(1, (0, common_1.Body)('ids')),
-    __param(2, (0, common_1.Param)('projectId')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.UserEntity, Array, Number]),
-    __metadata("design:returntype", Promise)
-], CartController.prototype, "sendToProject", null);
 CartController = __decorate([
-    (0, swagger_1.ApiTags)('Cart-Item'),
-    (0, common_1.Controller)('cart-item'),
+    (0, swagger_1.ApiTags)('Cart'),
+    (0, common_1.Controller)('cart'),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [cart_service_1.CartService])
 ], CartController);

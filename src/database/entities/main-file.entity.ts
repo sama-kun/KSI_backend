@@ -32,10 +32,12 @@ export class MainFileEntity implements IMainFile {
 
   @ManyToOne(() => FileEntity)
   @ApiPropertyOptional()
-  file: FileEntity;
+  file: Relation<FileEntity>;
 
+  @ManyToOne(() => MaintenanceEntity, (maintenance) => maintenance.reports, {
+    nullable: true,
+  })
   @ApiPropertyOptional()
-  @ManyToOne(() => MaintenanceEntity, (maintenance) => maintenance.mainFiles)
   @JoinColumn()
-  maintenance: Relation<MaintenanceEntity>;
+  maintenance?: Relation<MaintenanceEntity>;
 }

@@ -7,7 +7,7 @@ import { UserEntity } from './user.entity';
 import { MainTypeEnum } from '@/interfaces/enums';
 export declare class MaintenanceEntity extends BaseModel implements IMaintenance {
     item: Relation<ItemEntity>;
-    mainFiles: MainFileEntity[];
+    reports: MainFileEntity[];
     checker: Relation<UserEntity>;
     checkDate: Date;
     type: MainTypeEnum;

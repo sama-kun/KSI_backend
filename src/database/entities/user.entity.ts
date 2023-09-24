@@ -5,6 +5,7 @@ import { BaseModel } from '@/common/base/BaseModel';
 import { IUser } from '@/interfaces/entities';
 import { MaintenanceEntity } from './maintenance.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { CartEntity } from './cart.entity';
 
 @Entity('user')
 export class UserEntity extends BaseModel implements IUser {
@@ -25,9 +26,9 @@ export class UserEntity extends BaseModel implements IUser {
   })
   role: RoleEnum;
 
-  @OneToMany(() => CartItemEntity, (cart) => cart.createdBy)
+  @OneToMany(() => CartEntity, (cart) => cart.createdBy)
   @ApiPropertyOptional({ type: () => CartItemEntity, isArray: true })
-  carts: CartItemEntity[];
+  carts: CartEntity[];
 
   @OneToMany(() => MaintenanceEntity, (maintenance) => maintenance.checker)
   @ApiPropertyOptional({ type: () => MaintenanceEntity, isArray: true })

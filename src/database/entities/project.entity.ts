@@ -1,9 +1,9 @@
 import { Entity, Column, OneToMany } from 'typeorm';
-import { CartItemEntity } from './cart-item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IProject } from '@/interfaces/entities';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ProjectStatusEnum } from '@/interfaces/enums';
+import { CartEntity } from './cart.entity';
 
 @Entity('project')
 export class ProjectEntity extends BaseModel implements IProject {
@@ -15,19 +15,19 @@ export class ProjectEntity extends BaseModel implements IProject {
   @ApiPropertyOptional()
   description?: string;
 
-  @OneToMany(() => CartItemEntity, (cart) => cart.project)
-  @ApiPropertyOptional({ type: () => CartItemEntity, isArray: true })
-  carts: CartItemEntity[];
+  @OneToMany(() => CartEntity, (cart) => cart.project)
+  @ApiPropertyOptional({ type: () => CartEntity, isArray: true })
+  cart: CartEntity[];
 
   @Column({
     type: 'enum',
     enum: ProjectStatusEnum,
-    default: ProjectStatusEnum.planned,
+    default: ProjectStatusEnum.detailing,
   })
   @ApiProperty({
     example: 'active',
     description: 'Status of the Project',
-    enum: ProjectStatusEnum, // Use the enum option to specify the enum type
+    enum: ProjectStatusEnum,
   })
   status: ProjectStatusEnum;
 }

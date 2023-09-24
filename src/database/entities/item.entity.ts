@@ -1,60 +1,50 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
-import { CategoryEntity } from './category.entity';
-import { FileEntity } from './file.entity';
-import { CartItemEntity } from './cart-item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IItem } from '@/interfaces/entities';
-import { MaintenanceEntity } from './maintenance.entity';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ItemStatusEnum } from '@/interfaces/enums';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  Relation,
+} from 'typeorm';
+import { ItemGroupEntity } from './item-group.entity';
+import { MaintenanceEntity } from './maintenance.entity';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { CartItemEntity } from './cart-item.entity';
 
 @Entity('item')
 export class ItemEntity extends BaseModel implements IItem {
   @Column()
   @ApiPropertyOptional()
-  name: string;
+  uuid: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'enum', enum: ItemStatusEnum, default: ItemStatusEnum.ok })
   @ApiPropertyOptional()
-  description?: string;
+  status: ItemStatusEnum;
 
-  @ManyToOne(() => CategoryEntity, (category) => category.items)
+  @ManyToOne(() => ItemGroupEntity, (itemGroup) => itemGroup.items)
+  @JoinColumn()
   @ApiPropertyOptional()
-  category?: CategoryEntity;
-
-  @Column({ nullable: true })
-  @ApiPropertyOptional()
-  tag?: string;
-
-  @Column({ nullable: true })
-  @ApiPropertyOptional()
-  quantity?: number;
-
-  @OneToMany(() => FileEntity, (image) => image.item)
-  @ApiPropertyOptional()
-  images: FileEntity[];
-
-  @OneToMany(() => CartItemEntity, (cart) => cart.item)
-  @ApiPropertyOptional()
-  carts: CartItemEntity[];
-
-  @Column({ nullable: true, default: 0 })
-  @ApiPropertyOptional()
-  projectQuantity?: number;
+  itemGroup: Relation<ItemGroupEntity>;
 
   @OneToMany(() => MaintenanceEntity, (main) => main.item)
-  @ApiPropertyOptional({ type: () => MaintenanceEntity, isArray: true })
-  maintenances: MaintenanceEntity[];
-
-  @Column({ nullable: true })
   @ApiPropertyOptional()
-  totalQuantity?: number;
+  maintenances: MaintenanceEntity[];
 
   @Column({ nullable: true })
   @ApiPropertyOptional()
   workingHours?: number;
 
-  @Column({ type: 'enum', enum: ItemStatusEnum, default: ItemStatusEnum.ok })
-  @ApiProperty({ enum: ItemStatusEnum, example: ItemStatusEnum.warning })
-  status: ItemStatusEnum;
+  @Column({ nullable: true })
+  @ApiPropertyOptional()
+  workedHours?: number;
+
+  @ManyToMany(() => CartItemEntity, (cartItem) => cartItem.items)
+  @ApiPropertyOptional()
+  @JoinTable()
+  cartItems: CartItemEntity[];
 }

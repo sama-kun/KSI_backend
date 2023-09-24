@@ -58,7 +58,6 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         ]);
         const doc = new pdfkit_1.default();
         const fileName = 'KSI_Project_MDNreport.pdf';
-        console.debug(project.carts);
         const templatePath = path.join(__dirname, 'template', 'mdnreport.ejs');
         const template = fs.readFileSync(templatePath, 'utf-8');
         const html = ejs.render(template, { project });

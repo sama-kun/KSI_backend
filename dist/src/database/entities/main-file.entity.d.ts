@@ -6,6 +6,6 @@ import { Relation } from 'typeorm';
 export declare class MainFileEntity implements IMainFile {
     id: number;
     type: MainFileTypesEnum;
-    file: FileEntity;
-    maintenance: Relation<MaintenanceEntity>;
+    file: Relation<FileEntity>;
+    maintenance?: Relation<MaintenanceEntity>;
 }

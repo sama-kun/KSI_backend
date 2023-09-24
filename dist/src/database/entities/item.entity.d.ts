@@ -1,21 +1,16 @@
-import { CategoryEntity } from './category.entity';
-import { FileEntity } from './file.entity';
-import { CartItemEntity } from './cart-item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IItem } from '@/interfaces/entities';
-import { MaintenanceEntity } from './maintenance.entity';
 import { ItemStatusEnum } from '@/interfaces/enums';
+import { Relation } from 'typeorm';
+import { ItemGroupEntity } from './item-group.entity';
+import { MaintenanceEntity } from './maintenance.entity';
+import { CartItemEntity } from './cart-item.entity';
 export declare class ItemEntity extends BaseModel implements IItem {
-    name: string;
-    description?: string;
-    category?: CategoryEntity;
-    tag?: string;
-    quantity?: number;
-    images: FileEntity[];
-    carts: CartItemEntity[];
-    projectQuantity?: number;
-    maintenances: MaintenanceEntity[];
-    totalQuantity?: number;
-    workingHours?: number;
+    uuid: string;
     status: ItemStatusEnum;
+    itemGroup: Relation<ItemGroupEntity>;
+    maintenances: MaintenanceEntity[];
+    workingHours?: number;
+    workedHours?: number;
+    cartItems: CartItemEntity[];
 }

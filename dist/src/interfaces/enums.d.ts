@@ -1,9 +1,8 @@
 export declare enum CartStatusEnum {
-    FillLackReason = "FillLackReason",
     Finished = "Finished",
     OnProject = "OnProject",
     InCart = "InCart",
-    FillWorkingHour = "FillWorkingHour"
+    LackOfQuantity = "LackOfQuantity"
 }
 export declare enum RoleEnum {
     USER = "user",
@@ -21,13 +20,24 @@ export declare enum MainFileTypesEnum {
     problem = "problem"
 }
 export declare enum ProjectStatusEnum {
+    detailing = "detailing",
     planned = "planned",
     active = "active",
     finished = "finished"
 }
 export declare enum ItemStatusEnum {
     warning = "warinig",
-    ok = "ok"
+    ok = "ok",
+    fault = "fault",
+    inProject = "inProject",
+    inCart = "inCart"
+}
+export declare enum CartItemStatusEnum {
+    detailing = "detailing",
+    fillWorkingHours = "fillWorkingHours",
+    fillWorkedHours = "fillWorkedHours",
+    lackOfQuantity = "lackOfQuantity",
+    finished = "finished"
 }
 export declare enum MainTypeEnum {
     corrective = "corrective",

@@ -29,8 +29,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-@ApiTags('Cart-Item')
-@Controller('cart-item')
+@ApiTags('Cart')
+@Controller('cart')
 @ApiBearerAuth()
 export class CartController {
   constructor(private cartService: CartService) {}
@@ -45,11 +45,8 @@ export class CartController {
   @Post()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  createCustom(
-    @AuthUser() user: UserEntity,
-    @Body() data: CartItemEntity[] & CartItemEntity,
-  ) {
-    return this.cartService.createMany(data, user);
+  createCustom(@AuthUser() user: UserEntity, @Body() data: CartItemEntity) {
+    return this.cartService.create(data, user);
   }
 
   @ApiParam({ name: 'id', description: 'Cart ID' })
@@ -92,62 +89,34 @@ export class CartController {
   //   return this.cartService.createMany(data, user.id)
   // }
 
-  @ApiOperation({ summary: 'Add 1 item to Cart' })
-  @ApiResponse({
-    status: 201,
-    type: CartItemEntity,
-    description: 'Cart updated successfully',
-  })
-  @ApiParam({ name: 'id', description: 'Cart ID' })
-  @Get(':id/plus')
-  @UseGuards(RolesQuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  plus(@Param('id', ParseIntPipe) id: number) {
-    return this.cartService.plus(id);
-  }
-
-  @ApiOperation({ summary: 'Remove 1 item from Cart' })
-  @ApiResponse({
-    status: 201,
-    type: CartItemEntity,
-    description: 'Cart updated successfully',
-  })
-  @ApiParam({ name: 'id', description: 'Cart ID' })
-  @Get(':id/minus')
-  @UseGuards(RolesQuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  minus(@Param('id', ParseIntPipe) id: number) {
-    return this.cartService.minus(id);
-  }
-
-  @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
-  @ApiResponse({
-    status: 201,
-    type: CartItemEntity,
-    description: 'Items returned succesfully',
-  })
-  @ApiParam({ name: 'id', description: 'Cart ID' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        initialQuantity: {
-          type: 'number',
-          example: 10,
-          description: 'The initial quantity of the cart',
-        },
-      },
-    },
-  })
-  @Post(':id/return')
-  @UseGuards(RolesQuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  return(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() body: { initialQuantity: number },
-  ) {
-    return this.cartService.return(id, body.initialQuantity);
-  }
+  // @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
+  // @ApiResponse({
+  //   status: 201,
+  //   type: CartItemEntity,
+  //   description: 'Items returned succesfully',
+  // })
+  // @ApiParam({ name: 'id', description: 'Cart ID' })
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       initialQuantity: {
+  //         type: 'number',
+  //         example: 10,
+  //         description: 'The initial quantity of the cart',
+  //       },
+  //     },
+  //   },
+  // })
+  // @Post(':id/return')
+  // @UseGuards(RolesQuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  // return(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() body: { initialQuantity: number },
+  // ) {
+  //   return this.cartService.return(id, body.initialQuantity);
+  // }
 
   @ApiOperation({ summary: 'Get all carts using query' })
   @ApiQuery({ type: SearchCartDto })
@@ -178,29 +147,29 @@ export class CartController {
     return this.cartService.delete(user, id);
   }
 
-  @ApiOperation({ summary: 'Send to the Project' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        ids: {
-          type: 'array',
-          example: [1, 2, 3, 4],
-          description: 'The array of ids carts',
-        },
-      },
-    },
-  })
-  @ApiParam({ name: 'id', description: 'Project ID' })
-  @Patch('send/:projectId')
-  @UseGuards(RolesQuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  async sendToProject(
-    @AuthUser() user: UserEntity,
-    @Body('ids') ids: number[],
-    @Param('projectId') projectId: number,
-  ) {
-    console.log(ids);
-    return this.cartService.send(user, ids, projectId);
-  }
+  // @ApiOperation({ summary: 'Send to the Project' })
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       ids: {
+  //         type: 'array',
+  //         example: [1, 2, 3, 4],
+  //         description: 'The array of ids carts',
+  //       },
+  //     },
+  //   },
+  // })
+  // @ApiParam({ name: 'id', description: 'Project ID' })
+  // @Patch('send/:projectId')
+  // @UseGuards(RolesQuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  // async sendToProject(
+  //   @AuthUser() user: UserEntity,
+  //   @Body('ids') ids: number[],
+  //   @Param('projectId') projectId: number,
+  // ) {
+  //   console.log(ids);
+  //   return this.cartService.send(user, ids, projectId);
+  // }
 }
