@@ -16,4 +16,5 @@ export declare class CartItemService extends BaseService<CartItemEntity, CreateC
     minus(id: number): Promise<CartItemEntity>;
     private check;
     return(id: number, initialQuantity: number): Promise<CartItemEntity>;
+    send(id: number): Promise<void>;
 }

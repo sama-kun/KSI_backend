@@ -69,6 +69,12 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
         }
         return candidate;
     }
+    async send(id) {
+        const record = await this.findById(id, ['items']);
+        await this.itemService.updateStatus(record.items.map((item) => item.id), enums_1.ItemStatusEnum.inProject);
+        record.status = enums_1.CartItemStatusEnum.inProject;
+        await this.repo.save(record);
+    }
 };
 CartItemService = __decorate([
     (0, common_1.Injectable)(),

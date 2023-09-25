@@ -45,6 +45,7 @@ var CartItemStatusEnum;
 (function (CartItemStatusEnum) {
     CartItemStatusEnum["detailing"] = "detailing";
     CartItemStatusEnum["fillWorkingHours"] = "fillWorkingHours";
+    CartItemStatusEnum["inProject"] = "inProject";
     CartItemStatusEnum["fillWorkedHours"] = "fillWorkedHours";
     CartItemStatusEnum["lackOfQuantity"] = "lackOfQuantity";
     CartItemStatusEnum["finished"] = "finished";

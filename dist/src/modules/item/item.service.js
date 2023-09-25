@@ -51,6 +51,13 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
         candidate.status = enums_1.ItemStatusEnum.ok;
         return await this.repo.save(candidate);
     }
+    async updateStatus(ids, status) {
+        for (const id of ids) {
+            const item = await this.findById(id, []);
+            item.status = status;
+            await this.repo.save(item);
+        }
+    }
 };
 ItemService = __decorate([
     (0, common_1.Injectable)(),

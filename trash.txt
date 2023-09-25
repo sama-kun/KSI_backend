@@ -45,3 +45,16 @@ async create(userDto: Prisma.UserCreateInput): Promise<User> {
         "api_key": "776412232818641"
     }
 }
+
+
+<!-- <% for (let i = 0; i < project.carts.length; i++) { %>
+<%=i+1%>   |    <%=project.carts[i].item.name%>    |    <%=project.carts[i].quantity%>   |     <%=project.name%>     |      <%=project.carts[i].item.workingHours%>
+<% } %> -->
+
+<!-- Manager: <%= data.projec.createdBy.email %> -->
+<!-- 
+<%= data.project.name %>
+Data: <%= data.project.carts[0].createdAt %> -->
+<!-- Company: KSI PetroGasServices LLP
+Warehouse Address: Atyrau, Zhuldyz-3, 13/3
+Vehicle Details: -->

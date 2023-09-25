@@ -5,6 +5,7 @@ import { MaintenanceEntity } from './maintenance.entity';
 import { CartEntity } from './cart.entity';
 export declare class UserEntity extends BaseModel implements IUser {
     email: string;
+    name: string;
     password: string;
     role: RoleEnum;
     carts: CartEntity[];

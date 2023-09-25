@@ -28,6 +28,11 @@ __decorate([
     (0, typeorm_1.Column)(),
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
+], UserEntity.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.RoleEnum, default: enums_1.RoleEnum.USER }),

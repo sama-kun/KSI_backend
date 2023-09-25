@@ -8,5 +8,5 @@ import { UserEntity } from '../../database/entities/user.entity';
 export declare class ProjectService extends BaseService<ProjectEntity, CreateProjectDto, UpdateProjectDto> {
     protected repo: Repository<ProjectEntity>;
     constructor(repo: Repository<ProjectEntity>);
-    mdnReport(user: UserEntity, res: Response, id: number): Promise<void>;
+    mdnReport(res: Response, user: UserEntity): Promise<void>;
 }

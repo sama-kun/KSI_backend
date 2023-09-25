@@ -93,15 +93,13 @@ export class CartItemService extends BaseService<
     return candidate;
   }
 
-  // async send(user: UserEntity, ids: number[]) {
-  //   const records = [];
-  //   for (const id of ids) {
-  //     const record = await this.update(user, id, {
-  //       status: CartItemStatusEnum.fillWorkingHours,
-  //     });
-  //     records.push(record);
-  //   }
-
-  //   return records;
-  // }
+  async send(id: number) {
+    const record = await this.findById(id, ['items']);
+    await this.itemService.updateStatus(
+      record.items.map((item) => item.id),
+      ItemStatusEnum.inProject,
+    );
+    record.status = CartItemStatusEnum.inProject;
+    await this.repo.save(record);
+  }
 }

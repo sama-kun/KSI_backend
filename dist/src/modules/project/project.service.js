@@ -40,32 +40,52 @@ const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const project_entity_1 = require("../../database/entities/project.entity");
 const common_1 = require("@nestjs/common");
-const pdfkit_1 = __importDefault(require("pdfkit"));
-const ejs = __importStar(require("ejs"));
-const path = __importStar(require("path"));
+const ejs_1 = __importDefault(require("ejs"));
 const fs = __importStar(require("fs"));
+const pdf = __importStar(require("html-pdf"));
+const path_1 = __importDefault(require("path"));
+const util = __importStar(require("util"));
 const console = new common_1.Logger('ProjectService');
 let ProjectService = class ProjectService extends BaseService_1.BaseService {
     constructor(repo) {
         super();
         this.repo = repo;
     }
-    async mdnReport(user, res, id) {
-        const project = await this.findById(id, [
-            'carts',
-            'carts.item',
-            'carts.createdBy',
-        ]);
-        const doc = new pdfkit_1.default();
-        const fileName = 'KSI_Project_MDNreport.pdf';
-        const templatePath = path.join(__dirname, 'template', 'mdnreport.ejs');
-        const template = fs.readFileSync(templatePath, 'utf-8');
-        const html = ejs.render(template, { project });
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
-        doc.pipe(res);
-        doc.text(html);
-        doc.end();
+    async mdnReport(res, user) {
+        const name = 'mdnreport_' + user.email + '.pdf';
+        const fileName = path_1.default.join(__dirname, './template', name);
+        ejs_1.default.renderFile(path_1.default.join(__dirname, './template/', 'mdnreport.ejs'), {}, (err, data) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                const options = {
+                    height: '11.25in',
+                    width: '8.5in',
+                    header: {
+                        height: '20mm',
+                    },
+                    footer: {
+                        height: '20mm',
+                    },
+                };
+                pdf.create(data, options).toFile(fileName, function (err, data) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        res.setHeader('Content-Type', 'application/pdf');
+                        res.setHeader('Content-Disposition', 'inline; filename=' + name);
+                        const fileStream = fs.createReadStream(fileName);
+                        fileStream.pipe(res);
+                    }
+                });
+            }
+        });
+        setTimeout(() => {
+            util.promisify(fs.promises.unlink)(fileName);
+            console.log(`File deleted: ${fileName}`);
+        }, 1000);
     }
 };
 ProjectService = __decorate([

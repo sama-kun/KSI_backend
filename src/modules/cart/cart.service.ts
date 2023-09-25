@@ -7,6 +7,8 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { CartEntity } from '@/database/entities/cart.entity';
 import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { UserEntity } from '@/database/entities/user.entity';
+import { ItemService } from '../item/item.service';
+import { CartItemService } from '../cart-item/cart-item.service';
 
 @Injectable()
 export class CartService extends BaseService<
@@ -17,17 +19,18 @@ export class CartService extends BaseService<
   constructor(
     @InjectRepository(CartEntity)
     protected repo: Repository<CartEntity>,
+    protected itemService: ItemService,
+    protected cartItemService: CartItemService,
   ) {
     super();
   }
 
   async myCreate(data: CreateCartDto, user: UserEntity): Promise<any> {
-    // const id = data.item;
-    // const item = this.itemService.findById(id, []);
     const cart = await this.create(data, user);
     const cartItems = [];
     for (const id of data.cartItems) {
       cartItems.push({ id: id as CartItemEntity });
+      await this.cartItemService.send(Number(id));
     }
     cart.cartItems = cartItems;
     return await this.repo.save(cart);

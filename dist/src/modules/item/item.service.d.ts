@@ -3,6 +3,7 @@ import { UpdateItemDto } from './dto/update-item.dto';
 import { BaseService } from '@/common/base/BaseService';
 import { Repository } from 'typeorm';
 import { ItemEntity } from '@/database/entities/item.entity';
+import { ItemStatusEnum } from '@/interfaces/enums';
 export declare class ItemService extends BaseService<ItemEntity, CreateItemDto, UpdateItemDto> {
     protected repo: Repository<ItemEntity>;
     constructor(repo: Repository<ItemEntity>);
@@ -10,4 +11,5 @@ export declare class ItemService extends BaseService<ItemEntity, CreateItemDto, 
     updateWorkingHours(id: number, workingHour: number): Promise<ItemEntity>;
     addCartItem(itemId: number, cartId: number): Promise<ItemEntity>;
     removeCartItem(itemId: number, cartId: number): Promise<ItemEntity>;
+    updateStatus(ids: number[], status: ItemStatusEnum): Promise<void>;
 }

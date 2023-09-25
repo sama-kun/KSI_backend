@@ -15,6 +15,10 @@ export class UserEntity extends BaseModel implements IUser {
 
   @Column()
   @ApiPropertyOptional()
+  name: string;
+
+  @Column()
+  @ApiPropertyOptional()
   password: string;
 
   @Column({ type: 'enum', enum: RoleEnum, default: RoleEnum.USER })

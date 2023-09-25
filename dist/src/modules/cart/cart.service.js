@@ -18,16 +18,21 @@ const BaseService_1 = require("../../common/base/BaseService");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const cart_entity_1 = require("../../database/entities/cart.entity");
+const item_service_1 = require("../item/item.service");
+const cart_item_service_1 = require("../cart-item/cart-item.service");
 let CartService = class CartService extends BaseService_1.BaseService {
-    constructor(repo) {
+    constructor(repo, itemService, cartItemService) {
         super();
         this.repo = repo;
+        this.itemService = itemService;
+        this.cartItemService = cartItemService;
     }
     async myCreate(data, user) {
         const cart = await this.create(data, user);
         const cartItems = [];
         for (const id of data.cartItems) {
             cartItems.push({ id: id });
+            await this.cartItemService.send(Number(id));
         }
         cart.cartItems = cartItems;
         return await this.repo.save(cart);
@@ -36,7 +41,9 @@ let CartService = class CartService extends BaseService_1.BaseService {
 CartService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(cart_entity_1.CartEntity)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        item_service_1.ItemService,
+        cart_item_service_1.CartItemService])
 ], CartService);
 exports.CartService = CartService;
 //# sourceMappingURL=cart.service.js.map

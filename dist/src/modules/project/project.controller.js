@@ -48,8 +48,8 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
         console.log(user);
         return this.dataService.delete(user, id);
     }
-    mdnreport(user, id, res) {
-        return this.projectService.mdnReport(user, res, id);
+    async mdnreport(user, id, res) {
+        return this.dataService.mdnReport(res, user);
     }
 };
 __decorate([
@@ -131,12 +131,14 @@ __decorate([
 ], ProjectController.prototype, "remove", null);
 __decorate([
     (0, common_1.Get)(':id/mdnreport'),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "mdnreport", null);
 ProjectController = __decorate([
     (0, swagger_1.ApiTags)('Project'),

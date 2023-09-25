@@ -55,6 +55,14 @@ export class ItemService extends BaseService<
     return await this.repo.save(candidate);
   }
 
+  async updateStatus(ids: number[], status: ItemStatusEnum) {
+    for (const id of ids) {
+      const item = await this.findById(id, []);
+      item.status = status;
+      await this.repo.save(item);
+    }
+  }
+
   // async removeLast() {
 
   // }
