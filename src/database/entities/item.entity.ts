@@ -45,6 +45,5 @@ export class ItemEntity extends BaseModel implements IItem {
 
   @ManyToMany(() => CartItemEntity, (cartItem) => cartItem.items)
   @ApiPropertyOptional()
-  @JoinTable()
   cartItems: CartItemEntity[];
 }

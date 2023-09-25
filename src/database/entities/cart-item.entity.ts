@@ -1,4 +1,11 @@
-import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+  JoinColumn,
+} from 'typeorm';
 import { ItemEntity } from './item.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { ICartItem } from '@/interfaces/entities';
@@ -19,6 +26,7 @@ export class CartItemEntity extends BaseModel implements ICartItem {
 
   @ManyToMany(() => ItemEntity, (item) => item.cartItems)
   @ApiPropertyOptional()
+  @JoinTable()
   items: ItemEntity[];
 
   @ManyToOne(() => ItemGroupEntity)
@@ -27,6 +35,7 @@ export class CartItemEntity extends BaseModel implements ICartItem {
 
   @ManyToOne(() => CartEntity, (cart) => cart.cartItems, { nullable: true })
   @ApiPropertyOptional()
+  @JoinColumn()
   cart?: CartEntity;
 
   @Column({ default: false })

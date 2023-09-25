@@ -32,6 +32,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToMany)(() => item_entity_1.ItemEntity, (item) => item.cartItems),
     (0, swagger_1.ApiPropertyOptional)(),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], CartItemEntity.prototype, "items", void 0);
 __decorate([
@@ -42,6 +43,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => cart_entity_1.CartEntity, (cart) => cart.cartItems, { nullable: true }),
     (0, swagger_1.ApiPropertyOptional)(),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", cart_entity_1.CartEntity)
 ], CartItemEntity.prototype, "cart", void 0);
 __decorate([

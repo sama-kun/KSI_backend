@@ -53,7 +53,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToMany)(() => cart_item_entity_1.CartItemEntity, (cartItem) => cartItem.items),
     (0, swagger_1.ApiPropertyOptional)(),
-    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], ItemEntity.prototype, "cartItems", void 0);
 ItemEntity = __decorate([
