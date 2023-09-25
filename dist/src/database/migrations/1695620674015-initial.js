@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Initail1695545600983 = void 0;
-class Initail1695545600983 {
+exports.Initial1695620674015 = void 0;
+class Initial1695620674015 {
     constructor() {
-        this.name = 'Initail1695545600983';
+        this.name = 'Initial1695620674015';
     }
     async up(queryRunner) {
         await queryRunner.query(`CREATE TABLE "category" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying, "description" character varying, "updatedById" integer, "createdById" integer, CONSTRAINT "UQ_23c05c292c439d77b0de816b500" UNIQUE ("name"), CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`);
@@ -14,7 +14,7 @@ class Initail1695545600983 {
         await queryRunner.query(`CREATE TABLE "main-file" ("id" SERIAL NOT NULL, "type" "public"."main-file_type_enum" NOT NULL DEFAULT 'main', "fileId" integer, "maintenanceId" integer, CONSTRAINT "PK_977852ae2139699bc9a232749e8" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."project_status_enum" AS ENUM('detailing', 'planned', 'active', 'finished')`);
         await queryRunner.query(`CREATE TABLE "project" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "description" character varying, "status" "public"."project_status_enum" NOT NULL DEFAULT 'detailing', "updatedById" integer, "createdById" integer, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "projectId" integer, "returnById" integer, CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "returnById" integer, CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."user_role_enum" AS ENUM('user', 'admin', 'root')`);
         await queryRunner.query(`CREATE TABLE "user" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "email" character varying NOT NULL, "password" character varying NOT NULL, "role" "public"."user_role_enum" NOT NULL DEFAULT 'user', "updatedById" integer, "createdById" integer, CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."maintenance_type_enum" AS ENUM('corrective', 'preventive')`);
@@ -39,7 +39,6 @@ class Initail1695545600983 {
         await queryRunner.query(`ALTER TABLE "project" ADD CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_476b318963147ddc70f5f973ea1" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_eaca17862ea338f633669c95211" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_4c5415b550273e04087f5a6d2db" FOREIGN KEY ("returnById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "user" ADD CONSTRAINT "FK_db5173f7d27aa8a98a9fe6113df" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "user" ADD CONSTRAINT "FK_45c0d39d1f9ceeb56942db93cc5" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -74,7 +73,6 @@ class Initail1695545600983 {
         await queryRunner.query(`ALTER TABLE "user" DROP CONSTRAINT "FK_45c0d39d1f9ceeb56942db93cc5"`);
         await queryRunner.query(`ALTER TABLE "user" DROP CONSTRAINT "FK_db5173f7d27aa8a98a9fe6113df"`);
         await queryRunner.query(`ALTER TABLE "cart" DROP CONSTRAINT "FK_4c5415b550273e04087f5a6d2db"`);
-        await queryRunner.query(`ALTER TABLE "cart" DROP CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3"`);
         await queryRunner.query(`ALTER TABLE "cart" DROP CONSTRAINT "FK_eaca17862ea338f633669c95211"`);
         await queryRunner.query(`ALTER TABLE "cart" DROP CONSTRAINT "FK_476b318963147ddc70f5f973ea1"`);
         await queryRunner.query(`ALTER TABLE "project" DROP CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18"`);
@@ -110,5 +108,5 @@ class Initail1695545600983 {
         await queryRunner.query(`DROP TABLE "category"`);
     }
 }
-exports.Initail1695545600983 = Initail1695545600983;
-//# sourceMappingURL=1695545600983-initail.js.map
+exports.Initial1695620674015 = Initial1695620674015;
+//# sourceMappingURL=1695620674015-initial.js.map

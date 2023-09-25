@@ -42,7 +42,7 @@ export interface IFile extends IBaseModel {
 export interface IProject extends IBaseModel {
   name: string;
   description?: string;
-  cart: ICart[];
+  cart: ICart;
   status: ProjectStatusEnum;
 }
 

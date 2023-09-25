@@ -16,7 +16,6 @@ import { RoleEnum } from '@/interfaces/enums';
 import { Roles } from '@/common/decorators/roles-auth.decorator';
 import { AuthUser } from '@/common/decorators/auth-user.decorator';
 import { UserEntity } from '@/database/entities/user.entity';
-import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { SearchCartDto } from './dto/search-cart.dto';
 import { SearchQueryDto } from '@/common/base/dto/search-query.dto';
 import {
@@ -28,6 +27,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { CartEntity } from '@/database/entities/cart.entity';
 
 @ApiTags('Cart')
 @Controller('cart')
@@ -38,22 +38,22 @@ export class CartController {
   @ApiOperation({ summary: 'Create cart' })
   @ApiResponse({
     status: 201,
-    type: CartItemEntity,
+    type: CartEntity,
     description: 'Cart created successfully',
   })
-  @ApiBody({ type: CartItemEntity })
+  @ApiBody({ type: CartEntity })
   @Post()
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  createCustom(@AuthUser() user: UserEntity, @Body() data: CartItemEntity) {
-    return this.cartService.create(data, user);
+  createCustom(@AuthUser() user: UserEntity, @Body() data: CartEntity) {
+    return this.cartService.myCreate(data, user);
   }
 
   @ApiParam({ name: 'id', description: 'Cart ID' })
   @ApiOperation({ summary: 'Get Cart by id' })
   @ApiResponse({
     status: 201,
-    type: CartItemEntity,
+    type: CartEntity,
     description: 'Cart created successfully',
   })
   @ApiQuery({ name: 'relations', required: false, type: Array })
@@ -68,17 +68,17 @@ export class CartController {
   @ApiOperation({ summary: 'Update cart' })
   @ApiResponse({
     status: 201,
-    type: CartItemEntity,
+    type: CartEntity,
     description: 'Cart updated successfully',
   })
   @ApiParam({ name: 'id', description: 'Cart ID' })
-  @ApiBody({ type: CartItemEntity })
+  @ApiBody({ type: CartEntity })
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   @Patch(':id')
   update(
     @AuthUser() user: UserEntity,
-    @Body() data: CartItemEntity,
+    @Body() data: CartEntity,
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.cartService.update(user, id, data);
@@ -92,7 +92,7 @@ export class CartController {
   // @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
   // @ApiResponse({
   //   status: 201,
-  //   type: CartItemEntity,
+  //   type: CartEntity,
   //   description: 'Items returned succesfully',
   // })
   // @ApiParam({ name: 'id', description: 'Cart ID' })

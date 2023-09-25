@@ -1,37 +1,37 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { BaseService } from '@/common/base/BaseService';
-import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
-import { ItemGroupService } from '../item-group/item-group.service';
+import { CartEntity } from '@/database/entities/cart.entity';
+import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { UserEntity } from '@/database/entities/user.entity';
-import { ProjectEntity } from '@/database/entities/project.entity';
 
 @Injectable()
 export class CartService extends BaseService<
-  CartItemEntity,
+  CartEntity,
   CreateCartDto,
   UpdateCartDto
 > {
   constructor(
-    @InjectRepository(CartItemEntity)
-    protected repo: Repository<CartItemEntity>,
+    @InjectRepository(CartEntity)
+    protected repo: Repository<CartEntity>,
   ) {
     super();
   }
 
-  // async createMany(data: CreateCartDto, user: UserEntity): Promise<any> {
-  //   // const id = data.item;
-  //   // const item = this.itemService.findById(id, []);
-
-  //   const cartSave = await this.create(data, user);
-  //   const cart = await this.findById(cartSave.id, ['item']);
-  //   console.log(cart);
-  //   await this.itemService.transaction(cart.item.id, data.quantity, '+');
-  //   return cartSave;
-  // }
+  async myCreate(data: CreateCartDto, user: UserEntity): Promise<any> {
+    // const id = data.item;
+    // const item = this.itemService.findById(id, []);
+    const cart = await this.create(data, user);
+    const cartItems = [];
+    for (const id of data.cartItems) {
+      cartItems.push({ id: id as CartItemEntity });
+    }
+    cart.cartItems = cartItems;
+    return await this.repo.save(cart);
+  }
 
   // async plus(id: number): Promise<CartItemEntity> {
   //   const candidate = await super.findById(id, ['item', 'project']);

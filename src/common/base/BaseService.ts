@@ -101,7 +101,6 @@ export abstract class BaseService<
       page = parseInt(pagination.page, 10) || 1;
       pageSize = parseInt(pagination.pageSize, 10) || 10;
     }
-    console.debug(pagination);
     try {
       const records = await this.repo.find({
         order: sort,

@@ -15,18 +15,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartService = void 0;
 const common_1 = require("@nestjs/common");
 const BaseService_1 = require("../../common/base/BaseService");
-const cart_item_entity_1 = require("../../database/entities/cart-item.entity");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
+const cart_entity_1 = require("../../database/entities/cart.entity");
 let CartService = class CartService extends BaseService_1.BaseService {
     constructor(repo) {
         super();
         this.repo = repo;
     }
+    async myCreate(data, user) {
+        const cart = await this.create(data, user);
+        const cartItems = [];
+        for (const id of data.cartItems) {
+            cartItems.push({ id: id });
+        }
+        cart.cartItems = cartItems;
+        return await this.repo.save(cart);
+    }
 };
 CartService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_2.InjectRepository)(cart_item_entity_1.CartItemEntity)),
+    __param(0, (0, typeorm_2.InjectRepository)(cart_entity_1.CartEntity)),
     __metadata("design:paramtypes", [typeorm_1.Repository])
 ], CartService);
 exports.CartService = CartService;

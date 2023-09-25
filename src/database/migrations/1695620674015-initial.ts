@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Initail1695545600983 implements MigrationInterface {
-  name = 'Initail1695545600983';
+export class Initial1695620674015 implements MigrationInterface {
+  name = 'Initial1695620674015';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -29,7 +29,7 @@ export class Initail1695545600983 implements MigrationInterface {
       `CREATE TABLE "project" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "description" character varying, "status" "public"."project_status_enum" NOT NULL DEFAULT 'detailing', "updatedById" integer, "createdById" integer, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "projectId" integer, "returnById" integer, CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "returnById" integer, CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TYPE "public"."user_role_enum" AS ENUM('user', 'admin', 'root')`,
@@ -102,9 +102,6 @@ export class Initail1695545600983 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "cart" ADD CONSTRAINT "FK_eaca17862ea338f633669c95211" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" ADD CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "cart" ADD CONSTRAINT "FK_4c5415b550273e04087f5a6d2db" FOREIGN KEY ("returnById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -204,9 +201,6 @@ export class Initail1695545600983 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "cart" DROP CONSTRAINT "FK_4c5415b550273e04087f5a6d2db"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" DROP CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3"`,
     );
     await queryRunner.query(
       `ALTER TABLE "cart" DROP CONSTRAINT "FK_eaca17862ea338f633669c95211"`,

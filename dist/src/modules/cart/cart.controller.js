@@ -20,16 +20,16 @@ const enums_1 = require("../../interfaces/enums");
 const roles_auth_decorator_1 = require("../../common/decorators/roles-auth.decorator");
 const auth_user_decorator_1 = require("../../common/decorators/auth-user.decorator");
 const user_entity_1 = require("../../database/entities/user.entity");
-const cart_item_entity_1 = require("../../database/entities/cart-item.entity");
 const search_cart_dto_1 = require("./dto/search-cart.dto");
 const search_query_dto_1 = require("../../common/base/dto/search-query.dto");
 const swagger_1 = require("@nestjs/swagger");
+const cart_entity_1 = require("../../database/entities/cart.entity");
 let CartController = class CartController {
     constructor(cartService) {
         this.cartService = cartService;
     }
     createCustom(user, data) {
-        return this.cartService.create(data, user);
+        return this.cartService.myCreate(data, user);
     }
     getOne(id, query) {
         const { relations } = query;
@@ -51,17 +51,17 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_item_entity_1.CartItemEntity,
+        type: cart_entity_1.CartEntity,
         description: 'Cart created successfully',
     }),
-    (0, swagger_1.ApiBody)({ type: cart_item_entity_1.CartItemEntity }),
+    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     __param(0, (0, auth_user_decorator_1.AuthUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.UserEntity, cart_item_entity_1.CartItemEntity]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, cart_entity_1.CartEntity]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "createCustom", null);
 __decorate([
@@ -69,7 +69,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Get Cart by id' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_item_entity_1.CartItemEntity,
+        type: cart_entity_1.CartEntity,
         description: 'Cart created successfully',
     }),
     (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
@@ -86,11 +86,11 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Update cart' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
-        type: cart_item_entity_1.CartItemEntity,
+        type: cart_entity_1.CartEntity,
         description: 'Cart updated successfully',
     }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
-    (0, swagger_1.ApiBody)({ type: cart_item_entity_1.CartItemEntity }),
+    (0, swagger_1.ApiBody)({ type: cart_entity_1.CartEntity }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
     (0, common_1.Patch)(':id'),
@@ -99,7 +99,7 @@ __decorate([
     __param(2, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity,
-        cart_item_entity_1.CartItemEntity, Number]),
+        cart_entity_1.CartEntity, Number]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([

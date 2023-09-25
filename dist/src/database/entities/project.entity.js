@@ -28,9 +28,9 @@ __decorate([
     __metadata("design:type", String)
 ], ProjectEntity.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => cart_entity_1.CartEntity, (cart) => cart.project),
-    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity, isArray: true }),
-    __metadata("design:type", Array)
+    (0, typeorm_1.OneToOne)(() => cart_entity_1.CartEntity, (cart) => cart.project),
+    (0, swagger_1.ApiPropertyOptional)({ type: () => cart_entity_1.CartEntity }),
+    __metadata("design:type", cart_entity_1.CartEntity)
 ], ProjectEntity.prototype, "cart", void 0);
 __decorate([
     (0, typeorm_1.Column)({

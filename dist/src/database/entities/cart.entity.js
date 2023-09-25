@@ -25,8 +25,9 @@ __decorate([
     __metadata("design:type", Array)
 ], CartEntity.prototype, "cartItems", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => project_entity_1.ProjectEntity, (project) => project.cart),
+    (0, typeorm_1.OneToOne)(() => project_entity_1.ProjectEntity, (project) => project.cart),
     (0, swagger_1.ApiPropertyOptional)(),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Object)
 ], CartEntity.prototype, "project", void 0);
 __decorate([
