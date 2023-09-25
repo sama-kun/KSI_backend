@@ -6,15 +6,12 @@ import { ProjectEntity } from '@/database/entities/project.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Injectable, Logger } from '@nestjs/common';
-import PDFDocument from 'pdfkit';
 import ejs from 'ejs';
 import * as fs from 'fs';
-import * as pdf from 'html-pdf';
 import { UserEntity } from '../../database/entities/user.entity';
 import path from 'path';
 import * as pdf1 from 'pdf-creator-node';
 import { CartItemService } from '../cart-item/cart-item.service';
-import { projects } from '../../database/seeds/test.seed';
 import * as util from 'util';
 const console = new Logger('ProjectService');
 

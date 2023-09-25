@@ -1,5 +1,6 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
+import { config } from './config';
 
 export default (app: INestApplication) => {
   const swaggerConfig = new DocumentBuilder()
@@ -16,7 +17,7 @@ export default (app: INestApplication) => {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('swagger', app, document, {
+  SwaggerModule.setup(config.swagger.path, app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const swagger_1 = require("@nestjs/swagger");
+const config_1 = require("./config");
 exports.default = (app) => {
     const swaggerConfig = new swagger_1.DocumentBuilder()
         .setTitle('KSI Platform')
@@ -14,7 +15,7 @@ exports.default = (app) => {
     })
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, swaggerConfig);
-    swagger_1.SwaggerModule.setup('swagger', app, document, {
+    swagger_1.SwaggerModule.setup(config_1.config.swagger.path, app, document, {
         swaggerOptions: {
             persistAuthorization: true,
         },
