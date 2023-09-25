@@ -1,7 +1,75 @@
 
 <!DOCTYPE html>
 <html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+        }
+
+        .title {
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+      </style>
+</head>
 <body>
-  <h1>Hello</h1>
+  <header>
+    <meta charset="UTF-8">
+    <img alt="KSI logo" src="<%= path  %>" />
+</header>
+    <p class="title">Material Delivery Note / Уведомление о доставке материала</p>
+    <div>Shipper / Отправитель:<br>    <%= cart.createdBy.name %></div>
+    <div>Date / Дата:<br> <%= cart.createdAt %></div>
+    <div>Company/Компания:      KSI PetroGasServices LLP </div> 
+    <div>Warehouse Address / Адрес Склада:      Atyrau, Zhuldyz-3, 13/3 </div> 
+
+    <div>Consignee / Получатель: </div>
+    <div>Company / Компания:	KSI PetroGasServices LLP </div>
+    <div>Address / Адрес:  	Onshore, Karabatan</div>
+  <br>
+  <table>
+  <thead>
+    <tr>
+        <th>Description / Наименование</th>
+        <th>Q-ty (pcs) / Кол-во в ед.</th>
+        <th>№</th>
+        <th>Items / Аппараты</th>
+        <th>Worked hour / Время работы</th>
+    </tr>
+</thead>
+<tbody>
+    <% for (let cartItem of cart.cartItems) { %>
+        <tr>
+            <td><%= cartItem.itemGroup.name %></td>
+            <td><%= cartItem.quantity %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <% for (let i=0; i<cartItem.items.length; i++) { %>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><%= i+1 %></td>
+            <td><%= cartItem.items[i].uuid %></td>
+            <td><%= cartItem.items[0].workedHours - cartItem.items[i].workingHours %></td>
+        </tr>
+        <% } %>
+    <% } %>
+</tbody>
+</table>
+<footer>
+    Delivered by / Передал:  	<%= cart.createdBy.name %>
+    <br>
+    Date / Дата:	<%= cart.createdAt %>	
+</footer>
 </body>
 </html>

@@ -13,6 +13,7 @@ const project_controller_1 = require("./project.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const project_entity_1 = require("../../database/entities/project.entity");
 const jwt_1 = require("@nestjs/jwt");
+const cart_item_module_1 = require("../cart-item/cart-item.module");
 let ProjectModule = class ProjectModule {
 };
 ProjectModule = __decorate([
@@ -22,6 +23,7 @@ ProjectModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([project_entity_1.ProjectEntity]),
             jwt_1.JwtModule,
+            cart_item_module_1.CartItemModule,
         ],
         exports: [project_service_1.ProjectService],
     })
