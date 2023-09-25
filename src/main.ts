@@ -12,18 +12,20 @@ import {
 import { TransformInterceptor } from './common/interceptors/rest-response.interceptor';
 import RateLimit from 'express-rate-limit';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import swaggerInit from '@/swagger';
 import * as bodyParser from 'body-parser';
+import { join } from 'path';
 import * as express from 'express';
-import { config } from './config';
+// import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
   const logger = new Logger('KSI');
   logger.log(`Application [KSI] is starting...`);
-  console.debug(config.database[config.env]);
   const app = await NestFactory.create(AppModule);
   swaggerInit(app);
-  await app.listen(config.port);
+  await app.listen(process.env.PORT);
+  app.use(express.static(__dirname + 'public'));
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useLogger(logger);
@@ -54,10 +56,30 @@ async function bootstrap() {
   // app.use(Sentry.Handlers.tracingHandler());
   // app.use(Sentry.Handlers.errorHandler());
 
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('KSI Platform')
+    .setDescription('nvhg')
+    .setVersion('1.0.0')
+    .setContact('Samgar Seriknur', 'khbdk', 'samgar.robot@gmail.com')
+    .addBearerAuth({
+      type: 'http',
+      description: 'Can be received at `/auth/login` endpoint',
+      name: 'Authorization',
+      in: 'header', // Corrected the 'in' property value to 'header'
+    })
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('swagger', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
+
   console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
-  Started at ${config.url}
-  NODE_ENV= ${config.env}
+  Started at ${process.env.APP_URL}
+  NODE_ENV=local
   `);
   // swaggerInit(app);
 }

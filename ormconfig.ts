@@ -1,5 +1,4 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { config } from './src/config';
 import dotenv from 'dotenv';
 import * as process from 'process';
 import * as fs from 'fs-extra';
@@ -12,23 +11,26 @@ console.log(
 );
 export const appDataSource = new DataSource({
   type: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: process.env.POSTGRES_PORT || 5432,
-      username: process.env.POSTGRES_USER || 'postgres',
-      password: process.env.POSTGRES_PASSWORD || 12345678,
-      database: process.env.POSTGRES_NAME,
-      entities: [__dirname + '/../../src/database/entities/*.entity{.ts,.js}'],
-      subscribers: [
-        __dirname + '/../../src/database/subscribers/*.subscriber{.ts,.js}',
-      ],
-      synchronize: true,
-      autoLoadEntities: true,
-      logging: false,
-      migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-      ssl: Boolean(process.env.DB_SSl) || false,
-      extra: {
-        ssl: {
-          ca: fs.readFileSync('./ksi_db.crt'),
-        },
-      },
+  host: process.env.POSTGRES_HOST,
+  port: parseInt(process.env.POSTGRES_PORT || '5432') || 5432,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_NAME,
+  autoLoadEntities: true,
+  entities: ['src/database/entities/**/*.entity{.ts,.js}'],
+  synchronize: true,
+  migrationsRun: process.env.NODE_ENV !== 'development',
+  migrations: ['src/database/migrations/**/*.ts'],
+  subscribers: ['src/database/subscribers/**/*.subscriber{.ts,.js}'],
+  cli: {
+    entitiesDir: 'src/modules/',
+    migrationsDir: 'src/database/migrations/',
+    seedsDir: 'src/database/seeds/',
+  },
+  ssl: process.env.DB_SSl || false,
+  extra: {
+    ssl: {
+      ca: fs.readFileSync('./ksi_db.crt'),
+    },
+  },
 } as DataSourceOptions);
