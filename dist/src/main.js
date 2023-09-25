@@ -32,12 +32,14 @@ const logging_interceptor_1 = require("./common/interceptors/logging.interceptor
 const swagger_1 = require("@nestjs/swagger");
 const swagger_2 = __importDefault(require("./swagger"));
 const bodyParser = __importStar(require("body-parser"));
+const express = __importStar(require("express"));
 async function bootstrap() {
     const logger = new common_1.Logger('KSI');
     logger.log(`Application [KSI] is starting...`);
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     (0, swagger_2.default)(app);
     await app.listen(process.env.PORT);
+    app.use(express.static(__dirname + 'public'));
     app.use(bodyParser.json({ limit: '50mb' }));
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
     app.useLogger(logger);

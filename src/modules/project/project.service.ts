@@ -41,7 +41,7 @@ export class ProjectService extends BaseService<
       'utf8',
     );
     console.debug(project.cart.createdBy);
-    project.path = path.join(__dirname, './template', 'ksi.png');
+    project.pic = path.join(__dirname + 'template' + 'ksi.png');
 
     // Render the template with data
     const html = ejs.render(template, project);
@@ -70,68 +70,15 @@ export class ProjectService extends BaseService<
     const pdfBuffer = await pdf1.create(pdfDocument, options);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
-    res.sendFile(path.join(__dirname, 'template', fileName));
+    // res.sendFile(fileName);
     const fileStream = fs.createReadStream(fileName);
     fileStream.pipe(res);
+    this.deleteFile(fileName);
+  }
+  deleteFile(fileName: string) {
     setTimeout(() => {
       util.promisify(fs.promises.unlink)(fileName);
       console.log(`File deleted: ${fileName}`);
     }, 1000);
-  }
-
-  async mdnReport(res: Response, user: UserEntity, id: number) {
-    // const name = 'mdnreport_' + user.email + '.pdf';
-    try {
-      const project = await this.findById(id, [
-        'cart',
-        'cart.cartItems.items',
-        'cart.cartItems.itemGroup',
-        'cart.createdBy',
-      ]);
-      const name = 'mdnreport.pdf';
-      console.log(project);
-      const fileName = path.join(__dirname, './template', name);
-      ejs.renderFile(
-        path.join(__dirname, './template/', 'mdnreport.ejs'),
-        { data: project },
-        (err, data) => {
-          if (err) {
-            res.send(err);
-          } else {
-            const options = {
-              height: '11.25in',
-              width: '8.5in',
-              header: {
-                height: '20mm',
-              },
-              footer: {
-                height: '20mm',
-              },
-            };
-            pdf.create(data, options).toFile(fileName, function (err, data) {
-              if (err) {
-                res.send(err);
-              } else {
-                res.setHeader('Content-Type', 'application/pdf');
-                res.setHeader(
-                  'Content-Disposition',
-                  'inline; filename=' + name,
-                );
-
-                // Create a read stream to send the file
-                const fileStream = fs.createReadStream(fileName);
-                fileStream.pipe(res);
-              }
-            });
-          }
-        },
-      );
-      // setTimeout(() => {
-      //   util.promisify(fs.promises.unlink)(fileName);
-      //   console.log(`File deleted: ${fileName}`);
-      // }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
   }
 }

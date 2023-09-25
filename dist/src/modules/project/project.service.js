@@ -42,7 +42,6 @@ const project_entity_1 = require("../../database/entities/project.entity");
 const common_1 = require("@nestjs/common");
 const ejs_1 = __importDefault(require("ejs"));
 const fs = __importStar(require("fs"));
-const pdf = __importStar(require("html-pdf"));
 const path_1 = __importDefault(require("path"));
 const pdf1 = __importStar(require("pdf-creator-node"));
 const cart_item_service_1 = require("../cart-item/cart-item.service");
@@ -57,7 +56,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
     async test(res, user, project) {
         const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'mdnreport.ejs'), 'utf8');
         console.debug(project.cart.createdBy);
-        project.path = path_1.default.join(__dirname, './template', 'ksi.png');
+        project.pic = path_1.default.join(__dirname + 'template' + 'ksi.png');
         const html = ejs_1.default.render(template, project);
         const options = {
             format: 'A4',
@@ -79,57 +78,15 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         const pdfBuffer = await pdf1.create(pdfDocument, options);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
-        res.sendFile(path_1.default.join(__dirname, 'template', fileName));
         const fileStream = fs.createReadStream(fileName);
         fileStream.pipe(res);
+        this.deleteFile(fileName);
+    }
+    deleteFile(fileName) {
         setTimeout(() => {
             util.promisify(fs.promises.unlink)(fileName);
             console.log(`File deleted: ${fileName}`);
         }, 1000);
-    }
-    async mdnReport(res, user, id) {
-        try {
-            const project = await this.findById(id, [
-                'cart',
-                'cart.cartItems.items',
-                'cart.cartItems.itemGroup',
-                'cart.createdBy',
-            ]);
-            const name = 'mdnreport.pdf';
-            console.log(project);
-            const fileName = path_1.default.join(__dirname, './template', name);
-            ejs_1.default.renderFile(path_1.default.join(__dirname, './template/', 'mdnreport.ejs'), { data: project }, (err, data) => {
-                if (err) {
-                    res.send(err);
-                }
-                else {
-                    const options = {
-                        height: '11.25in',
-                        width: '8.5in',
-                        header: {
-                            height: '20mm',
-                        },
-                        footer: {
-                            height: '20mm',
-                        },
-                    };
-                    pdf.create(data, options).toFile(fileName, function (err, data) {
-                        if (err) {
-                            res.send(err);
-                        }
-                        else {
-                            res.setHeader('Content-Type', 'application/pdf');
-                            res.setHeader('Content-Disposition', 'inline; filename=' + name);
-                            const fileStream = fs.createReadStream(fileName);
-                            fileStream.pipe(res);
-                        }
-                    });
-                }
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
     }
 };
 ProjectService = __decorate([

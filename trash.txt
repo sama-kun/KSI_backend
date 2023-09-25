@@ -58,3 +58,63 @@ Data: <%= data.project.carts[0].createdAt %> -->
 <!-- Company: KSI PetroGasServices LLP
 Warehouse Address: Atyrau, Zhuldyz-3, 13/3
 Vehicle Details: -->
+
+
+
+
+
+async mdnReport(res: Response, user: UserEntity, id: number) {
+    // const name = 'mdnreport_' + user.email + '.pdf';
+    try {
+      const project = await this.findById(id, [
+        'cart',
+        'cart.cartItems.items',
+        'cart.cartItems.itemGroup',
+        'cart.createdBy',
+      ]);
+      const name = 'mdnreport.pdf';
+      console.log(project);
+      const fileName = path.join(__dirname, './template', name);
+      ejs.renderFile(
+        path.join(__dirname, './template/', 'mdnreport.ejs'),
+        { data: project },
+        (err, data) => {
+          if (err) {
+            res.send(err);
+          } else {
+            const options = {
+              height: '11.25in',
+              width: '8.5in',
+              header: {
+                height: '20mm',
+              },
+              footer: {
+                height: '20mm',
+              },
+            };
+            pdf.create(data, options).toFile(fileName, function (err, data) {
+              if (err) {
+                res.send(err);
+              } else {
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader(
+                  'Content-Disposition',
+                  'inline; filename=' + name,
+                );
+
+                // Create a read stream to send the file
+                const fileStream = fs.createReadStream(fileName);
+                fileStream.pipe(res);
+              }
+            });
+          }
+        },
+      );
+      // setTimeout(() => {
+      //   util.promisify(fs.promises.unlink)(fileName);
+      //   console.log(`File deleted: ${fileName}`);
+      // }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  }

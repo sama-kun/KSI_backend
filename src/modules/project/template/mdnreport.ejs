@@ -13,17 +13,44 @@
         .title {
             text-align: center;
         }
-        table, th, td {
-            border: 1px solid black;
+        .styled-table {
             border-collapse: collapse;
-            text-align: center;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
         }
       </style>
 </head>
 <body>
   <header>
     <meta charset="UTF-8">
-    <img alt="KSI logo" src="<%= path  %>" />
+    <img alt="KSI logo" src="<%= pic %>" >
 </header>
     <p class="title">Material Delivery Note / Уведомление о доставке материала</p>
     <div>Shipper / Отправитель:<br>    <%= cart.createdBy.name %></div>
@@ -35,7 +62,7 @@
     <div>Company / Компания:	KSI PetroGasServices LLP </div>
     <div>Address / Адрес:  	Onshore, Karabatan</div>
   <br>
-  <table>
+  <table class="styled-table">
   <thead>
     <tr>
         <th>Description / Наименование</th>
@@ -47,20 +74,20 @@
 </thead>
 <tbody>
     <% for (let cartItem of cart.cartItems) { %>
-        <tr>
+        <tr class="active-row">
             <td><%= cartItem.itemGroup.name %></td>
             <td><%= cartItem.quantity %></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>1</td>
+            <td><%= cartItem.items[0].uuid %></td>
+            <td><%= cartItem.items[0].workingHours %></td>
         </tr>
-        <% for (let i=0; i<cartItem.items.length; i++) { %>
+        <% for (let i=1; i<cartItem.items.length; i++) { %>
         <tr>
             <td></td>
             <td></td>
             <td><%= i+1 %></td>
             <td><%= cartItem.items[i].uuid %></td>
-            <td><%= cartItem.items[0].workedHours - cartItem.items[i].workingHours %></td>
+            <td><%= cartItem.items[i].workingHours %></td>
         </tr>
         <% } %>
     <% } %>

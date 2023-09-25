@@ -16,6 +16,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import swaggerInit from '@/swagger';
 import * as bodyParser from 'body-parser';
 import { join } from 'path';
+import * as express from 'express';
 // import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
@@ -24,6 +25,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   swaggerInit(app);
   await app.listen(process.env.PORT);
+  app.use(express.static(__dirname + 'public'));
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useLogger(logger);
