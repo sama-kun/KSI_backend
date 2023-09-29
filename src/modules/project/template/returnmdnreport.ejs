@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+        }
+
+        .title {
+            text-align: center;
+        }
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .styled-table thead tr {
+            background-color: #06234B;
+            color: #ffffff;
+            text-align: left;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #06234B;
+        }
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #06234B;
+        }
+      </style>
+</head>
+<body>
+  <header>
+    <meta charset="UTF-8">
+    <img alt="KSI logo" src="<%= pic %>" >
+</header>
+    <p class="title">Material Delivery Note / Уведомление о доставке материала</p>
+    <div>Shipper / Отправитель:<br>    <%= cart.createdBy.name %></div>
+    <div>Date / Дата:<br> <%= cart.createdAt %></div>
+    <div>Company/Компания:      KSI PetroGasServices LLP </div> 
+    <div>Warehouse Address / Адрес Склада:      Atyrau, Zhuldyz-3, 13/3 </div> 
+
+    <div>Consignee / Получатель: </div>
+    <div>Company / Компания:	KSI PetroGasServices LLP </div>
+    <div>Address / Адрес:  	Onshore, Karabatan</div>
+  <br>
+  <table class="styled-table">
+  <thead>
+    <tr>
+        <th>Description / Наименование</th>
+        <th>Q-ty (pcs) / Кол-во в ед.</th>
+        <th>№</th>
+        <th>Items / Аппараты</th>
+        <th>Worked hour / Время работы</th>
+    </tr>
+</thead>
+<tbody>
+    <% for (let cartItem of cart.cartItems) { %>
+        <tr class="active-row">
+            <td><%= cartItem.itemGroup.name %></td>
+            <td><%= cartItem.quantity %></td>
+            <td>1</td>
+            <td><%= cartItem.items[0].uuid %></td>
+            <td><%= cartItem.items[0].workingHours %></td>
+        </tr>
+        <% for (let i=1; i<cartItem.items.length; i++) { %>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><%= i+1 %></td>
+            <td><%= cartItem.items[i].uuid %></td>
+            <td><%= cartItem.items[i].workedHours - cartItem.items[i].workingHours %></td>
+        </tr>
+        <% } %>
+    <% } %>
+</tbody>
+</table>
+<footer>
+    Delivered by / Передал:  	<%= cart.createdBy.name %>
+    <br>
+    Date / Дата:	<%= cart.createdAt %>	
+</footer>
+</body>
+</html>

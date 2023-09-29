@@ -57,6 +57,15 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
         ]);
         return this.dataService.test(res, user, project);
     }
+    async returnmdnreport(user, id, res) {
+        const project = await this.dataService.findById(id, [
+            'cart',
+            'cart.cartItems.items',
+            'cart.cartItems.itemGroup',
+            'cart.createdBy',
+        ]);
+        return this.dataService.returnMdnReport(res, user, project);
+    }
 };
 __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
@@ -144,6 +153,15 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number, Object]),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "mdnreport", null);
+__decorate([
+    (0, common_1.Get)(':id/mdnreport/return'),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Number, Object]),
+    __metadata("design:returntype", Promise)
+], ProjectController.prototype, "returnmdnreport", null);
 ProjectController = __decorate([
     (0, swagger_1.ApiTags)('Project'),
     (0, common_1.Controller)('project'),

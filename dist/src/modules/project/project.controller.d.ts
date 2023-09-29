@@ -16,4 +16,5 @@ export declare class ProjectController extends BaseController<ProjectEntity, Cre
     findAll(query: SearchProjectDto): Promise<any>;
     remove(user: UserEntity, id: number): Promise<any>;
     mdnreport(user: UserEntity, id: number, res: Response): Promise<void>;
+    returnmdnreport(user: UserEntity, id: number, res: Response): Promise<void>;
 }

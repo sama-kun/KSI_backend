@@ -157,4 +157,33 @@ export class CartItemController extends BaseController<
   minus(@Param('id', ParseIntPipe) id: number) {
     return this.dataService.minus(id);
   }
+
+  @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
+  @ApiResponse({
+    status: 201,
+    type: CartItemEntity,
+    description: 'Items returned succesfully',
+  })
+  @ApiParam({ name: 'id', description: 'Cart ID' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        initialQuantity: {
+          type: 'number',
+          example: 10,
+          description: 'The initial quantity of the cart',
+        },
+      },
+    },
+  })
+  @Post(':id/return')
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  return(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { initialQuantity: number },
+  ) {
+    return this.dataService.return(id, body.initialQuantity);
+  }
 }

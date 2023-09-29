@@ -72,10 +72,53 @@ export class ProjectService extends BaseService<
     fileStream.pipe(res);
     this.deleteFile(fileName);
   }
+
   deleteFile(fileName: string) {
     setTimeout(() => {
       util.promisify(fs.promises.unlink)(fileName);
       console.log(`File deleted: ${fileName}`);
     }, 1000);
+  }
+
+  async returnMdnReport(res: Response, user: UserEntity, project: any) {
+    // Load your EJS template
+    const template = fs.readFileSync(
+      path.join(__dirname, 'template', 'returnmdnreport.ejs'),
+      'utf8',
+    );
+    console.debug(project.cart.createdBy);
+    project.pic = path.join(__dirname + 'template' + 'ksi.png');
+
+    // Render the template with data
+    const html = ejs.render(template, project);
+
+    // Define PDF options
+    const options = {
+      format: 'A4',
+      orientation: 'portrait',
+      border: '10mm',
+      header: {
+        height: '10mm',
+      },
+      footer: {
+        height: '10mm',
+      },
+    };
+
+    // Create the PDF
+    const fileName = `returnmdnreport_${project.cart.createdBy.name}.pdf`;
+    const pdfDocument = {
+      html: html, // Pass the rendered HTML
+      path: fileName, // Output file path (optional)\
+      data: project,
+    };
+
+    const pdfBuffer = await pdf1.create(pdfDocument, options);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
+    // res.sendFile(fileName);
+    const fileStream = fs.createReadStream(fileName);
+    fileStream.pipe(res);
+    this.deleteFile(fileName);
   }
 }

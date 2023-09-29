@@ -11,23 +11,16 @@ const common_1 = require("@nestjs/common");
 const cart_service_1 = require("./cart.service");
 const jwt_1 = require("@nestjs/jwt");
 const cart_controller_1 = require("./cart.controller");
-const item_group_module_1 = require("../item-group/item-group.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const cart_item_module_1 = require("../cart-item/cart-item.module");
 const cart_entity_1 = require("../../database/entities/cart.entity");
-const item_module_1 = require("../item/item.module");
 let CartModule = class CartModule {
 };
 CartModule = __decorate([
     (0, common_1.Module)({
         controllers: [cart_controller_1.CartController],
-        providers: [cart_service_1.CartService, item_group_module_1.ItemGroupModule],
-        imports: [
-            jwt_1.JwtModule,
-            cart_item_module_1.CartItemModule,
-            typeorm_1.TypeOrmModule.forFeature([cart_entity_1.CartEntity]),
-            item_module_1.ItemModule,
-        ],
+        providers: [cart_service_1.CartService],
+        imports: [cart_item_module_1.CartItemModule, jwt_1.JwtModule, typeorm_1.TypeOrmModule.forFeature([cart_entity_1.CartEntity])],
         exports: [cart_service_1.CartService],
     })
 ], CartModule);

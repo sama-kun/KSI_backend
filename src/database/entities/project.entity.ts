@@ -22,7 +22,7 @@ export class ProjectEntity extends BaseModel implements IProject {
   @Column({
     type: 'enum',
     enum: ProjectStatusEnum,
-    default: ProjectStatusEnum.detailing,
+    default: ProjectStatusEnum.active,
   })
   @ApiProperty({
     example: 'active',

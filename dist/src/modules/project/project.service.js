@@ -88,6 +88,35 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
             console.log(`File deleted: ${fileName}`);
         }, 1000);
     }
+    async returnMdnReport(res, user, project) {
+        const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'returnmdnreport.ejs'), 'utf8');
+        console.debug(project.cart.createdBy);
+        project.pic = path_1.default.join(__dirname + 'template' + 'ksi.png');
+        const html = ejs_1.default.render(template, project);
+        const options = {
+            format: 'A4',
+            orientation: 'portrait',
+            border: '10mm',
+            header: {
+                height: '10mm',
+            },
+            footer: {
+                height: '10mm',
+            },
+        };
+        const fileName = `returnmdnreport_${project.cart.createdBy.name}.pdf`;
+        const pdfDocument = {
+            html: html,
+            path: fileName,
+            data: project,
+        };
+        const pdfBuffer = await pdf1.create(pdfDocument, options);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
+        const fileStream = fs.createReadStream(fileName);
+        fileStream.pipe(res);
+        this.deleteFile(fileName);
+    }
 };
 ProjectService = __decorate([
     (0, common_1.Injectable)(),

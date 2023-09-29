@@ -36,7 +36,7 @@ __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: enums_1.ProjectStatusEnum,
-        default: enums_1.ProjectStatusEnum.detailing,
+        default: enums_1.ProjectStatusEnum.active,
     }),
     (0, swagger_1.ApiProperty)({
         example: 'active',

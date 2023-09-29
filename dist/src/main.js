@@ -29,15 +29,14 @@ const common_1 = require("@nestjs/common");
 const rest_response_interceptor_1 = require("./common/interceptors/rest-response.interceptor");
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const logging_interceptor_1 = require("./common/interceptors/logging.interceptor");
-const swagger_1 = require("@nestjs/swagger");
-const swagger_2 = __importDefault(require("./swagger"));
+const swagger_1 = __importDefault(require("./swagger"));
 const bodyParser = __importStar(require("body-parser"));
 const express = __importStar(require("express"));
 async function bootstrap() {
     const logger = new common_1.Logger('KSI');
     logger.log(`Application [KSI] is starting...`);
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    (0, swagger_2.default)(app);
+    (0, swagger_1.default)(app);
     await app.listen(process.env.PORT);
     app.use(express.static(__dirname + 'public'));
     app.use(bodyParser.json({ limit: '50mb' }));
@@ -59,24 +58,6 @@ async function bootstrap() {
         },
     }));
     app.enableCors();
-    const swaggerConfig = new swagger_1.DocumentBuilder()
-        .setTitle('KSI Platform')
-        .setDescription('nvhg')
-        .setVersion('1.0.0')
-        .setContact('Samgar Seriknur', 'khbdk', 'samgar.robot@gmail.com')
-        .addBearerAuth({
-        type: 'http',
-        description: 'Can be received at `/auth/login` endpoint',
-        name: 'Authorization',
-        in: 'header',
-    })
-        .build();
-    const document = swagger_1.SwaggerModule.createDocument(app, swaggerConfig);
-    swagger_1.SwaggerModule.setup('swagger', app, document, {
-        swaggerOptions: {
-            persistAuthorization: true,
-        },
-    });
     console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
   Started at ${process.env.APP_URL}

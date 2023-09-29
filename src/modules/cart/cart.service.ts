@@ -19,7 +19,6 @@ export class CartService extends BaseService<
   constructor(
     @InjectRepository(CartEntity)
     protected repo: Repository<CartEntity>,
-    protected itemService: ItemService,
     protected cartItemService: CartItemService,
   ) {
     super();
@@ -36,42 +35,16 @@ export class CartService extends BaseService<
     return await this.repo.save(cart);
   }
 
-  // async plus(id: number): Promise<CartItemEntity> {
-  //   const candidate = await super.findById(id, ['item', 'project']);
-  //   await this.itemService.transaction(candidate.item.id, 1, '+');
-
-  //   (candidate.quantity += 1), await this.repo.save(candidate);
-
-  //   return await super.findById(id, ['item', 'project', 'createdBy']);
-  // }
-
-  // async minus(id: number): Promise<CartItemEntity> {
-  //   const candidate = await super.findById(id, ['item']);
-  //   await this.check(id, 1);
-  //   await this.itemService.transaction(candidate.item.id, 1, '-');
-  //   candidate.quantity -= 1;
-
-  //   await this.repo.save(candidate);
-
-  //   return await super.findById(id, ['item', 'project', 'createdBy']);
-  // }
-
-  // private async check(id: number, transcript: number) {
-  //   const cart = await this.findById(id, []);
-
-  //   if (cart.quantity < transcript)
-  //     throw new BadRequestException("Don't enough quantity of item id: " + id);
-  // }
-
   // async return(id: number, initialQuantity: number) {
   //   const candidate = await this.findById(id, []);
-  //   candidate.isHistory = true;
-  //   candidate.initialQuantity = initialQuantity;
-  //   if (candidate.quantity != initialQuantity) {
-  //     candidate.status = CartStatusEnum.FillLackReason;
-  //   } else {
-  //     candidate.status = CartStatusEnum.Finished;
-  //   }
+  //   // candidate.isHistory = true;
+  //   // candidate.initialQuantity = initialQuantity;
+  //   // if (candidate.quantity != initialQuantity) {
+  //   //   candidate.status = CartStatusEnum.FillLackReason;
+  //   // } else {
+  //   //   candidate.status = CartStatusEnum.Finished;
+  //   // }
+
   //   return candidate;
   // }
 

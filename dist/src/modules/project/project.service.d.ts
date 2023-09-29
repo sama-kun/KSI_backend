@@ -12,4 +12,5 @@ export declare class ProjectService extends BaseService<ProjectEntity, CreatePro
     constructor(repo: Repository<ProjectEntity>, repoCartItem: CartItemService);
     test(res: Response, user: UserEntity, project: any): Promise<void>;
     deleteFile(fileName: string): void;
+    returnMdnReport(res: Response, user: UserEntity, project: any): Promise<void>;
 }

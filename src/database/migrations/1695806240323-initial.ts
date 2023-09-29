@@ -1,15 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Initial1695646712423 implements MigrationInterface {
-  name = 'Initial1695646712423';
+export class Initial1695806240323 implements MigrationInterface {
+  name = 'Initial1695806240323';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TYPE "public"."project_status_enum" AS ENUM('detailing', 'planned', 'active', 'finished')`,
-    );
-    await queryRunner.query(
-      `CREATE TABLE "project" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "description" character varying, "status" "public"."project_status_enum" NOT NULL DEFAULT 'detailing', "updatedById" integer, "createdById" integer, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`,
-    );
     await queryRunner.query(
       `CREATE TABLE "category" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying, "description" character varying, "updatedById" integer, "createdById" integer, CONSTRAINT "UQ_23c05c292c439d77b0de816b500" UNIQUE ("name"), CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`,
     );
@@ -27,6 +21,15 @@ export class Initial1695646712423 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE TABLE "main-file" ("id" SERIAL NOT NULL, "type" "public"."main-file_type_enum" NOT NULL DEFAULT 'main', "fileId" integer, "maintenanceId" integer, CONSTRAINT "PK_977852ae2139699bc9a232749e8" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TYPE "public"."project_status_enum" AS ENUM('planned', 'active', 'finished', 'cancelled')`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "project" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "description" character varying, "status" "public"."project_status_enum" NOT NULL DEFAULT 'active', "updatedById" integer, "createdById" integer, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "projectId" integer, "returnById" integer, CONSTRAINT "REL_266ea3ec3f7689e6a59c6ec73c" UNIQUE ("projectId"), CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TYPE "public"."user_role_enum" AS ENUM('user', 'admin', 'root')`,
@@ -50,9 +53,6 @@ export class Initial1695646712423 implements MigrationInterface {
       `CREATE TABLE "cart-item" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "quantity" integer, "initialQuantity" integer, "isHistory" boolean NOT NULL DEFAULT false, "status" character varying NOT NULL DEFAULT 'detailing', "comment" text, "updatedById" integer, "createdById" integer, "itemGroupId" integer, "cartId" integer, CONSTRAINT "PK_0bab23e63a695e02f3b9496809b" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "cart" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "returnTime" TIMESTAMP WITH TIME ZONE, "status" character varying NOT NULL DEFAULT 'InCart', "updatedById" integer, "createdById" integer, "projectId" integer, "returnById" integer, CONSTRAINT "REL_266ea3ec3f7689e6a59c6ec73c" UNIQUE ("projectId"), CONSTRAINT "PK_c524ec48751b9b5bcfbf6e59be7" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
       `CREATE TABLE "cart-item_items_item" ("cartItemId" integer NOT NULL, "itemId" integer NOT NULL, CONSTRAINT "PK_761e694b062e55c0282b0fa1e0c" PRIMARY KEY ("cartItemId", "itemId"))`,
     );
     await queryRunner.query(
@@ -60,12 +60,6 @@ export class Initial1695646712423 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE INDEX "IDX_b9a6d22d9385445d5a0ccbcbe9" ON "cart-item_items_item" ("itemId") `,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "project" ADD CONSTRAINT "FK_dfdad0cd83b31ccb2204f3dc688" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "project" ADD CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "category" ADD CONSTRAINT "FK_a5d7b5b0fc1f7358541b14b242d" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -96,6 +90,24 @@ export class Initial1695646712423 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "main-file" ADD CONSTRAINT "FK_4657ec6966634d5abdd7d1667de" FOREIGN KEY ("maintenanceId") REFERENCES "maintenance"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "project" ADD CONSTRAINT "FK_dfdad0cd83b31ccb2204f3dc688" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "project" ADD CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" ADD CONSTRAINT "FK_476b318963147ddc70f5f973ea1" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" ADD CONSTRAINT "FK_eaca17862ea338f633669c95211" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" ADD CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" ADD CONSTRAINT "FK_4c5415b550273e04087f5a6d2db" FOREIGN KEY ("returnById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "user" ADD CONSTRAINT "FK_db5173f7d27aa8a98a9fe6113df" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -137,18 +149,6 @@ export class Initial1695646712423 implements MigrationInterface {
       `ALTER TABLE "cart-item" ADD CONSTRAINT "FK_7f05d97bef35db4f1f4b2f8c412" FOREIGN KEY ("cartId") REFERENCES "cart"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "cart" ADD CONSTRAINT "FK_476b318963147ddc70f5f973ea1" FOREIGN KEY ("updatedById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" ADD CONSTRAINT "FK_eaca17862ea338f633669c95211" FOREIGN KEY ("createdById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" ADD CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" ADD CONSTRAINT "FK_4c5415b550273e04087f5a6d2db" FOREIGN KEY ("returnById") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "cart-item_items_item" ADD CONSTRAINT "FK_44e44af982730dcf5df978ade51" FOREIGN KEY ("cartItemId") REFERENCES "cart-item"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
     await queryRunner.query(
@@ -162,18 +162,6 @@ export class Initial1695646712423 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "cart-item_items_item" DROP CONSTRAINT "FK_44e44af982730dcf5df978ade51"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" DROP CONSTRAINT "FK_4c5415b550273e04087f5a6d2db"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" DROP CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" DROP CONSTRAINT "FK_eaca17862ea338f633669c95211"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "cart" DROP CONSTRAINT "FK_476b318963147ddc70f5f973ea1"`,
     );
     await queryRunner.query(
       `ALTER TABLE "cart-item" DROP CONSTRAINT "FK_7f05d97bef35db4f1f4b2f8c412"`,
@@ -215,6 +203,24 @@ export class Initial1695646712423 implements MigrationInterface {
       `ALTER TABLE "user" DROP CONSTRAINT "FK_db5173f7d27aa8a98a9fe6113df"`,
     );
     await queryRunner.query(
+      `ALTER TABLE "cart" DROP CONSTRAINT "FK_4c5415b550273e04087f5a6d2db"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" DROP CONSTRAINT "FK_266ea3ec3f7689e6a59c6ec73c3"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" DROP CONSTRAINT "FK_eaca17862ea338f633669c95211"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "cart" DROP CONSTRAINT "FK_476b318963147ddc70f5f973ea1"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "project" DROP CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "project" DROP CONSTRAINT "FK_dfdad0cd83b31ccb2204f3dc688"`,
+    );
+    await queryRunner.query(
       `ALTER TABLE "main-file" DROP CONSTRAINT "FK_4657ec6966634d5abdd7d1667de"`,
     );
     await queryRunner.query(
@@ -245,19 +251,12 @@ export class Initial1695646712423 implements MigrationInterface {
       `ALTER TABLE "category" DROP CONSTRAINT "FK_a5d7b5b0fc1f7358541b14b242d"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "project" DROP CONSTRAINT "FK_678acfe7017fe8a25fe7cae5f18"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "project" DROP CONSTRAINT "FK_dfdad0cd83b31ccb2204f3dc688"`,
-    );
-    await queryRunner.query(
       `DROP INDEX "public"."IDX_b9a6d22d9385445d5a0ccbcbe9"`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_44e44af982730dcf5df978ade5"`,
     );
     await queryRunner.query(`DROP TABLE "cart-item_items_item"`);
-    await queryRunner.query(`DROP TABLE "cart"`);
     await queryRunner.query(`DROP TABLE "cart-item"`);
     await queryRunner.query(`DROP TABLE "item"`);
     await queryRunner.query(`DROP TYPE "public"."item_status_enum"`);
@@ -265,13 +264,14 @@ export class Initial1695646712423 implements MigrationInterface {
     await queryRunner.query(`DROP TYPE "public"."maintenance_type_enum"`);
     await queryRunner.query(`DROP TABLE "user"`);
     await queryRunner.query(`DROP TYPE "public"."user_role_enum"`);
+    await queryRunner.query(`DROP TABLE "cart"`);
+    await queryRunner.query(`DROP TABLE "project"`);
+    await queryRunner.query(`DROP TYPE "public"."project_status_enum"`);
     await queryRunner.query(`DROP TABLE "main-file"`);
     await queryRunner.query(`DROP TYPE "public"."main-file_type_enum"`);
     await queryRunner.query(`DROP TABLE "item-group"`);
     await queryRunner.query(`DROP TABLE "file"`);
     await queryRunner.query(`DROP TYPE "public"."file_type_enum"`);
     await queryRunner.query(`DROP TABLE "category"`);
-    await queryRunner.query(`DROP TABLE "project"`);
-    await queryRunner.query(`DROP TYPE "public"."project_status_enum"`);
   }
 }

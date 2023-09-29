@@ -16,12 +16,12 @@ exports.projects = [
     {
         name: 'Kashagan',
         description: 'This is test project in seeds',
-        status: enums_1.ProjectStatusEnum.detailing,
+        status: enums_1.ProjectStatusEnum.active,
     },
     {
         name: 'Zhanaozen',
         description: 'This is test project in seeds',
-        status: enums_1.ProjectStatusEnum.detailing,
+        status: enums_1.ProjectStatusEnum.active,
     },
 ];
 //# sourceMappingURL=test.seed.js.map

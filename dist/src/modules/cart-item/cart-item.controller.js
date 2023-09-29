@@ -53,6 +53,9 @@ let CartItemController = class CartItemController extends BaseController_1.BaseC
     minus(id) {
         return this.dataService.minus(id);
     }
+    return(id, body) {
+        return this.dataService.return(id, body.initialQuantity);
+    }
 };
 __decorate([
     (0, swagger_1.ApiBearerAuth)(),
@@ -167,6 +170,35 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], CartItemController.prototype, "minus", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Return items to Base of KSI from Project' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        type: cart_item_entity_1.CartItemEntity,
+        description: 'Items returned succesfully',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            type: 'object',
+            properties: {
+                initialQuantity: {
+                    type: 'number',
+                    example: 10,
+                    description: 'The initial quantity of the cart',
+                },
+            },
+        },
+    }),
+    (0, common_1.Post)(':id/return'),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", void 0)
+], CartItemController.prototype, "return", null);
 CartItemController = __decorate([
     (0, swagger_1.ApiTags)('CartItem'),
     (0, common_1.Controller)('cart-item'),

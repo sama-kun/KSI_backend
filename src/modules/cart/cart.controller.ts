@@ -89,35 +89,6 @@ export class CartController {
   //   return this.cartService.createMany(data, user.id)
   // }
 
-  // @ApiOperation({ summary: 'Return items to Base of KSI from Project' })
-  // @ApiResponse({
-  //   status: 201,
-  //   type: CartEntity,
-  //   description: 'Items returned succesfully',
-  // })
-  // @ApiParam({ name: 'id', description: 'Cart ID' })
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       initialQuantity: {
-  //         type: 'number',
-  //         example: 10,
-  //         description: 'The initial quantity of the cart',
-  //       },
-  //     },
-  //   },
-  // })
-  // @Post(':id/return')
-  // @UseGuards(RolesQuard)
-  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  // return(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() body: { initialQuantity: number },
-  // ) {
-  //   return this.cartService.return(id, body.initialQuantity);
-  // }
-
   @ApiOperation({ summary: 'Get all carts using query' })
   @ApiQuery({ type: SearchCartDto })
   @Get()

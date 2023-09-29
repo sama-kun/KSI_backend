@@ -25,6 +25,7 @@ export class ItemService extends BaseService<
   async updateWorkedHours(id: number, workedHour: number): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
     candidate.workedHours = workedHour;
+    candidate.status = ItemStatusEnum.ok;
     return this.repo.save(candidate);
   }
 

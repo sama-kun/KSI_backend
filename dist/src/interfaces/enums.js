@@ -6,7 +6,7 @@ var CartStatusEnum;
     CartStatusEnum["Finished"] = "Finished";
     CartStatusEnum["OnProject"] = "OnProject";
     CartStatusEnum["InCart"] = "InCart";
-    CartStatusEnum["LackOfQuantity"] = "LackOfQuantity";
+    CartStatusEnum["finished"] = "finished";
 })(CartStatusEnum = exports.CartStatusEnum || (exports.CartStatusEnum = {}));
 var RoleEnum;
 (function (RoleEnum) {
@@ -28,10 +28,10 @@ var MainFileTypesEnum;
 })(MainFileTypesEnum = exports.MainFileTypesEnum || (exports.MainFileTypesEnum = {}));
 var ProjectStatusEnum;
 (function (ProjectStatusEnum) {
-    ProjectStatusEnum["detailing"] = "detailing";
     ProjectStatusEnum["planned"] = "planned";
     ProjectStatusEnum["active"] = "active";
     ProjectStatusEnum["finished"] = "finished";
+    ProjectStatusEnum["cancelled"] = "cancelled";
 })(ProjectStatusEnum = exports.ProjectStatusEnum || (exports.ProjectStatusEnum = {}));
 var ItemStatusEnum;
 (function (ItemStatusEnum) {
@@ -44,9 +44,7 @@ var ItemStatusEnum;
 var CartItemStatusEnum;
 (function (CartItemStatusEnum) {
     CartItemStatusEnum["detailing"] = "detailing";
-    CartItemStatusEnum["fillWorkingHours"] = "fillWorkingHours";
     CartItemStatusEnum["inProject"] = "inProject";
-    CartItemStatusEnum["fillWorkedHours"] = "fillWorkedHours";
     CartItemStatusEnum["lackOfQuantity"] = "lackOfQuantity";
     CartItemStatusEnum["finished"] = "finished";
 })(CartItemStatusEnum = exports.CartItemStatusEnum || (exports.CartItemStatusEnum = {}));

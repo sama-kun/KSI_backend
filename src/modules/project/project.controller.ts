@@ -149,6 +149,23 @@ export class ProjectController extends BaseController<
     return this.dataService.test(res, user, project);
   }
 
+  @Get(':id/mdnreport/return')
+  // @UseGuards(RolesQuard)
+  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  async returnmdnreport(
+    @AuthUser() user: UserEntity,
+    @Param('id', ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
+    const project = await this.dataService.findById(id, [
+      'cart',
+      'cart.cartItems.items',
+      'cart.cartItems.itemGroup',
+      'cart.createdBy',
+    ]);
+    return this.dataService.returnMdnReport(res, user, project);
+  }
+
   // @Get('test')
   // test(){
   //   return super().

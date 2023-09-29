@@ -10,6 +10,7 @@ import { ItemGroupService } from '../item-group/item-group.service';
 import { UserEntity } from '@/database/entities/user.entity';
 import { CartItemStatusEnum, ItemStatusEnum } from '@/interfaces/enums';
 import { ItemService } from '../item/item.service';
+import { CartService } from '../cart/cart.service';
 
 @Injectable()
 export class CartItemService extends BaseService<
@@ -83,11 +84,11 @@ export class CartItemService extends BaseService<
 
   async return(id: number, initialQuantity: number) {
     const candidate = await this.findById(id, []);
-    candidate.isHistory = true;
     candidate.initialQuantity = initialQuantity;
     if (candidate.quantity != initialQuantity) {
       candidate.status = CartItemStatusEnum.lackOfQuantity;
     } else {
+      candidate.isHistory = true;
       candidate.status = CartItemStatusEnum.finished;
     }
     return candidate;

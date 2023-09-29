@@ -56,25 +56,25 @@ async function bootstrap() {
   // app.use(Sentry.Handlers.tracingHandler());
   // app.use(Sentry.Handlers.errorHandler());
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('KSI Platform')
-    .setDescription('nvhg')
-    .setVersion('1.0.0')
-    .setContact('Samgar Seriknur', 'khbdk', 'samgar.robot@gmail.com')
-    .addBearerAuth({
-      type: 'http',
-      description: 'Can be received at `/auth/login` endpoint',
-      name: 'Authorization',
-      in: 'header', // Corrected the 'in' property value to 'header'
-    })
-    .build();
+  // const swaggerConfig = new DocumentBuilder()
+  //   .setTitle('KSI Platform')
+  //   .setDescription('nvhg')
+  //   .setVersion('1.0.0')
+  //   .setContact('Samgar Seriknur', 'khbdk', 'samgar.robot@gmail.com')
+  //   .addBearerAuth({
+  //     type: 'http',
+  //     description: 'Can be received at `/auth/login` endpoint',
+  //     name: 'Authorization',
+  //     in: 'header', // Corrected the 'in' property value to 'header'
+  //   })
+  //   .build();
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('swagger', app, document, {
-    swaggerOptions: {
-      persistAuthorization: true,
-    },
-  });
+  // const document = SwaggerModule.createDocument(app, swaggerConfig);
+  // SwaggerModule.setup('swagger', app, document, {
+  //   swaggerOptions: {
+  //     persistAuthorization: true,
+  //   },
+  // });
 
   console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger

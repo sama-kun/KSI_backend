@@ -18,13 +18,11 @@ const BaseService_1 = require("../../common/base/BaseService");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const cart_entity_1 = require("../../database/entities/cart.entity");
-const item_service_1 = require("../item/item.service");
 const cart_item_service_1 = require("../cart-item/cart-item.service");
 let CartService = class CartService extends BaseService_1.BaseService {
-    constructor(repo, itemService, cartItemService) {
+    constructor(repo, cartItemService) {
         super();
         this.repo = repo;
-        this.itemService = itemService;
         this.cartItemService = cartItemService;
     }
     async myCreate(data, user) {
@@ -42,7 +40,6 @@ CartService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(cart_entity_1.CartEntity)),
     __metadata("design:paramtypes", [typeorm_1.Repository,
-        item_service_1.ItemService,
         cart_item_service_1.CartItemService])
 ], CartService);
 exports.CartService = CartService;

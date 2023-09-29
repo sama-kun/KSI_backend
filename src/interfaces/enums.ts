@@ -2,7 +2,7 @@ export enum CartStatusEnum {
   Finished = 'Finished',
   OnProject = 'OnProject',
   InCart = 'InCart',
-  LackOfQuantity = 'LackOfQuantity',
+  finished = 'finished',
 }
 
 export enum RoleEnum {
@@ -24,10 +24,10 @@ export enum MainFileTypesEnum {
 }
 
 export enum ProjectStatusEnum {
-  detailing = 'detailing',
   planned = 'planned',
   active = 'active',
   finished = 'finished',
+  cancelled = 'cancelled',
 }
 
 export enum ItemStatusEnum {
@@ -40,9 +40,7 @@ export enum ItemStatusEnum {
 
 export enum CartItemStatusEnum {
   detailing = 'detailing',
-  fillWorkingHours = 'fillWorkingHours',
   inProject = 'inProject',
-  fillWorkedHours = 'fillWorkedHours',
   lackOfQuantity = 'lackOfQuantity',
   finished = 'finished',
 }

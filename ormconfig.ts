@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs-extra';
 dotenv.config();
 console.log(
-  `Uses postgres database ${process.env.POSTGRES_NAME} at ${process.env.POSTGRES_HOST}:${process.env.POSTGRES_POR}`,
+  `Uses postgres database ${process.env.POSTGRES_NAME} at ${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}`,
 );
 
 export const appDataSource = new DataSource({
@@ -24,10 +24,10 @@ export const appDataSource = new DataSource({
     migrationsDir: 'src/database/migrations/',
     seedsDir: 'src/database/seeds/',
   },
-  ssl: process.env.DB_SSl || false,
-  extra: {
-    ssl: {
-      ca: fs.readFileSync('./ksi_db.crt'),
-    },
-  },
+  // ssl: process.env.DB_SSl || false,
+  // extra: {
+  //   ssl: {
+  //     ca: fs.readFileSync('./ksi_db.crt'),
+  //   },
+  // },
 } as DataSourceOptions);

@@ -59,12 +59,12 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
     }
     async return(id, initialQuantity) {
         const candidate = await this.findById(id, []);
-        candidate.isHistory = true;
         candidate.initialQuantity = initialQuantity;
         if (candidate.quantity != initialQuantity) {
             candidate.status = enums_1.CartItemStatusEnum.lackOfQuantity;
         }
         else {
+            candidate.isHistory = true;
             candidate.status = enums_1.CartItemStatusEnum.finished;
         }
         return candidate;

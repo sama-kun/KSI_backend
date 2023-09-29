@@ -14,4 +14,7 @@ export declare class CartItemController extends BaseController<CartItemEntity, C
     remove(user: UserEntity, id: number): Promise<any>;
     plus(id: number): Promise<CartItemEntity>;
     minus(id: number): Promise<CartItemEntity>;
+    return(id: number, body: {
+        initialQuantity: number;
+    }): Promise<CartItemEntity>;
 }

@@ -26,6 +26,6 @@
     "esModuleInterop": true,
   },
 	// "include": ["src", "src/modules/project/template"],
-	"include": ["src"],
+	"include": ["src", "config.ts"],
   "exclude": ["templater"]
 }

@@ -15,11 +15,11 @@ export const projects: Partial<ProjectEntity>[] = [
   {
     name: 'Kashagan',
     description: 'This is test project in seeds',
-    status: ProjectStatusEnum.detailing,
+    status: ProjectStatusEnum.active,
   },
   {
     name: 'Zhanaozen',
     description: 'This is test project in seeds',
-    status: ProjectStatusEnum.detailing,
+    status: ProjectStatusEnum.active,
   },
 ];

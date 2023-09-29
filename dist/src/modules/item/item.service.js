@@ -28,6 +28,7 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
     async updateWorkedHours(id, workedHour) {
         const candidate = await this.findById(id, []);
         candidate.workedHours = workedHour;
+        candidate.status = enums_1.ItemStatusEnum.ok;
         return this.repo.save(candidate);
     }
     async updateWorkingHours(id, workingHour) {
