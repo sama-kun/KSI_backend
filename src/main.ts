@@ -24,7 +24,6 @@ async function bootstrap() {
   logger.log(`Application [KSI] is starting...`);
   const app = await NestFactory.create(AppModule);
   swaggerInit(app);
-  await app.listen(process.env.PORT);
   app.use(express.static(__dirname + 'public'));
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -52,6 +51,7 @@ async function bootstrap() {
   );
   // app.enableCors();
 
+  await app.listen(process.env.PORT);
   console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
   Started at ${process.env.APP_URL}
