@@ -16,7 +16,6 @@ class ItemGroupsSeed99999999999999 {
     async up(queryRunner) {
         if (queryRunner.isTransactionActive)
             await queryRunner.commitTransaction();
-        const data = [];
         for (const itemGroup of item_groups_seed_json_1.itemGroups) {
             const index = category_seed_json_1.default.findIndex((el) => el === itemGroup.categoryName);
             if (!itemGroup.categoryName) {

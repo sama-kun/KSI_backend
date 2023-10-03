@@ -10,7 +10,6 @@ export class ItemGroupsSeed99999999999999 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     if (queryRunner.isTransactionActive) await queryRunner.commitTransaction();
-    const data = [];
 
     for (const itemGroup of itemGroups) {
       const index = categories.findIndex((el) => el === itemGroup.categoryName);

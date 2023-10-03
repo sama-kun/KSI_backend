@@ -1,6 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { items, projects } from '../seeds/test.seed';
-import { ItemEntity } from '../entities/item.entity';
+import { projects } from '../seeds/test.seed';
 import { ProjectEntity } from '../entities/project.entity';
 
 export class TestSeed99999999999999 implements MigrationInterface {
