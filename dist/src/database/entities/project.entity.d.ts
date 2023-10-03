@@ -5,6 +5,6 @@ import { CartEntity } from './cart.entity';
 export declare class ProjectEntity extends BaseModel implements IProject {
     name: string;
     description?: string;
-    cart: CartEntity;
+    carts: CartEntity[];
     status: ProjectStatusEnum;
 }

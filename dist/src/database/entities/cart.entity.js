@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", Array)
 ], CartEntity.prototype, "cartItems", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => project_entity_1.ProjectEntity, (project) => project.cart),
+    (0, typeorm_1.OneToOne)(() => project_entity_1.ProjectEntity, (project) => project.carts),
     (0, swagger_1.ApiPropertyOptional)(),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Object)
@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", Object)
 ], CartEntity.prototype, "returnBy", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: enums_1.CartStatusEnum.InCart }),
+    (0, typeorm_1.Column)({ default: enums_1.CartStatusEnum.OnProject }),
     (0, swagger_1.ApiPropertyOptional)({
         example: 'Warning',
         description: 'The status of the cart',

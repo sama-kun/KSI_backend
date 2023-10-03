@@ -21,7 +21,7 @@ export class CartEntity extends BaseModel implements ICart {
   @ApiPropertyOptional()
   cartItems: CartItemEntity[];
 
-  @OneToOne(() => ProjectEntity, (project) => project.cart)
+  @OneToOne(() => ProjectEntity, (project) => project.carts)
   @ApiPropertyOptional()
   @JoinColumn()
   project: IProject;
@@ -34,7 +34,7 @@ export class CartEntity extends BaseModel implements ICart {
   @ApiPropertyOptional()
   returnBy?: Relation<UserEntity>;
 
-  @Column({ default: CartStatusEnum.InCart })
+  @Column({ default: CartStatusEnum.OnProject })
   @ApiPropertyOptional({
     example: 'Warning',
     description: 'The status of the cart',

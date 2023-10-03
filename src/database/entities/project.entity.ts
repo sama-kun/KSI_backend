@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne } from 'typeorm';
+import { Entity, Column, OneToOne, OneToMany } from 'typeorm';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IProject } from '@/interfaces/entities';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -15,9 +15,9 @@ export class ProjectEntity extends BaseModel implements IProject {
   @ApiPropertyOptional()
   description?: string;
 
-  @OneToOne(() => CartEntity, (cart) => cart.project)
-  @ApiPropertyOptional({ type: () => CartEntity })
-  cart: CartEntity;
+  @OneToMany(() => CartEntity, (cart) => cart.project)
+  @ApiPropertyOptional({ type: () => CartEntity, isArray: true })
+  carts: CartEntity[];
 
   @Column({
     type: 'enum',
