@@ -9,16 +9,6 @@ export class TestSeed99999999999999 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     if (queryRunner.isTransactionActive) await queryRunner.commitTransaction();
 
-    for (const itemGroups of items) {
-      for (const item of itemGroups.items) {
-        const id = itemGroups.itemGroup;
-        await queryRunner.manager.insert(ItemEntity, {
-          uuid: item,
-          itemGroup: { id },
-        });
-      }
-    }
-
     for (const project of projects) {
       await queryRunner.manager.insert(ProjectEntity, project as ProjectEntity);
     }
