@@ -68,7 +68,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
                 height: '10mm',
             },
         };
-        const fileName = `mdnreport_${project.carts[0].createdBy.name}.pdf`;
+        const fileName = `mdnreport.pdf`;
         const pdfDocument = {
             html: html,
             path: fileName,
@@ -103,7 +103,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
                 height: '10mm',
             },
         };
-        const fileName = `returnmdnreport_${project.cart.createdBy.name}.pdf`;
+        const fileName = `returnmdnreport.pdf`;
         const pdfDocument = {
             html: html,
             path: fileName,
