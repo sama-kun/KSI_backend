@@ -27,9 +27,6 @@ export class ProjectService extends BaseService<
   ) {
     super();
   }
-  // test(){
-  //   return super().
-  // }
 
   async test(res: Response, user: UserEntity, project: any) {
     // Load your EJS template
@@ -39,10 +36,7 @@ export class ProjectService extends BaseService<
     );
     project.pic = path.join(__dirname + 'template' + 'ksi.png');
 
-    // Render the template with data
     const html = ejs.render(template, project);
-
-    // Define PDF options
     const options = {
       format: 'A4',
       orientation: 'portrait',
@@ -66,7 +60,6 @@ export class ProjectService extends BaseService<
     const pdfBuffer = await pdf1.create(pdfDocument, options);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
-    // res.sendFile(fileName);
     const fileStream = fs.createReadStream(fileName);
     fileStream.pipe(res);
     this.deleteFile(fileName);
@@ -80,17 +73,14 @@ export class ProjectService extends BaseService<
   }
 
   async returnMdnReport(res: Response, user: UserEntity, project: any) {
-    // Load your EJS template
     const template = fs.readFileSync(
       path.join(__dirname, 'template', 'returnmdnreport.ejs'),
       'utf8',
     );
     project.pic = path.join(__dirname + 'template' + 'ksi.png');
 
-    // Render the template with data
     const html = ejs.render(template, project);
 
-    // Define PDF options
     const options = {
       format: 'A4',
       orientation: 'portrait',
@@ -103,7 +93,6 @@ export class ProjectService extends BaseService<
       },
     };
 
-    // Create the PDF
     const fileName = `returnmdnreport.pdf`;
     const pdfDocument = {
       html: html, // Pass the rendered HTML
@@ -114,7 +103,6 @@ export class ProjectService extends BaseService<
     const pdfBuffer = await pdf1.create(pdfDocument, options);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
-    // res.sendFile(fileName);
     const fileStream = fs.createReadStream(fileName);
     fileStream.pipe(res);
     this.deleteFile(fileName);
