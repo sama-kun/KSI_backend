@@ -141,10 +141,10 @@ export class ProjectController extends BaseController<
     @Res() res: Response,
   ) {
     const project = await this.dataService.findById(id, [
-      'cart',
-      'cart.cartItems.items',
-      'cart.cartItems.itemGroup',
-      'cart.createdBy',
+      'carts',
+      'carts.cartItems.items',
+      'carts.cartItems.itemGroup',
+      'carts.createdBy',
     ]);
     return this.dataService.test(res, user, project);
   }
@@ -158,10 +158,10 @@ export class ProjectController extends BaseController<
     @Res() res: Response,
   ) {
     const project = await this.dataService.findById(id, [
-      'cart',
-      'cart.cartItems.items',
-      'cart.cartItems.itemGroup',
-      'cart.createdBy',
+      'carts',
+      'carts.cartItems.items',
+      'carts.cartItems.itemGroup',
+      'carts.createdBy',
     ]);
     return this.dataService.returnMdnReport(res, user, project);
   }

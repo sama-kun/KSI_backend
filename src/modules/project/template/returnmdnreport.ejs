@@ -53,7 +53,7 @@
 </header>
     <p class="title">Material Delivery Note / Уведомление о доставке материала</p>
     <div>Shipper / Отправитель:<br>    <%= cart.createdBy.name %></div>
-    <div>Date / Дата:<br> <%= cart.createdAt %></div>
+    <div>Date / Дата:<br> <%= carts[0].createdAt %></div>
     <div>Company/Компания:      KSI PetroGasServices LLP </div> 
     <div>Warehouse Address / Адрес Склада:      Atyrau, Zhuldyz-3, 13/3 </div> 
 
@@ -72,6 +72,7 @@
     </tr>
 </thead>
 <tbody>
+    <% for (let cart of carts) { %>
     <% for (let cartItem of cart.cartItems) { %>
         <tr class="active-row">
             <td><%= cartItem.itemGroup.name %></td>
@@ -90,12 +91,13 @@
         </tr>
         <% } %>
     <% } %>
+    <% }%>
 </tbody>
 </table>
 <footer>
-    Delivered by / Передал:  	<%= cart.createdBy.name %>
+    Delivered by / Передал:  	<%= carts[0].createdBy.name %>
     <br>
-    Date / Дата:	<%= cart.createdAt %>	
+    Date / Дата:	<%= carts[0].createdAt %>	
 </footer>
 </body>
 </html>
