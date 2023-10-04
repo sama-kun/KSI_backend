@@ -118,29 +118,12 @@ export class CartController {
     return this.cartService.delete(user, id);
   }
 
-  // @ApiOperation({ summary: 'Send to the Project' })
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       ids: {
-  //         type: 'array',
-  //         example: [1, 2, 3, 4],
-  //         description: 'The array of ids carts',
-  //       },
-  //     },
-  //   },
-  // })
-  // @ApiParam({ name: 'id', description: 'Project ID' })
-  // @Patch('send/:projectId')
-  // @UseGuards(RolesQuard)
-  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  // async sendToProject(
-  //   @AuthUser() user: UserEntity,
-  //   @Body('ids') ids: number[],
-  //   @Param('projectId') projectId: number,
-  // ) {
-  //   console.log(ids);
-  //   return this.cartService.send(user, ids, projectId);
-  // }
+  @ApiOperation({ summary: 'Return cart API' })
+  @ApiParam({ name: 'id', description: 'Cart ID' })
+  @Patch(':id/return')
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  async sendToProject(@AuthUser() user: UserEntity, @Param('id') id: number) {
+    return this.cartService.return(user, id);
+  }
 }

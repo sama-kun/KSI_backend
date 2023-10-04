@@ -11,4 +11,5 @@ export declare class CartController {
     update(user: UserEntity, data: CartEntity, id: number): Promise<CartEntity>;
     findAll(query: SearchQueryDto): Promise<any>;
     remove(user: UserEntity, id: number): Promise<any>;
+    sendToProject(user: UserEntity, id: number): Promise<CartEntity>;
 }

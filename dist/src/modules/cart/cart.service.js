@@ -19,6 +19,7 @@ const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const cart_entity_1 = require("../../database/entities/cart.entity");
 const cart_item_service_1 = require("../cart-item/cart-item.service");
+const enums_1 = require("../../interfaces/enums");
 let CartService = class CartService extends BaseService_1.BaseService {
     constructor(repo, cartItemService) {
         super();
@@ -34,6 +35,13 @@ let CartService = class CartService extends BaseService_1.BaseService {
         }
         cart.cartItems = cartItems;
         return await this.repo.save(cart);
+    }
+    async return(user, id) {
+        const candidate = await this.findById(id, []);
+        candidate.status = enums_1.CartStatusEnum.Finished;
+        candidate.returnTime = new Date();
+        candidate.returnBy = user;
+        return candidate;
     }
 };
 CartService = __decorate([

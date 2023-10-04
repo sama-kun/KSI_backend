@@ -7,8 +7,8 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { CartEntity } from '@/database/entities/cart.entity';
 import { CartItemEntity } from '@/database/entities/cart-item.entity';
 import { UserEntity } from '@/database/entities/user.entity';
-import { ItemService } from '../item/item.service';
 import { CartItemService } from '../cart-item/cart-item.service';
+import { CartStatusEnum } from '@/interfaces/enums';
 
 @Injectable()
 export class CartService extends BaseService<
@@ -35,33 +35,12 @@ export class CartService extends BaseService<
     return await this.repo.save(cart);
   }
 
-  // async return(id: number, initialQuantity: number) {
-  //   const candidate = await this.findById(id, []);
-  //   // candidate.isHistory = true;
-  //   // candidate.initialQuantity = initialQuantity;
-  //   // if (candidate.quantity != initialQuantity) {
-  //   //   candidate.status = CartStatusEnum.FillLackReason;
-  //   // } else {
-  //   //   candidate.status = CartStatusEnum.Finished;
-  //   // }
+  async return(user: UserEntity, id: number) {
+    const candidate = await this.findById(id, []);
+    candidate.status = CartStatusEnum.Finished;
+    candidate.returnTime = new Date();
+    candidate.returnBy = user;
 
-  //   return candidate;
-  // }
-
-  // async send(user: UserEntity, ids: number[], projectId: number) {
-  //   const records = [];
-  //   for (const id of ids) {
-  //     const record = await this.update(user, id, {
-  //       project: { id: projectId } as ProjectEntity,
-  //       status: CartStatusEnum.FillWorkingHour,
-  //     });
-  //     records.push(record);
-  //   }
-
-  //   return records;
-  // }
-
-  // test(){
-  //   return super().
-  // }
+    return candidate;
+  }
 }

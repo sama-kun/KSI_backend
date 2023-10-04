@@ -27,12 +27,16 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
     }
     async updateWorkedHours(id, workedHour) {
         const candidate = await this.findById(id, []);
+        if (candidate.status != enums_1.ItemStatusEnum.inProject)
+            throw new common_1.ForbiddenException();
         candidate.workedHours = workedHour;
         candidate.status = enums_1.ItemStatusEnum.ok;
         return this.repo.save(candidate);
     }
     async updateWorkingHours(id, workingHour) {
         const candidate = await this.findById(id, []);
+        if (candidate.status != enums_1.ItemStatusEnum.inCart)
+            throw new common_1.ForbiddenException();
         candidate.workingHours = workingHour;
         candidate.status = enums_1.ItemStatusEnum.inProject;
         return this.repo.save(candidate);

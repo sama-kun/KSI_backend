@@ -46,6 +46,9 @@ let CartController = class CartController {
         console.log(user);
         return this.cartService.delete(user, id);
     }
+    async sendToProject(user, id) {
+        return this.cartService.return(user, id);
+    }
 };
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create cart' }),
@@ -125,6 +128,18 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
     __metadata("design:returntype", Promise)
 ], CartController.prototype, "remove", null);
+__decorate([
+    (0, swagger_1.ApiOperation)({ summary: 'Return cart API' }),
+    (0, swagger_1.ApiParam)({ name: 'id', description: 'Cart ID' }),
+    (0, common_1.Patch)(':id/return'),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
+    __metadata("design:returntype", Promise)
+], CartController.prototype, "sendToProject", null);
 CartController = __decorate([
     (0, swagger_1.ApiTags)('Cart'),
     (0, common_1.Controller)('cart'),

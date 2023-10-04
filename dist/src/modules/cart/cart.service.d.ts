@@ -10,4 +10,5 @@ export declare class CartService extends BaseService<CartEntity, CreateCartDto, 
     protected cartItemService: CartItemService;
     constructor(repo: Repository<CartEntity>, cartItemService: CartItemService);
     myCreate(data: CreateCartDto, user: UserEntity): Promise<any>;
+    return(user: UserEntity, id: number): Promise<CartEntity>;
 }

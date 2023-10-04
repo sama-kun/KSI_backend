@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { BaseService } from '@/common/base/BaseService';
@@ -24,6 +24,8 @@ export class ItemService extends BaseService<
 
   async updateWorkedHours(id: number, workedHour: number): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
+    if (candidate.status != ItemStatusEnum.inProject)
+      throw new ForbiddenException();
     candidate.workedHours = workedHour;
     candidate.status = ItemStatusEnum.ok;
     return this.repo.save(candidate);
@@ -34,6 +36,8 @@ export class ItemService extends BaseService<
     workingHour: number,
   ): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
+    if (candidate.status != ItemStatusEnum.inCart)
+      throw new ForbiddenException();
     candidate.workingHours = workingHour;
     candidate.status = ItemStatusEnum.inProject;
     return this.repo.save(candidate);
