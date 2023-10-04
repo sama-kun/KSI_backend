@@ -37,7 +37,6 @@ export class ProjectService extends BaseService<
       path.join(__dirname, 'template', 'mdnreport.ejs'),
       'utf8',
     );
-    console.debug(project.cart.createdBy);
     project.pic = path.join(__dirname + 'template' + 'ksi.png');
 
     // Render the template with data

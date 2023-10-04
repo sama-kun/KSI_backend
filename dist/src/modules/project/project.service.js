@@ -55,7 +55,6 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
     }
     async test(res, user, project) {
         const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'mdnreport.ejs'), 'utf8');
-        console.debug(project.cart.createdBy);
         project.pic = path_1.default.join(__dirname + 'template' + 'ksi.png');
         const html = ejs_1.default.render(template, project);
         const options = {
