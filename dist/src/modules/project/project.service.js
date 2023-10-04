@@ -68,7 +68,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
                 height: '10mm',
             },
         };
-        const fileName = `mdnreport_${project.cart.createdBy.name}.pdf`;
+        const fileName = `mdnreport_${project.carts[0].createdBy.name}.pdf`;
         const pdfDocument = {
             html: html,
             path: fileName,
@@ -89,7 +89,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
     }
     async returnMdnReport(res, user, project) {
         const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'returnmdnreport.ejs'), 'utf8');
-        console.debug(project.cart.createdBy);
+        console.debug(project.carts[0].createdBy);
         project.pic = path_1.default.join(__dirname + 'template' + 'ksi.png');
         const html = ejs_1.default.render(template, project);
         const options = {

@@ -56,7 +56,7 @@ export class ProjectService extends BaseService<
     };
 
     // Create the PDF
-    const fileName = `mdnreport_${project.cart.createdBy.name}.pdf`;
+    const fileName = `mdnreport_${project.carts[0].createdBy.name}.pdf`;
     const pdfDocument = {
       html: html, // Pass the rendered HTML
       path: fileName, // Output file path (optional)\
@@ -85,7 +85,7 @@ export class ProjectService extends BaseService<
       path.join(__dirname, 'template', 'returnmdnreport.ejs'),
       'utf8',
     );
-    console.debug(project.cart.createdBy);
+    console.debug(project.carts[0].createdBy);
     project.pic = path.join(__dirname + 'template' + 'ksi.png');
 
     // Render the template with data

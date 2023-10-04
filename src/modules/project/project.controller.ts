@@ -146,6 +146,7 @@ export class ProjectController extends BaseController<
       'carts.cartItems.itemGroup',
       'carts.createdBy',
     ]);
+    console.log(project);
     return this.dataService.test(res, user, project);
   }
 
@@ -163,6 +164,7 @@ export class ProjectController extends BaseController<
       'carts.cartItems.itemGroup',
       'carts.createdBy',
     ]);
+    console.log(project);
     return this.dataService.returnMdnReport(res, user, project);
   }
 

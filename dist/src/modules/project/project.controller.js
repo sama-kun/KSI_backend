@@ -55,6 +55,7 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
             'carts.cartItems.itemGroup',
             'carts.createdBy',
         ]);
+        console.log(project);
         return this.dataService.test(res, user, project);
     }
     async returnmdnreport(user, id, res) {
@@ -64,6 +65,7 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
             'carts.cartItems.itemGroup',
             'carts.createdBy',
         ]);
+        console.log(project);
         return this.dataService.returnMdnReport(res, user, project);
     }
 };
