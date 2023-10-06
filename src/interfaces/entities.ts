@@ -44,6 +44,7 @@ export interface IProject extends IBaseModel {
   description?: string;
   carts: ICart[];
   status: ProjectStatusEnum;
+  date?: Date;
 }
 
 export interface ICart extends IBaseModel {

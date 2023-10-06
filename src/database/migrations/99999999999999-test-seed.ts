@@ -9,7 +9,10 @@ export class TestSeed99999999999999 implements MigrationInterface {
     if (queryRunner.isTransactionActive) await queryRunner.commitTransaction();
 
     for (const project of projects) {
-      await queryRunner.manager.insert(ProjectEntity, project as ProjectEntity);
+      await queryRunner.manager.insert(ProjectEntity, {
+        ...project,
+        date: new Date(),
+      } as ProjectEntity);
     }
 
     await queryRunner.startTransaction();

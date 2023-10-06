@@ -44,6 +44,14 @@ let UserController = class UserController extends BaseController_1.BaseControlle
         const { relations } = query;
         return this.dataService.findById(id, relations);
     }
+    me(user) {
+        if (!user)
+            throw new common_1.HttpException('Токен неверный', common_1.HttpStatus.UNAUTHORIZED);
+        return this.dataService.findOne({
+            where: { id: user.id },
+            relations: [],
+        });
+    }
 };
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Create Category' }),
@@ -101,7 +109,6 @@ __decorate([
     }),
     (0, swagger_1.ApiQuery)({ name: 'relations', required: false, type: Array }),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
     (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ROOT),
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -110,6 +117,16 @@ __decorate([
     __metadata("design:paramtypes", [Number, search_user_dto_1.SearchUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getOne", null);
+__decorate([
+    (0, common_1.Get)('auth/me'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ROOT),
+    __param(0, (0, auth_user_decorator_1.AuthUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "me", null);
 UserController = __decorate([
     (0, swagger_1.ApiTags)('User'),
     (0, common_1.Controller)('user'),

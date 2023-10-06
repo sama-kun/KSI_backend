@@ -11,7 +11,7 @@ class TestSeed99999999999999 {
         if (queryRunner.isTransactionActive)
             await queryRunner.commitTransaction();
         for (const project of test_seed_1.projects) {
-            await queryRunner.manager.insert(project_entity_1.ProjectEntity, project);
+            await queryRunner.manager.insert(project_entity_1.ProjectEntity, Object.assign(Object.assign({}, project), { date: new Date() }));
         }
         await queryRunner.startTransaction();
     }

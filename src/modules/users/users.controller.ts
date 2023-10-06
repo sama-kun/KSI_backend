@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Patch,
@@ -28,6 +30,7 @@ import {
 } from '@nestjs/swagger';
 import { RoleEnum } from '@/interfaces/enums';
 import { Roles } from '@/common/decorators/roles-auth.decorator';
+import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 
 @ApiTags('User')
 @Controller('user')
@@ -104,7 +107,6 @@ export class UserController extends BaseController<
   })
   @ApiQuery({ name: 'relations', required: false, type: Array })
   @UseGuards(RolesQuard)
-  @UseGuards(RolesQuard)
   @Roles(RoleEnum.ROOT)
   @Get('/:id')
   async getOne(
@@ -113,5 +115,18 @@ export class UserController extends BaseController<
   ) {
     const { relations } = query;
     return this.dataService.findById(id, relations);
+  }
+
+  @Get('auth/me')
+  @ApiBearerAuth()
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ROOT)
+  me(@AuthUser() user: UserEntity) {
+    if (!user)
+      throw new HttpException('Токен неверный', HttpStatus.UNAUTHORIZED);
+    return this.dataService.findOne({
+      where: { id: user.id },
+      relations: [],
+    });
   }
 }

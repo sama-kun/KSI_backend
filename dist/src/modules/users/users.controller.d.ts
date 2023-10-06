@@ -11,4 +11,5 @@ export declare class UserController extends BaseController<UserEntity, CreateUse
     update(user: UserEntity, id: number, updateUserDto: UpdateUserDto): Promise<UserEntity>;
     findAll(query: SearchUserDto): Promise<any>;
     getOne(id: number, query: SearchUserDto): Promise<UserEntity>;
+    me(user: UserEntity): Promise<UserEntity>;
 }

@@ -27,7 +27,6 @@ let RolesQuard = class RolesQuard {
             if (!requiredRoles) {
                 return true;
             }
-            console.log('Hello this is RolesQuard');
             const req = context.switchToHttp().getRequest();
             const authHeader = req.headers.authorization;
             const [bearer, token] = authHeader.split(' ');
@@ -43,7 +42,7 @@ let RolesQuard = class RolesQuard {
             return requiredRoles.includes(user.role);
         }
         catch (error) {
-            throw new common_1.HttpException('Methot Forbidden', common_1.HttpStatus.FORBIDDEN);
+            throw new common_1.HttpException('Method Forbidden', common_1.HttpStatus.FORBIDDEN);
         }
     }
 };

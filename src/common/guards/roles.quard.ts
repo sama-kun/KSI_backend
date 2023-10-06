@@ -31,7 +31,6 @@ export class RolesQuard implements CanActivate {
       if (!requiredRoles) {
         return true;
       }
-      console.log('Hello this is RolesQuard');
 
       const req = context.switchToHttp().getRequest();
       const authHeader = req.headers.authorization;
@@ -48,7 +47,7 @@ export class RolesQuard implements CanActivate {
       if (user.role === RoleEnum.ROOT) return true;
       return requiredRoles.includes(user.role);
     } catch (error) {
-      throw new HttpException('Methot Forbidden', HttpStatus.FORBIDDEN);
+      throw new HttpException('Method Forbidden', HttpStatus.FORBIDDEN);
     }
   }
 }

@@ -7,4 +7,5 @@ export declare class ProjectEntity extends BaseModel implements IProject {
     description?: string;
     carts: CartEntity[];
     status: ProjectStatusEnum;
+    date?: Date;
 }

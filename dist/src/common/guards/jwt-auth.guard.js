@@ -19,7 +19,6 @@ let JwtAuthGuard = class JwtAuthGuard {
     }
     canActivate(context) {
         const req = context.switchToHttp().getRequest();
-        console.log('Hello this JwtAuthGuard');
         try {
             const authHeader = req.headers.authorization;
             const bearer = authHeader.split(' ')[0];

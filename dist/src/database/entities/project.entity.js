@@ -45,6 +45,15 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], ProjectEntity.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP',
+        nullable: true,
+    }),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], ProjectEntity.prototype, "date", void 0);
 ProjectEntity = __decorate([
     (0, typeorm_1.Entity)('project')
 ], ProjectEntity);

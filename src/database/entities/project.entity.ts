@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, CreateDateColumn } from 'typeorm';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IProject } from '@/interfaces/entities';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -30,4 +30,12 @@ export class ProjectEntity extends BaseModel implements IProject {
     enum: ProjectStatusEnum,
   })
   status: ProjectStatusEnum;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    nullable: true,
+  })
+  @ApiProperty()
+  date?: Date;
 }
