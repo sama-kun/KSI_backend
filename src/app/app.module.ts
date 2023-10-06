@@ -56,11 +56,11 @@ console.log(process.env.POSTGRES_PORT);
       logging: false,
       migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
       ssl: Boolean(process.env.DB_SSl) || false,
-      // extra: {
-      //   ssl: {
-      //     ca: fs.readFileSync('./ksi_db.crt'),
-      //   },
-      // },
+      extra: {
+        ssl: {
+          ca: fs.readFileSync('./ksi_db.crt'),
+        },
+      },
     }),
   ],
   controllers: [AppController],
