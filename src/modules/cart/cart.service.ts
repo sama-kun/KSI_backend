@@ -26,12 +26,13 @@ export class CartService extends BaseService<
 
   async myCreate(data: CreateCartDto, user: UserEntity): Promise<any> {
     const cart = await this.create(data, user);
-    const cartItems = [];
+    // const cartItems = [];
     for (const id of data.cartItems) {
-      cartItems.push({ id: id as CartItemEntity });
-      await this.cartItemService.send(Number(id));
+      // cartItems.push({ id: id as CartItemEntity });
+      await this.cartItemService.send(Number(id), Number(cart.id));
     }
-    cart.cartItems = cartItems;
+    // data.cartItems = cartItems;
+
     return await this.repo.save(cart);
   }
 

@@ -49,9 +49,9 @@ let CloudinaryService = class CloudinaryService extends BaseService_1.BaseServic
                 public_id: result.public_id,
                 folder: result.folder,
                 type,
-                item: { id: itemId },
+                itemGroup: { id: itemId },
             });
-            return await this.findById(file.id, ['item']);
+            return await this.findById(file.id, ['itemGroup']);
         }
         catch (error) {
             console.error(error);

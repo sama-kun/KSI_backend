@@ -21,10 +21,10 @@ export class CartEntity extends BaseModel implements ICart {
   @ApiPropertyOptional()
   cartItems: CartItemEntity[];
 
-  @OneToOne(() => ProjectEntity, (project) => project.carts)
+  @ManyToOne(() => ProjectEntity, (project) => project.carts)
   @ApiPropertyOptional()
   @JoinColumn()
-  project: IProject;
+  project: ProjectEntity;
 
   @Column({ type: 'timestamptz', nullable: true })
   @ApiPropertyOptional()

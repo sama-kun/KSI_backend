@@ -11,6 +11,7 @@ import { UserEntity } from '@/database/entities/user.entity';
 import { CartItemStatusEnum, ItemStatusEnum } from '@/interfaces/enums';
 import { ItemService } from '../item/item.service';
 import { CartService } from '../cart/cart.service';
+import { CartEntity } from '@/database/entities/cart.entity';
 
 @Injectable()
 export class CartItemService extends BaseService<
@@ -94,13 +95,14 @@ export class CartItemService extends BaseService<
     return candidate;
   }
 
-  async send(id: number) {
+  async send(id: number, cartid: number) {
     const record = await this.findById(id, ['items']);
     await this.itemService.updateStatus(
       record.items.map((item) => item.id),
       ItemStatusEnum.inProject,
     );
     record.status = CartItemStatusEnum.inProject;
+    record.cart = { id: cartid } as CartEntity;
     await this.repo.save(record);
   }
 }

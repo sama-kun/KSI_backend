@@ -69,10 +69,11 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
         }
         return candidate;
     }
-    async send(id) {
+    async send(id, cartid) {
         const record = await this.findById(id, ['items']);
         await this.itemService.updateStatus(record.items.map((item) => item.id), enums_1.ItemStatusEnum.inProject);
         record.status = enums_1.CartItemStatusEnum.inProject;
+        record.cart = { id: cartid };
         await this.repo.save(record);
     }
 };

@@ -77,7 +77,6 @@ AppModule = __decorate([
                 autoLoadEntities: true,
                 logging: false,
                 migrations: [__dirname + '/../../src/database/migrations/*{.ts,.js}'],
-                ssl: Boolean(process.env.DB_SSl) || false,
             }),
         ],
         controllers: [app_controller_1.AppController],

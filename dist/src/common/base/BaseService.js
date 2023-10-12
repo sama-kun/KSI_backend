@@ -110,9 +110,7 @@ class BaseService {
         return meta;
     }
     async delete(user, id) {
-        const record = await this.findById(id, []);
-        console.warn(`Record id: ${id} was deleted by: id: ${user.id}
-                                 email: ${user.email}`);
+        const record = await this.findById(Number(id), []);
         return await this.repo.delete(record.id);
     }
 }

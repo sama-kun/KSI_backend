@@ -8,6 +8,7 @@ import { Repository, TypeORMError } from 'typeorm';
 import { UserEntity } from '../../database/entities/user.entity';
 import { FileTypesEnum } from '@/interfaces/enums';
 import { BaseService } from '@/common/base/BaseService';
+import { ItemGroupEntity } from '@/database/entities/item-group.entity';
 const console = new Logger('CloudinaryService');
 
 @Injectable()
@@ -48,9 +49,9 @@ export class CloudinaryService extends BaseService<
         public_id: result.public_id,
         folder: result.folder,
         type,
-        item: { id: itemId },
+        itemGroup: { id: itemId } as ItemGroupEntity,
       });
-      return await this.findById(file.id, ['item']);
+      return await this.findById(file.id, ['itemGroup']);
     } catch (error) {
       console.error(error);
       throw new TypeORMError(error);

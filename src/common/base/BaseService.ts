@@ -144,11 +144,11 @@ export abstract class BaseService<
   }
 
   async delete(user: UserEntity, id: number): Promise<any> {
-    const record = await this.findById(id, []);
-    console.warn(
-      `Record id: ${id} was deleted by: id: ${user.id}
-                                 email: ${user.email}`,
-    );
+    const record = await this.findById(Number(id), []);
+    // console.warn(
+    //   `Record id: ${id} was deleted by: id: ${user.id}
+    //                              email: ${user.email}`,
+    // );
     return await this.repo.delete(record.id);
     // return record;
   }

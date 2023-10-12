@@ -28,12 +28,9 @@ let CartService = class CartService extends BaseService_1.BaseService {
     }
     async myCreate(data, user) {
         const cart = await this.create(data, user);
-        const cartItems = [];
         for (const id of data.cartItems) {
-            cartItems.push({ id: id });
-            await this.cartItemService.send(Number(id));
+            await this.cartItemService.send(Number(id), Number(cart.id));
         }
-        cart.cartItems = cartItems;
         return await this.repo.save(cart);
     }
     async return(user, id) {
