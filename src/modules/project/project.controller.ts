@@ -77,7 +77,7 @@ export class ProjectController extends BaseController<
   @ApiBody({ type: ProjectEntity })
   @Post()
   @UseGuards(RolesQuard)
-  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER, RoleEnum.ROOT)
   create(
     @Body() data: ProjectEntity[] & ProjectEntity,
     @AuthUser() user: UserEntity,

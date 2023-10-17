@@ -81,4 +81,5 @@ export interface IItemGroup extends IBaseModel {
     projectQuantity?: number;
     totalQuantity?: number;
     items: IItem[];
+    cartItems: ICartItem[];
 }

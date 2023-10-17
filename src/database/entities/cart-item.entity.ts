@@ -29,8 +29,9 @@ export class CartItemEntity extends BaseModel implements ICartItem {
   @JoinTable()
   items: ItemEntity[];
 
-  @ManyToOne(() => ItemGroupEntity)
+  @ManyToOne(() => ItemGroupEntity, (itemGroup) => itemGroup.cartItems)
   @ApiPropertyOptional()
+  @JoinColumn()
   itemGroup: ItemGroupEntity;
 
   @ManyToOne(() => CartEntity, (cart) => cart.cartItems, { nullable: true })

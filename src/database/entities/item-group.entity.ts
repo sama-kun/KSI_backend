@@ -2,9 +2,10 @@ import { Entity, Column, ManyToOne, OneToMany, Relation } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 import { FileEntity } from './file.entity';
 import { BaseModel } from '@/common/base/BaseModel';
-import { IItemGroup } from '@/interfaces/entities';
+import { ICartItem, IItemGroup } from '@/interfaces/entities';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { ItemEntity } from './item.entity';
+import { CartItemEntity } from './cart-item.entity';
 
 @Entity('item-group')
 export class ItemGroupEntity extends BaseModel implements IItemGroup {
@@ -43,4 +44,8 @@ export class ItemGroupEntity extends BaseModel implements IItemGroup {
   @OneToMany(() => ItemEntity, (item) => item.itemGroup)
   @ApiPropertyOptional()
   items: ItemEntity[];
+
+  @OneToMany(() => CartItemEntity, (cartItem) => cartItem.itemGroup)
+  @ApiPropertyOptional()
+  cartItems: CartItemEntity[];
 }

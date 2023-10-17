@@ -16,6 +16,7 @@ const file_entity_1 = require("./file.entity");
 const BaseModel_1 = require("../../common/base/BaseModel");
 const swagger_1 = require("@nestjs/swagger");
 const item_entity_1 = require("./item.entity");
+const cart_item_entity_1 = require("./cart-item.entity");
 let ItemGroupEntity = class ItemGroupEntity extends BaseModel_1.BaseModel {
 };
 __decorate([
@@ -63,6 +64,11 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Array)
 ], ItemGroupEntity.prototype, "items", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => cart_item_entity_1.CartItemEntity, (cartItem) => cartItem.itemGroup),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", Array)
+], ItemGroupEntity.prototype, "cartItems", void 0);
 ItemGroupEntity = __decorate([
     (0, typeorm_1.Entity)('item-group')
 ], ItemGroupEntity);

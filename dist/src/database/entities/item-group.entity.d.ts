@@ -4,6 +4,7 @@ import { FileEntity } from './file.entity';
 import { BaseModel } from '@/common/base/BaseModel';
 import { IItemGroup } from '@/interfaces/entities';
 import { ItemEntity } from './item.entity';
+import { CartItemEntity } from './cart-item.entity';
 export declare class ItemGroupEntity extends BaseModel implements IItemGroup {
     name: string;
     description?: string;
@@ -14,4 +15,5 @@ export declare class ItemGroupEntity extends BaseModel implements IItemGroup {
     projectQuantity?: number;
     totalQuantity?: number;
     items: ItemEntity[];
+    cartItems: CartItemEntity[];
 }

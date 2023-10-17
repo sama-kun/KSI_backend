@@ -97,7 +97,7 @@ __decorate([
     (0, swagger_1.ApiBody)({ type: project_entity_1.ProjectEntity }),
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(roles_quard_1.RolesQuard),
-    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER),
+    (0, roles_auth_decorator_1.Roles)(enums_1.RoleEnum.ADMIN, enums_1.RoleEnum.USER, enums_1.RoleEnum.ROOT),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, auth_user_decorator_1.AuthUser)()),
     __metadata("design:type", Function),

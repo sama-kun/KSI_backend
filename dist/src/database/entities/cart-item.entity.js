@@ -36,8 +36,9 @@ __decorate([
     __metadata("design:type", Array)
 ], CartItemEntity.prototype, "items", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => item_group_entity_1.ItemGroupEntity),
+    (0, typeorm_1.ManyToOne)(() => item_group_entity_1.ItemGroupEntity, (itemGroup) => itemGroup.cartItems),
     (0, swagger_1.ApiPropertyOptional)(),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", item_group_entity_1.ItemGroupEntity)
 ], CartItemEntity.prototype, "itemGroup", void 0);
 __decorate([
