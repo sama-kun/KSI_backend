@@ -2,7 +2,7 @@ import { Entity, Column, ManyToOne, OneToMany, Relation } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 import { FileEntity } from './file.entity';
 import { BaseModel } from '@/common/base/BaseModel';
-import { ICartItem, IItemGroup } from '@/interfaces/entities';
+import { IItemGroup } from '@/interfaces/entities';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { ItemEntity } from './item.entity';
 import { CartItemEntity } from './cart-item.entity';

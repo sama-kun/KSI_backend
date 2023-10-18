@@ -1,5 +1,5 @@
 import { BaseModel } from '@/common/base/BaseModel';
-import { ICart, IProject } from '@/interfaces/entities';
+import { ICart } from '@/interfaces/entities';
 import { CartStatusEnum } from '@/interfaces/enums';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
@@ -8,7 +8,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   Relation,
 } from 'typeorm';
 import { ProjectEntity } from './project.entity';
