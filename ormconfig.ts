@@ -27,7 +27,7 @@ export const appDataSource = new DataSource({
   ssl: process.env.DB_SSl || false,
   extra: {
     ssl: {
-      ca: fs.readFileSync('./ksi_db.crt'),
+      ca: fs.readFileSync('./cer_ksi.crt'),
     },
   },
 } as DataSourceOptions);

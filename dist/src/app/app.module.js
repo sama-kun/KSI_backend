@@ -81,7 +81,7 @@ AppModule = __decorate([
                 ssl: Boolean(process.env.DB_SSl) || false,
                 extra: {
                     ssl: {
-                        ca: fs.readFileSync('./ksi_db.crt'),
+                        ca: fs.readFileSync('./cer_ksi.crt'),
                     },
                 },
             }),
