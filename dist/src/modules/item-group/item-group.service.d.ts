@@ -11,7 +11,6 @@ export declare class ItemGroupService extends BaseService<ItemGroupEntity, Creat
     constructor(repo: Repository<ItemGroupEntity>, repoItem: ItemService);
     transaction(id: number, cart: CartItemEntity, quantity: number, operation: string): Promise<ItemGroupEntity>;
     check(id: number, transcript: number): Promise<void>;
-    z: any;
     addRandomItemToCatItem(id: number, cartId: number): Promise<any>;
     private randomGenerater;
 }

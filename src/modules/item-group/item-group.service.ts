@@ -61,7 +61,7 @@ export class ItemGroupService extends BaseService<
       throw new BadRequestException(
         "Don't enough quantity of itemGroup id: " + id,
       );
-  }z
+  }
 
   async addRandomItemToCatItem(id: number, cartId: number): Promise<any> {
     const candidate = await this.findById(id, ['items']);
