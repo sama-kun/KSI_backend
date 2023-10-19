@@ -32,6 +32,7 @@ export class CartItemService extends BaseService<
     // const id = data.item;
     // const item = this.itemService.findById(id, []);
 
+    this.itemGroupService.check(Number(data.itemGroup), data.quantity);
     const cartItemSave = await this.create(data, user);
     const cartItem = await this.findById(cartItemSave.id, ['itemGroup']);
     await this.itemGroupService.transaction(

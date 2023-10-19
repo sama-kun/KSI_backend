@@ -29,6 +29,7 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
         this.itemService = itemService;
     }
     async createMany(data, user) {
+        this.itemGroupService.check(Number(data.itemGroup), data.quantity);
         const cartItemSave = await this.create(data, user);
         const cartItem = await this.findById(cartItemSave.id, ['itemGroup']);
         await this.itemGroupService.transaction(cartItem.itemGroup.id, cartItem, data.quantity, '+');

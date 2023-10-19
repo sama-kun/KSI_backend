@@ -54,14 +54,14 @@ export class ItemGroupService extends BaseService<
     return await this.repo.save(candidate);
   }
 
-  private async check(id: number, transcript: number) {
+  async check(id: number, transcript: number) {
     const item = await this.findById(id, []);
 
     if (item.quantity < transcript)
       throw new BadRequestException(
         "Don't enough quantity of itemGroup id: " + id,
       );
-  }
+  }z
 
   async addRandomItemToCatItem(id: number, cartId: number): Promise<any> {
     const candidate = await this.findById(id, ['items']);
