@@ -29,7 +29,21 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
         this.itemService = itemService;
     }
     async createMany(data, user) {
-        this.itemGroupService.check(Number(data.itemGroup), data.quantity);
+        const check = await this.repo.find({
+            where: {
+                status: enums_1.CartItemStatusEnum.detailing,
+                createdBy: {
+                    id: user.id,
+                },
+                itemGroup: { id: Number(data.itemGroup) },
+            },
+            relations: ['items', 'itemGroup'],
+        });
+        if (check.length > 0) {
+            await this.itemGroupService.transaction(Number(data.itemGroup), check[0], data.quantity, '+');
+            return this.findById(check[0].id, ['items', 'itemGroup']);
+        }
+        await this.itemGroupService.check(Number(data.itemGroup), data.quantity);
         const cartItemSave = await this.create(data, user);
         const cartItem = await this.findById(cartItemSave.id, ['itemGroup']);
         await this.itemGroupService.transaction(cartItem.itemGroup.id, cartItem, data.quantity, '+');
