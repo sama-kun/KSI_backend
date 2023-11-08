@@ -133,8 +133,8 @@ export class ProjectController extends BaseController<
     return this.dataService.delete(user, id);
   }
   @Get(':id/mdnreport')
-  // @UseGuards(RolesQuard)
-  // @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async mdnreport(
     @AuthUser() user: UserEntity,
     @Param('id', ParseIntPipe) id: number,
