@@ -77,8 +77,4 @@ export class ItemGroupService extends BaseService<
   private randomGenerater(ids: number[]): number {
     return ids[Math.floor(Math.random() * ids.length)];
   }
-
-  // test(){
-  //   return super().
-  // }
 }

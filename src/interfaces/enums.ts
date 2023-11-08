@@ -41,6 +41,7 @@ export enum ItemStatusEnum {
 export enum CartItemStatusEnum {
   detailing = 'detailing',
   inProject = 'inProject',
+  fillWorkingHours = 'fillWorkingHours',
   lackOfQuantity = 'lackOfQuantity',
   finished = 'finished',
 }

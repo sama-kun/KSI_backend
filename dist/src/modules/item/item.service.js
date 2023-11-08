@@ -35,7 +35,8 @@ let ItemService = class ItemService extends BaseService_1.BaseService {
     }
     async updateWorkingHours(id, workingHour) {
         const candidate = await this.findById(id, []);
-        if (candidate.status != enums_1.ItemStatusEnum.inCart)
+        if (candidate.status != enums_1.ItemStatusEnum.inCart &&
+            candidate.status != enums_1.ItemStatusEnum.inProject)
             throw new common_1.ForbiddenException();
         candidate.workingHours = workingHour;
         candidate.status = enums_1.ItemStatusEnum.inProject;

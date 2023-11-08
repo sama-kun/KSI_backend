@@ -36,7 +36,10 @@ export class ItemService extends BaseService<
     workingHour: number,
   ): Promise<ItemEntity> {
     const candidate = await this.findById(id, []);
-    if (candidate.status != ItemStatusEnum.inCart)
+    if (
+      candidate.status != ItemStatusEnum.inCart &&
+      candidate.status != ItemStatusEnum.inProject
+    )
       throw new ForbiddenException();
     candidate.workingHours = workingHour;
     candidate.status = ItemStatusEnum.inProject;

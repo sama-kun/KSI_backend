@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Initial1697566206926 = void 0;
-class Initial1697566206926 {
+exports.Initial1697765644276 = void 0;
+class Initial1697765644276 {
     constructor() {
-        this.name = 'Initial1697566206926';
+        this.name = 'Initial1697765644276';
     }
     async up(queryRunner) {
         await queryRunner.query(`CREATE TABLE "category" ("id" SERIAL NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying, "description" character varying, "updatedById" integer, "createdById" integer, CONSTRAINT "UQ_23c05c292c439d77b0de816b500" UNIQUE ("name"), CONSTRAINT "PK_9c4e4a89e3674fc9f382d733f03" PRIMARY KEY ("id"))`);
@@ -110,5 +110,5 @@ class Initial1697566206926 {
         await queryRunner.query(`DROP TABLE "category"`);
     }
 }
-exports.Initial1697566206926 = Initial1697566206926;
-//# sourceMappingURL=1697566206926-initial.js.map
+exports.Initial1697765644276 = Initial1697765644276;
+//# sourceMappingURL=1697765644276-initial.js.map

@@ -35,6 +35,7 @@ export declare enum ItemStatusEnum {
 export declare enum CartItemStatusEnum {
     detailing = "detailing",
     inProject = "inProject",
+    fillWorkingHours = "fillWorkingHours",
     lackOfQuantity = "lackOfQuantity",
     finished = "finished"
 }
