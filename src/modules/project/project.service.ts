@@ -34,7 +34,7 @@ export class ProjectService extends BaseService<
       path.join(__dirname, 'template', 'mdnreport.ejs'),
       'utf8',
     );
-    project.pic = path.join(__dirname + 'template' + 'ksi.png');
+    project.pic = path.join(__dirname, 'template', 'ksi.png');
 
     const html = ejs.render(template, project);
     const options = {
