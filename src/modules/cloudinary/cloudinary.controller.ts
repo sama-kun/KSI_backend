@@ -54,7 +54,7 @@ export class CloudinaryController {
     @UploadedFile() file: Express.Multer.File,
     @Body() data: any,
   ) {
-    console.debug(data.item);
+    // console.debug(data.item);
     return this.cloudinaryService.uploadFile(
       user,
       file,

@@ -30,7 +30,6 @@ let CloudinaryController = class CloudinaryController {
         this.cloudinaryService = cloudinaryService;
     }
     uploadImage(user, file, data) {
-        console.debug(data.item);
         return this.cloudinaryService.uploadFile(user, file, { folder: data.folder }, data.item);
     }
     async uploadImages(user, files, data) {

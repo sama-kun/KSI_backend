@@ -89,23 +89,20 @@ export class CloudinaryService extends BaseService<
       ...options,
       public_id: file.originalname,
     };
-    // Convert the file buffer to a Buffer (if it's not already)
     const buffer = Buffer.from(file.buffer);
     return new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(options, (error, result) => {
           if (error) {
-            // Handle the error here
             reject(error);
           } else {
-            // Handle the successful upload here
             this.createMy(user, item, result).then((data) => {
               result.db = data;
               resolve(result);
             });
           }
         })
-        .end(buffer); // Pass the buffer here
+        .end(buffer);
     });
   }
 
