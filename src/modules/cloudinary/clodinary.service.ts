@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary, v2 } from 'cloudinary';
 import { CloudinaryResponse } from './dto/cloudinary-response.dto';
 import { Readable } from 'stream';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { UserEntity } from '../../database/entities/user.entity';
 import { FileTypesEnum } from '@/interfaces/enums';
 import { BaseService } from '@/common/base/BaseService';
 import { ItemGroupEntity } from '@/database/entities/item-group.entity';
+import { options } from 'pdfkit';
 const console = new Logger('CloudinaryService');
 
 @Injectable()
@@ -72,11 +73,24 @@ export class CloudinaryService extends BaseService<
   }
 
   async uploadPdf(user: UserEntity, file: Express.Multer.File): Promise<any> {
-    const uploadResult = await this.uploadFile(user, file, {
+    const options = {
       folder: 'pdf_files',
+    };
+    const buffer = Buffer.from(file.buffer);
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(options, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            // this.createMy(user, item, result).then((data) => {
+            // result.db = data;
+            resolve(result);
+            // });
+          }
+        })
+        .end(buffer);
     });
-
-    return uploadResult;
   }
 
   async uploadFile(

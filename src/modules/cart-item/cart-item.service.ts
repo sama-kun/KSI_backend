@@ -113,7 +113,7 @@ export class CartItemService extends BaseService<
       candidate.isHistory = true;
       candidate.status = CartItemStatusEnum.finished;
     }
-    return candidate;
+    return this.repo.save(candidate);
   }
 
   async send(id: number, cartid: number) {

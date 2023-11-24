@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Logger,
+  // Logger,
   Param,
   ParseIntPipe,
   Post,
@@ -32,7 +32,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UpdateFileDto } from './dto/update-file.dto';
-const console = new Logger('CloudinaryController');
+import * as multerConfig from './multer.config';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+// const console = new Logger('CloudinaryController');
 
 @ApiTags('Files')
 @Controller('cloud')
@@ -109,7 +111,7 @@ export class CloudinaryController {
   @Post('pdf')
   @UseGuards(RolesQuard)
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file', multerConfig as MulterOptions))
   uploadPdf(
     @AuthUser() user: UserEntity,
     @UploadedFile() File: Express.Multer.File,

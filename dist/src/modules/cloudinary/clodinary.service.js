@@ -72,10 +72,22 @@ let CloudinaryService = class CloudinaryService extends BaseService_1.BaseServic
         }
     }
     async uploadPdf(user, file) {
-        const uploadResult = await this.uploadFile(user, file, {
+        const options = {
             folder: 'pdf_files',
+        };
+        const buffer = Buffer.from(file.buffer);
+        return new Promise((resolve, reject) => {
+            cloudinary_1.v2.uploader
+                .upload_stream(options, (error, result) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(result);
+                }
+            })
+                .end(buffer);
         });
-        return uploadResult;
     }
     async uploadFile(user = null, file, options, item = null) {
         options = Object.assign(Object.assign({}, options), { public_id: file.originalname });
