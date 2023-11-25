@@ -63,7 +63,7 @@ export class ProjectService extends BaseService<
     const fileStream = fs.createReadStream(fileName);
     // res.send(pdfBuffer);
     fileStream.pipe(res);
-    this.deleteFile(fileName);
+    // this.deleteFile(fileName);
   }
 
   deleteFile(fileName: string) {

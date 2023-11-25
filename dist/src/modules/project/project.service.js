@@ -79,7 +79,6 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
         const fileStream = fs.createReadStream(fileName);
         fileStream.pipe(res);
-        this.deleteFile(fileName);
     }
     deleteFile(fileName) {
         setTimeout(() => {
