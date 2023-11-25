@@ -54,7 +54,7 @@ async function bootstrap() {
 
   console.log(`
   KSI_BACKEND ver.1.0 by Samgar Seriknur @lieproger
-  Started at ${process.env.APP_URL}
+  Started at lo http://localhost:${process.env.PORT}
   NODE_ENV=local
   `);
   // swaggerInit(app);
