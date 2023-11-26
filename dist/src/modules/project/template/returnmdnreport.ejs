@@ -44,6 +44,9 @@
             font-weight: bold;
             color: #06234B;
         }
+        .fault {
+            color: red;
+        }
       </style>
 </head>
 <body>
@@ -52,7 +55,7 @@
     <img alt="KSI logo" src="<%= pic %>" >
 </header>
     <p class="title">Material Delivery Note / Уведомление о доставке материала</p>
-    <div>Shipper / Отправитель:<br>    <%= cart.createdBy.name %></div>
+    <div>Shipper / Отправитель:<br>    <%= carts[0].createdBy.name %></div>
     <div>Date / Дата:<br> <%= carts[0].createdAt %></div>
     <div>Company/Компания:      KSI PetroGasServices LLP </div> 
     <div>Warehouse Address / Адрес Склада:      Atyrau, Zhuldyz-3, 13/3 </div> 
@@ -79,7 +82,12 @@
             <td><%= cartItem.quantity %></td>
             <td>1</td>
             <td><%= cartItem.items[0].uuid %></td>
-            <td><%= cartItem.items[0].workingHours %></td>
+            
+            <% if (cartItem.items[0].status === 'fault') { %>
+                <td class="fault">fault</td>
+            <%} else { %>
+            <td><%= cartItem.items[0].workedHours - cartItem.items[0].workingHours %></td>
+            <% } %>
         </tr>
         <% for (let i=1; i<cartItem.items.length; i++) { %>
         <tr>
@@ -87,7 +95,11 @@
             <td></td>
             <td><%= i+1 %></td>
             <td><%= cartItem.items[i].uuid %></td>
+            <% if (cartItem.items[i].status === 'fault') { %>
+                <td class="fault">fault</td>
+            <%} else { %>
             <td><%= cartItem.items[i].workedHours - cartItem.items[i].workingHours %></td>
+            <% } %>
         </tr>
         <% } %>
     <% } %>
