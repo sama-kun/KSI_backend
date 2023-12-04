@@ -29,8 +29,8 @@
   },
   {
     "A": 2,
-    "categoryName": "Pump2",
-    "name": "4-leg wire rope sling, 1.48m",
+    "categoryName": "Slings",
+    "name": "Pump2",
     "description": "Строп из проволочного троса ASSY 1.48м х 13мм (6*36) №1, 12.05.2022, 000009396",
     "tag": "N/A",
     "totalQuantity": 10,
@@ -39,8 +39,8 @@
   },
   {
     "A": 3,
-    "categoryName": "Pump3",
-    "name": "4-leg wire rope sling, 1.54m",
+    "categoryName": "Slings",
+    "name": "Pump3",
     "description": "Строп из проволочного троса ASSY 1.54м х 20мм (6*36) №1, 12.05.2022, 000009398",
     "tag": "N/A",
     "totalQuantity": 10,
@@ -49,8 +49,8 @@
   },
   {
     "A": 4,
-    "categoryName": "Pump4",
-    "name": "4-leg wire rope sling, 1.56m",
+    "categoryName": "Slings",
+    "name": "Pump4",
     "description": "Строп из проволочного троса ASSY 1.56м х 13мм (6*36) №1, 12.05.2022, 000009394",
     "tag": "N/A",
     "totalQuantity": 10,
@@ -59,8 +59,8 @@
   },
   {
     "A": 5,
-    "categoryName": "Pump5",
-    "name": "4-leg wire rope sling, 1.8m",
+    "categoryName": "Slings",
+    "name": "Pump5",
     "description": "Строп из проволочного троса ASSY 1.80м х 13мм (6*36) №1, 12.05.2022, 000009403",
     "tag": "N/A",
     "totalQuantity": 10,

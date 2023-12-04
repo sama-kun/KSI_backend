@@ -13,12 +13,12 @@ export class ItemGroupsSeed99999999999999 implements MigrationInterface {
 
     for (const itemGroup of itemGroups) {
       const index = categories.findIndex((el) => el === itemGroup.categoryName);
-      if (!itemGroup.categoryName) {
-        await queryRunner.manager.insert(ItemGroupEntity, {
-          ...itemGroup,
-          category: { id: 46 },
-        });
-      }
+      // if (!itemGroup.categoryName) {
+      //   await queryRunner.manager.insert(ItemGroupEntity, {
+      //     ...itemGroup,
+      //     category: { id: 46 },
+      //   });
+      // }
       await queryRunner.manager.insert(ItemGroupEntity, {
         ...itemGroup,
         category: { id: index + 1 },
