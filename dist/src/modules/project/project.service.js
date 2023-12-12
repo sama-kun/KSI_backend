@@ -46,7 +46,7 @@ const path_1 = __importDefault(require("path"));
 const pdf1 = __importStar(require("pdf-creator-node"));
 const cart_item_service_1 = require("../cart-item/cart-item.service");
 const util = __importStar(require("util"));
-const pdf = __importStar(require("html-pdf"));
+const puppeteer_1 = __importDefault(require("puppeteer"));
 const console = new common_1.Logger('ProjectService');
 let ProjectService = class ProjectService extends BaseService_1.BaseService {
     constructor(repo, repoCartItem) {
@@ -55,22 +55,15 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         this.repoCartItem = repoCartItem;
     }
     async generatePdf() {
-        return new Promise((resolve, reject) => {
-            const templatePath = path_1.default.resolve(__dirname, 'template', 'test.ejs');
-            const templateContent = fs.readFileSync(templatePath, 'utf-8');
-            const renderedHtml = ejs_1.default.render(templateContent, { name: 'Samgar' });
-            const pdfOptions = {
-                format: 'Letter',
-            };
-            pdf.create(renderedHtml, pdfOptions).toBuffer((err, buffer) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(buffer);
-                }
-            });
-        });
+        const browser = await puppeteer_1.default.launch({ headless: true });
+        const page = await browser.newPage();
+        const templatePath = path_1.default.resolve(__dirname, 'template', 'test.ejs');
+        const templateContent = fs.readFileSync(templatePath, 'utf-8');
+        const renderedHtml = ejs_1.default.render(templateContent, { name: 'Samgar' });
+        await page.setContent(renderedHtml);
+        const pdfBuffer = await page.pdf({ format: 'Letter' });
+        await browser.close();
+        return pdfBuffer;
     }
     async test(res, user, project) {
         const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'mdnreport.ejs'), 'utf8');

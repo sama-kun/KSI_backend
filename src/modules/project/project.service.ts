@@ -15,6 +15,7 @@ import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
 import * as pdf from 'html-pdf';
 import PDFDocument from 'pdfkit';
+import puppeteer from 'puppeteer';
 const console = new Logger('ProjectService');
 
 @Injectable()
@@ -31,15 +32,16 @@ export class ProjectService extends BaseService<
   }
 
   async generatePdf(): Promise<Buffer> {
-    // const templatePath = path.join(__dirname, 'template', 'test.ejs');
-    // const html = await ejs.renderFile(templatePath, { name: 'samgar' });
+    // return new Promise((resolve, reject) => {
+    //   const templatePath = path.resolve(__dirname, 'template', 'test.ejs');
+    //   const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    //   const renderedHtml = ejs.render(templateContent, { name: 'Samgar' });
 
-    // const options: pdf.CreateOptions = {
-    //   format: 'Letter',
-    // };
+    //   const pdfOptions: pdf.CreateOptions = {
+    //     format: 'Letter',
+    //   };
 
-    // const pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
-    //   pdf.create(html, options).toBuffer((err, buffer) => {
+    //   pdf.create(renderedHtml, pdfOptions).toBuffer((err, buffer) => {
     //     if (err) {
     //       reject(err);
     //     } else {
@@ -47,25 +49,19 @@ export class ProjectService extends BaseService<
     //     }
     //   });
     // });
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
 
-    // return pdfBuffer;
-    return new Promise((resolve, reject) => {
-      const templatePath = path.resolve(__dirname, 'template', 'test.ejs');
-      const templateContent = fs.readFileSync(templatePath, 'utf-8');
-      const renderedHtml = ejs.render(templateContent, { name: 'Samgar' });
+    const templatePath = path.resolve(__dirname, 'template', 'test.ejs');
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    const renderedHtml = ejs.render(templateContent, { name: 'Samgar' });
 
-      const pdfOptions: pdf.CreateOptions = {
-        format: 'Letter',
-      };
+    await page.setContent(renderedHtml);
+    const pdfBuffer = await page.pdf({ format: 'Letter' });
 
-      pdf.create(renderedHtml, pdfOptions).toBuffer((err, buffer) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(buffer);
-        }
-      });
-    });
+    await browser.close();
+
+    return pdfBuffer;
   }
 
   async test(res: Response, user: UserEntity, project: any) {
