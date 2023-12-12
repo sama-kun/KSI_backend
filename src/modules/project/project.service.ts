@@ -52,7 +52,7 @@ export class ProjectService extends BaseService<
     const templatePath = path.join(__dirname, 'template', 'test.ejs');
     const html = await ejs.renderFile(templatePath, { name: 'samgar' });
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();
     await page.setContent(html);
 

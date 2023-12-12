@@ -57,7 +57,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
     async generatePdf() {
         const templatePath = path_1.default.join(__dirname, 'template', 'test.ejs');
         const html = await ejs_1.default.renderFile(templatePath, { name: 'samgar' });
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ headless: 'new' });
         const page = await browser.newPage();
         await page.setContent(html);
         const pdfBuffer = await page.pdf();
