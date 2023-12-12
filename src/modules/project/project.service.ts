@@ -14,7 +14,7 @@ import * as pdf1 from 'pdf-creator-node';
 import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
 import * as pdf from 'html-pdf';
-import * as puppeteer from 'puppeteer';
+import PDFDocument from 'pdfkit';
 const console = new Logger('ProjectService');
 
 @Injectable()
@@ -49,17 +49,23 @@ export class ProjectService extends BaseService<
     // });
 
     // return pdfBuffer;
-    const templatePath = path.join(__dirname, 'template', 'test.ejs');
-    const html = await ejs.renderFile(templatePath, { name: 'samgar' });
+    return new Promise((resolve, reject) => {
+      const templatePath = path.resolve(__dirname, 'template', 'test.ejs');
+      const templateContent = fs.readFileSync(templatePath, 'utf-8');
+      const renderedHtml = ejs.render(templateContent, { name: 'Samgar' });
 
-    const browser = await puppeteer.launch({ headless: 'new' });
-    const page = await browser.newPage();
-    await page.setContent(html);
+      const pdfOptions: pdf.CreateOptions = {
+        format: 'Letter',
+      };
 
-    const pdfBuffer = await page.pdf();
-    await browser.close();
-
-    return pdfBuffer;
+      pdf.create(renderedHtml, pdfOptions).toBuffer((err, buffer) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(buffer);
+        }
+      });
+    });
   }
 
   async test(res: Response, user: UserEntity, project: any) {
