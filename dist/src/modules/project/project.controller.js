@@ -33,6 +33,12 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
     async root() {
         return { name: 'NestJS User' };
     }
+    async testPdf(res) {
+        const pdfBuffer = await this.dataService.generatePdf();
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=output.pdf');
+        res.send(pdfBuffer);
+    }
     getOne(id, query) {
         const { relations } = query;
         return this.dataService.findById(id, relations);
@@ -79,6 +85,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "root", null);
+__decorate([
+    (0, common_1.Get)('/testpdf'),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProjectController.prototype, "testPdf", null);
 __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Project by id' }),

@@ -13,6 +13,7 @@ import path from 'path';
 import * as pdf1 from 'pdf-creator-node';
 import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
+import * as pdf from 'html-pdf';
 const console = new Logger('ProjectService');
 
 @Injectable()
@@ -27,6 +28,28 @@ export class ProjectService extends BaseService<
   ) {
     super();
   }
+
+  async generatePdf(): Promise<Buffer> {
+    const templatePath = path.join(__dirname, 'template', 'test.ejs');
+    const html = await ejs.renderFile(templatePath, { name: 'samgar' });
+
+    const options: pdf.CreateOptions = {
+      format: 'Letter',
+    };
+
+    const pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
+      pdf.create(html, options).toBuffer((err, buffer) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(buffer);
+        }
+      });
+    });
+
+    return pdfBuffer;
+  }
+
   async test(res: Response, user: UserEntity, project: any) {
     // Load your EJS template
     const template = fs.readFileSync(

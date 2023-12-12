@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { BaseService } from '@/common/base/BaseService';
 import { Response } from 'express';
 import { Repository } from 'typeorm';
@@ -10,6 +11,7 @@ export declare class ProjectService extends BaseService<ProjectEntity, CreatePro
     protected repo: Repository<ProjectEntity>;
     protected repoCartItem: CartItemService;
     constructor(repo: Repository<ProjectEntity>, repoCartItem: CartItemService);
+    generatePdf(): Promise<Buffer>;
     test(res: Response, user: UserEntity, project: any): Promise<void>;
     deleteFile(fileName: string): void;
     returnMdnReport(res: Response, user: UserEntity, project: any): Promise<void>;

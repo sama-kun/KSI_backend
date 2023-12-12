@@ -46,12 +46,31 @@ const path_1 = __importDefault(require("path"));
 const pdf1 = __importStar(require("pdf-creator-node"));
 const cart_item_service_1 = require("../cart-item/cart-item.service");
 const util = __importStar(require("util"));
+const pdf = __importStar(require("html-pdf"));
 const console = new common_1.Logger('ProjectService');
 let ProjectService = class ProjectService extends BaseService_1.BaseService {
     constructor(repo, repoCartItem) {
         super();
         this.repo = repo;
         this.repoCartItem = repoCartItem;
+    }
+    async generatePdf() {
+        const templatePath = path_1.default.join(__dirname, 'template', 'test.ejs');
+        const html = await ejs_1.default.renderFile(templatePath, { name: 'samgar' });
+        const options = {
+            format: 'Letter',
+        };
+        const pdfBuffer = await new Promise((resolve, reject) => {
+            pdf.create(html, options).toBuffer((err, buffer) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(buffer);
+                }
+            });
+        });
+        return pdfBuffer;
     }
     async test(res, user, project) {
         const template = fs.readFileSync(path_1.default.join(__dirname, 'template', 'mdnreport.ejs'), 'utf8');

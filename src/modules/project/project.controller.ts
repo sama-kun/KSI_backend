@@ -56,6 +56,15 @@ export class ProjectController extends BaseController<
     return { name: 'NestJS User' };
   }
 
+  @Get('/testpdf')
+  async testPdf(@Res() res: Response) {
+    const pdfBuffer = await this.dataService.generatePdf();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=output.pdf');
+    res.send(pdfBuffer);
+  }
+
   @ApiParam({ name: 'id', description: 'Project ID' })
   @ApiOperation({ summary: 'Get Project by id' })
   @ApiResponse({

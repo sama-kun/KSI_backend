@@ -11,6 +11,7 @@ export declare class ProjectController extends BaseController<ProjectEntity, Cre
     private projectService;
     constructor(projectService: ProjectService);
     root(): Promise<object>;
+    testPdf(res: Response): Promise<void>;
     getOne(id: number, query: SearchProjectDto): Promise<ProjectEntity>;
     create(data: ProjectEntity[] & ProjectEntity, user: UserEntity): Promise<ProjectEntity>;
     update(user: UserEntity, id: number, data: ProjectEntity): Promise<ProjectEntity>;
