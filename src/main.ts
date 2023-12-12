@@ -23,7 +23,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const logger = new Logger('KSI');
-  logger.log(`Application [KSI] is starting...`);
+  logger.log(`Application [KSI] is starting...` + process.env.CHROME_PATH);
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   swaggerInit(app);
   app.enableCors();

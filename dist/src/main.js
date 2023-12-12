@@ -34,7 +34,7 @@ const bodyParser = __importStar(require("body-parser"));
 const path_1 = require("path");
 async function bootstrap() {
     const logger = new common_1.Logger('KSI');
-    logger.log(`Application [KSI] is starting...`);
+    logger.log(`Application [KSI] is starting...` + process.env.CHROME_PATH);
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     (0, swagger_1.default)(app);
     app.enableCors();
