@@ -44,4 +44,30 @@ export class CartService extends BaseService<
 
     return candidate;
   }
+
+  async accept(user: UserEntity, id: number) {
+    const candidate = await this.findById(id, []);
+    const res = await this.update(user, id, {
+      status: CartStatusEnum.accept,
+    });
+
+    return res;
+  }
+
+  async decline(user: UserEntity, id: number) {
+    const candidate = await this.findById(id, [
+      'cartItems.items',
+      'cartItems.itemGroup',
+    ]);
+
+    candidate.cartItems.forEach(async (value: CartItemEntity) => {
+      await this.cartItemService.returnItem(value.id, user);
+    });
+
+    const res = await this.update(user, id, {
+      status: CartStatusEnum.declined,
+    });
+
+    return res;
+  }
 }

@@ -7,6 +7,8 @@ var CartStatusEnum;
     CartStatusEnum["OnProject"] = "OnProject";
     CartStatusEnum["InCart"] = "InCart";
     CartStatusEnum["finished"] = "finished";
+    CartStatusEnum["accept"] = "accept";
+    CartStatusEnum["declined"] = "declined";
 })(CartStatusEnum = exports.CartStatusEnum || (exports.CartStatusEnum = {}));
 var RoleEnum;
 (function (RoleEnum) {

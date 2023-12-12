@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Render,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -47,6 +48,12 @@ export class ProjectController extends BaseController<
   constructor(private projectService: ProjectService) {
     super();
     this.dataService = projectService;
+  }
+
+  @Get('mdnreport/test')
+  @Render('index') // 'index' corresponds to the name of your EJS template file (without the extension)
+  async root(): Promise<object> {
+    return { name: 'NestJS User' };
   }
 
   @ApiParam({ name: 'id', description: 'Project ID' })

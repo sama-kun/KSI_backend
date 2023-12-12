@@ -10,6 +10,7 @@ import { SearchProjectDto } from './dto/search-project.dto';
 export declare class ProjectController extends BaseController<ProjectEntity, CreateProjectDto, UpdateProjectDto, SearchQueryDto, ProjectService> {
     private projectService;
     constructor(projectService: ProjectService);
+    root(): Promise<object>;
     getOne(id: number, query: SearchProjectDto): Promise<ProjectEntity>;
     create(data: ProjectEntity[] & ProjectEntity, user: UserEntity): Promise<ProjectEntity>;
     update(user: UserEntity, id: number, data: ProjectEntity): Promise<ProjectEntity>;

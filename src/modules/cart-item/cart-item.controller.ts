@@ -127,7 +127,7 @@ export class CartItemController extends BaseController<
   @Roles(RoleEnum.ADMIN, RoleEnum.USER)
   async remove(@AuthUser() user: UserEntity, @Param('id') id: number) {
     console.log(user);
-    return this.dataService.delete(user, id);
+    return this.dataService.remove(id, user);
   }
 
   @ApiOperation({ summary: 'Add 1 item to Cart' })

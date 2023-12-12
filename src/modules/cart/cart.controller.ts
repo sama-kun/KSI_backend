@@ -126,4 +126,22 @@ export class CartController {
   async sendToProject(@AuthUser() user: UserEntity, @Param('id') id: number) {
     return this.cartService.return(user, id);
   }
+
+  @ApiOperation({ summary: 'Accept the Cart' })
+  @ApiParam({ name: 'id', description: 'Cart ID' })
+  @Get(':id/accept')
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  async accept(@AuthUser() user: UserEntity, @Param('id') id: number) {
+    return this.cartService.accept(user, id);
+  }
+
+  @ApiOperation({ summary: 'Accept the Cart' })
+  @ApiParam({ name: 'id', description: 'Cart ID' })
+  @Get(':id/decline')
+  @UseGuards(RolesQuard)
+  @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+  async decline(@AuthUser() user: UserEntity, @Param('id') id: number) {
+    return this.cartService.decline(user, id);
+  }
 }

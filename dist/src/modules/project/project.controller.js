@@ -30,6 +30,9 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
         this.projectService = projectService;
         this.dataService = projectService;
     }
+    async root() {
+        return { name: 'NestJS User' };
+    }
     getOne(id, query) {
         const { relations } = query;
         return this.dataService.findById(id, relations);
@@ -69,6 +72,13 @@ let ProjectController = class ProjectController extends BaseController_1.BaseCon
         return this.dataService.returnMdnReport(res, user, project);
     }
 };
+__decorate([
+    (0, common_1.Get)('mdnreport/test'),
+    (0, common_1.Render)('index'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProjectController.prototype, "root", null);
 __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Project ID' }),
     (0, swagger_1.ApiOperation)({ summary: 'Get Project by id' }),

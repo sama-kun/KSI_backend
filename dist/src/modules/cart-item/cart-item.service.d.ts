@@ -17,4 +17,6 @@ export declare class CartItemService extends BaseService<CartItemEntity, CreateC
     private check;
     return(id: number, initialQuantity: number): Promise<CartItemEntity>;
     send(id: number, cartid: number): Promise<void>;
+    remove(id: number, user: UserEntity): Promise<any>;
+    returnItem(id: number, user: UserEntity): Promise<void>;
 }

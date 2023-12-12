@@ -27,7 +27,6 @@ export class ProjectService extends BaseService<
   ) {
     super();
   }
-
   async test(res: Response, user: UserEntity, project: any) {
     // Load your EJS template
     const template = fs.readFileSync(

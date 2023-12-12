@@ -3,6 +3,8 @@ export enum CartStatusEnum {
   OnProject = 'OnProject',
   InCart = 'InCart',
   finished = 'finished',
+  accept = 'accept',
+  declined = 'declined',
 }
 
 export enum RoleEnum {

@@ -16,17 +16,21 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import swaggerInit from '@/swagger';
 import * as bodyParser from 'body-parser';
 import { join } from 'path';
-import * as express from 'express';
+import express from 'express';
+import * as ejs from 'ejs';
+import { NestExpressApplication } from '@nestjs/platform-express';
 // import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
   const logger = new Logger('KSI');
   logger.log(`Application [KSI] is starting...`);
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   swaggerInit(app);
   app.enableCors();
+  app.setViewEngine('ejs');
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.useStaticAssets(join(__dirname, '..', 'public'));
   await app.listen(process.env.PORT);
-  app.use(express.static(__dirname + 'public'));
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useLogger(logger);

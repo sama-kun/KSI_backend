@@ -18,9 +18,6 @@ class ItemGroupsSeed99999999999999 {
             await queryRunner.commitTransaction();
         for (const itemGroup of item_groups_seed_json_1.itemGroups) {
             const index = category_seed_json_1.default.findIndex((el) => el === itemGroup.categoryName);
-            if (!itemGroup.categoryName) {
-                await queryRunner.manager.insert(item_group_entity_1.ItemGroupEntity, Object.assign(Object.assign({}, itemGroup), { category: { id: 46 } }));
-            }
             await queryRunner.manager.insert(item_group_entity_1.ItemGroupEntity, Object.assign(Object.assign({}, itemGroup), { category: { id: index + 1 } }));
         }
         for (let i = 1; i <= item_groups_seed_json_1.itemGroups.length; i++) {

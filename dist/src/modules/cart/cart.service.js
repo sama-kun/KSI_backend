@@ -40,6 +40,26 @@ let CartService = class CartService extends BaseService_1.BaseService {
         candidate.returnBy = user;
         return candidate;
     }
+    async accept(user, id) {
+        const candidate = await this.findById(id, []);
+        const res = await this.update(user, id, {
+            status: enums_1.CartStatusEnum.accept,
+        });
+        return res;
+    }
+    async decline(user, id) {
+        const candidate = await this.findById(id, [
+            'cartItems.items',
+            'cartItems.itemGroup',
+        ]);
+        candidate.cartItems.forEach(async (value) => {
+            await this.cartItemService.returnItem(value.id, user);
+        });
+        const res = await this.update(user, id, {
+            status: enums_1.CartStatusEnum.declined,
+        });
+        return res;
+    }
 };
 CartService = __decorate([
     (0, common_1.Injectable)(),

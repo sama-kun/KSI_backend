@@ -45,7 +45,7 @@ let CartItemController = class CartItemController extends BaseController_1.BaseC
     }
     async remove(user, id) {
         console.log(user);
-        return this.dataService.delete(user, id);
+        return this.dataService.remove(id, user);
     }
     plus(id) {
         return this.dataService.plus(id);

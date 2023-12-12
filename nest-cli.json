@@ -9,9 +9,13 @@
 				"outDir": "dist/src"
 			},
       {
-				"include": "public/*",
-				"outDir": "dist/"
-			}
+        "include": "../public/**",
+        "outDir": "dist/public"
+      },
+      {
+        "include": "../views/**",
+        "outDir": "dist/views"
+      }
 		],
 		"watchAssets": true
 	}

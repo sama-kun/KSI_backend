@@ -10,8 +10,8 @@ import { ItemGroupService } from '../item-group/item-group.service';
 import { UserEntity } from '@/database/entities/user.entity';
 import { CartItemStatusEnum, ItemStatusEnum } from '@/interfaces/enums';
 import { ItemService } from '../item/item.service';
-import { CartService } from '../cart/cart.service';
 import { CartEntity } from '@/database/entities/cart.entity';
+import { ItemEntity } from '@/database/entities/item.entity';
 
 @Injectable()
 export class CartItemService extends BaseService<
@@ -125,5 +125,23 @@ export class CartItemService extends BaseService<
     record.status = CartItemStatusEnum.inProject;
     record.cart = { id: cartid } as CartEntity;
     await this.repo.save(record);
+  }
+
+  async remove(id: number, user: UserEntity) {
+    this.returnItem(id, user);
+    return this.delete(user, id);
+  }
+
+  async returnItem(id: number, user: UserEntity) {
+    const candidate = await this.findById(id, ['items', 'itemGroup']);
+    candidate.items.forEach(async (value: ItemEntity) => {
+      await this.itemService.update(user, value.id, {
+        status: ItemStatusEnum.ok,
+      });
+    });
+    await this.itemGroupService.update(user, candidate.itemGroup.id, {
+      quantity: candidate.itemGroup.quantity + candidate.quantity,
+      projectQuantity: candidate.itemGroup.quantity - candidate.quantity,
+    });
   }
 }

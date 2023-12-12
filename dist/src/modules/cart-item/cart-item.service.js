@@ -91,6 +91,22 @@ let CartItemService = class CartItemService extends BaseService_1.BaseService {
         record.cart = { id: cartid };
         await this.repo.save(record);
     }
+    async remove(id, user) {
+        this.returnItem(id, user);
+        return this.delete(user, id);
+    }
+    async returnItem(id, user) {
+        const candidate = await this.findById(id, ['items', 'itemGroup']);
+        candidate.items.forEach(async (value) => {
+            await this.itemService.update(user, value.id, {
+                status: enums_1.ItemStatusEnum.ok,
+            });
+        });
+        await this.itemGroupService.update(user, candidate.itemGroup.id, {
+            quantity: candidate.itemGroup.quantity + candidate.quantity,
+            projectQuantity: candidate.itemGroup.quantity - candidate.quantity,
+        });
+    }
 };
 CartItemService = __decorate([
     (0, common_1.Injectable)(),

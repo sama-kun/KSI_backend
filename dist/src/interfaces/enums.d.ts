@@ -2,7 +2,9 @@ export declare enum CartStatusEnum {
     Finished = "Finished",
     OnProject = "OnProject",
     InCart = "InCart",
-    finished = "finished"
+    finished = "finished",
+    accept = "accept",
+    declined = "declined"
 }
 export declare enum RoleEnum {
     USER = "user",
