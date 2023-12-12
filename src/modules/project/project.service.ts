@@ -49,7 +49,10 @@ export class ProjectService extends BaseService<
     //     }
     //   });
     // });
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: process.env.CHROME_PATH,
+    });
     const page = await browser.newPage();
 
     const templatePath = path.resolve(__dirname, 'template', 'test.ejs');

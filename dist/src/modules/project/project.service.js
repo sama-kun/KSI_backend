@@ -55,7 +55,10 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         this.repoCartItem = repoCartItem;
     }
     async generatePdf() {
-        const browser = await puppeteer_1.default.launch({ headless: true });
+        const browser = await puppeteer_1.default.launch({
+            headless: true,
+            executablePath: process.env.CHROME_PATH,
+        });
         const page = await browser.newPage();
         const templatePath = path_1.default.resolve(__dirname, 'template', 'test.ejs');
         const templateContent = fs.readFileSync(templatePath, 'utf-8');
