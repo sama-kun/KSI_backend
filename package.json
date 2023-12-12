@@ -84,6 +84,7 @@
       "pg": "^8.11.3",
       "prompt-sync": "^4.2.0",
       "pug": "^3.0.2",
+      "puppeteer": "^21.6.0",
       "reflect-metadata": "^0.1.13",
       "replace": "^1.2.2",
       "replace-in-file": "^7.0.1",

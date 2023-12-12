@@ -14,6 +14,7 @@ import * as pdf1 from 'pdf-creator-node';
 import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
 import * as pdf from 'html-pdf';
+import * as puppeteer from 'puppeteer';
 const console = new Logger('ProjectService');
 
 @Injectable()
@@ -30,22 +31,33 @@ export class ProjectService extends BaseService<
   }
 
   async generatePdf(): Promise<Buffer> {
+    // const templatePath = path.join(__dirname, 'template', 'test.ejs');
+    // const html = await ejs.renderFile(templatePath, { name: 'samgar' });
+
+    // const options: pdf.CreateOptions = {
+    //   format: 'Letter',
+    // };
+
+    // const pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
+    //   pdf.create(html, options).toBuffer((err, buffer) => {
+    //     if (err) {
+    //       reject(err);
+    //     } else {
+    //       resolve(buffer);
+    //     }
+    //   });
+    // });
+
+    // return pdfBuffer;
     const templatePath = path.join(__dirname, 'template', 'test.ejs');
     const html = await ejs.renderFile(templatePath, { name: 'samgar' });
 
-    const options: pdf.CreateOptions = {
-      format: 'Letter',
-    };
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(html);
 
-    const pdfBuffer = await new Promise<Buffer>((resolve, reject) => {
-      pdf.create(html, options).toBuffer((err, buffer) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(buffer);
-        }
-      });
-    });
+    const pdfBuffer = await page.pdf();
+    await browser.close();
 
     return pdfBuffer;
   }
