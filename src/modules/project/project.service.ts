@@ -15,7 +15,7 @@ import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
 import * as pdf from 'html-pdf';
 import PDFDocument from 'pdfkit';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import chromium from 'chrome-aws-lambda';
 const console = new Logger('ProjectService');
 
@@ -56,6 +56,7 @@ export class ProjectService extends BaseService<
       // executablePath: await chromium.executablePath,
       userDataDir: '/workspace/.cache/puppeteer',
       // channel: await chromium.executablePath,
+      //../../..
     });
     const page = await browser.newPage();
 
