@@ -58,6 +58,7 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         const browser = await puppeteer_1.default.launch({
             headless: true,
             executablePath: process.env.CHROME_PATH,
+            args: ['--disable-dev-shm-usage'],
         });
         const page = await browser.newPage();
         const templatePath = path_1.default.resolve(__dirname, 'template', 'test.ejs');
