@@ -51,8 +51,7 @@ export class ProjectService extends BaseService<
     // });
     const browser = await puppeteer.launch({
       headless: true,
-      executablePath: process.env.CHROME_PATH,
-      args: ['--disable-dev-shm-usage'],
+      ignoreDefaultArgs: ['--disable-extensions'],
     });
     const page = await browser.newPage();
 
