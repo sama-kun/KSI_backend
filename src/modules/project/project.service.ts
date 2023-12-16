@@ -54,7 +54,7 @@ export class ProjectService extends BaseService<
       headless: true,
       ignoreDefaultArgs: ['--disable-extensions'],
       // executablePath: await chromium.executablePath,
-      userDataDir: '../../../workspace/.cache/puppeteer',
+      userDataDir: '../../../.cache/puppeteer',
       // channel: await chromium.executablePath,
       //../../..
     });
