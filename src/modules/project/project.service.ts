@@ -15,7 +15,8 @@ import { CartItemService } from '../cart-item/cart-item.service';
 import * as util from 'util';
 import * as pdf from 'html-pdf';
 import PDFDocument from 'pdfkit';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from 'chrome-aws-lambda';
 const console = new Logger('ProjectService');
 
 @Injectable()
@@ -52,6 +53,7 @@ export class ProjectService extends BaseService<
     const browser = await puppeteer.launch({
       headless: true,
       ignoreDefaultArgs: ['--disable-extensions'],
+      executablePath: await chromium.executablePath,
     });
     const page = await browser.newPage();
 
