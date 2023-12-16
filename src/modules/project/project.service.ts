@@ -53,8 +53,8 @@ export class ProjectService extends BaseService<
     const browser = await puppeteer.launch({
       headless: true,
       ignoreDefaultArgs: ['--disable-extensions'],
-      // executablePath: await chromium.executablePath,
-      userDataDir: '.cache/puppeteer',
+      executablePath: await chromium.executablePath,
+      // userDataDir: '.cache/puppeteer',
       // channel: await chromium.executablePath,
       //../../..
     });
