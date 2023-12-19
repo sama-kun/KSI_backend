@@ -47,6 +47,7 @@ const pdf1 = __importStar(require("pdf-creator-node"));
 const cart_item_service_1 = require("../cart-item/cart-item.service");
 const util = __importStar(require("util"));
 const puppeteer_1 = __importDefault(require("puppeteer"));
+const chrome_aws_lambda_1 = __importDefault(require("chrome-aws-lambda"));
 const console = new common_1.Logger('ProjectService');
 let ProjectService = class ProjectService extends BaseService_1.BaseService {
     constructor(repo, repoCartItem) {
@@ -55,10 +56,11 @@ let ProjectService = class ProjectService extends BaseService_1.BaseService {
         this.repoCartItem = repoCartItem;
     }
     async generatePdf() {
+        process.env.LD_LIBRARY_PATH = '/path/to/libraries';
         const browser = await puppeteer_1.default.launch({
             headless: true,
-            executablePath: process.env.CHROME_PATH,
-            args: ['--disable-dev-shm-usage'],
+            ignoreDefaultArgs: ['--disable-extensions'],
+            executablePath: await chrome_aws_lambda_1.default.executablePath,
         });
         const page = await browser.newPage();
         const templatePath = path_1.default.resolve(__dirname, 'template', 'test.ejs');

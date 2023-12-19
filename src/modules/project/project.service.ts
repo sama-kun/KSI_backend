@@ -33,30 +33,13 @@ export class ProjectService extends BaseService<
   }
 
   async generatePdf(): Promise<Buffer> {
-    // return new Promise((resolve, reject) => {
-    //   const templatePath = path.resolve(__dirname, 'template', 'test.ejs');
-    //   const templateContent = fs.readFileSync(templatePath, 'utf-8');
-    //   const renderedHtml = ejs.render(templateContent, { name: 'Samgar' });
+    // Set LD_LIBRARY_PATH if needed
+    process.env.LD_LIBRARY_PATH = '/path/to/libraries'; // Replace with the actual path
 
-    //   const pdfOptions: pdf.CreateOptions = {
-    //     format: 'Letter',
-    //   };
-
-    //   pdf.create(renderedHtml, pdfOptions).toBuffer((err, buffer) => {
-    //     if (err) {
-    //       reject(err);
-    //     } else {
-    //       resolve(buffer);
-    //     }
-    //   });
-    // });
     const browser = await puppeteer.launch({
       headless: true,
       ignoreDefaultArgs: ['--disable-extensions'],
       executablePath: await chromium.executablePath,
-      // userDataDir: '.cache/puppeteer',
-      // channel: await chromium.executablePath,
-      //../../..
     });
     const page = await browser.newPage();
 
