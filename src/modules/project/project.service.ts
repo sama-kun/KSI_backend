@@ -37,7 +37,7 @@ export class ProjectService extends BaseService<
     process.env.LD_LIBRARY_PATH = '/path/to/libraries'; // Replace with the actual path
 
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: 'new',
       ignoreDefaultArgs: ['--disable-extensions'],
       executablePath: await chromium.executablePath,
     });
