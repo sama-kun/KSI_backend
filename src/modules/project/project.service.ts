@@ -40,6 +40,8 @@ export class ProjectService extends BaseService<
       headless: 'new',
       ignoreDefaultArgs: ['--disable-extensions'],
       executablePath: await chromium.executablePath,
+      userDataDir:
+        '/workspace/.cache/puppeteer/chrome/linux-119.0.6045.105/chrome-linux64/chrome',
     });
     const page = await browser.newPage();
 
